@@ -19,5 +19,6 @@ frontend:
   cache:
     paths:
       - .next/cache/**/*
+      - .pnpm-store/**/*
       - .npm/**/*
       - node_modules/**/*
