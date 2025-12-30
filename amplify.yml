@@ -1,6 +1,6 @@
 
 version: 1
-:TODO: Enable backend deployment once ready
+# TODO: Enable backend deployment once ready
 # backend:
 #   phases:
 #     build:
