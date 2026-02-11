@@ -19,9 +19,9 @@ type ProductTeaserCardProps = {
 export const ProductTeaserCard = (props: ProductTeaserCardProps) => {
   const {
     dailyVolume = "1,430,992,688",
-    dailyVolumeLabel = "Shopify for AI Agents",
+    dailyVolumeLabel = "Solving Customer Service At Scale",
     headline = "Your Business Operating System",
-    subheadline = "Simtropolis connects every customer interaction into a unified AI layer — delivering more human and interactive customer experiences using natural language.",
+    subheadline = "Simtropolis connects every customer interaction into a unified interface and AI layer — delivering more human and interactive customer experiences using natural language.",
     description = "Trusted by fast-growing teams and enterprises, Simtropolis powers better customer experiences across many organisations",
     videoSrc = "#",
     posterSrc = "/images/design-mode/9ad78a5534a46e77bafe116ce1c38172c60dc21a-1069x1068.png",

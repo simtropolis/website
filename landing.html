@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Simtropolis Landing Page - Variant 2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#1313ec",
+            "background-light": "#f6f6f8",
+            "background-dark": "#101022",
+          },
+          fontFamily: {
+            "display": ["Space Grotesk", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .grid-pattern {
+      background-image: radial-gradient(circle, #282839 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .glass-nav {
+      backdrop-filter: blur(12px);
+      background-color: rgba(16, 16, 34, 0.8);
+    }
+    .hero-glow {
+      background: radial-gradient(circle at center, rgba(19, 19, 236, 0.15) 0%, transparent 70%);
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen selection:bg-primary selection:text-white">
+<!-- Main Container -->
+<div class="relative flex flex-col w-full overflow-x-hidden grid-pattern">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 border-b border-slate-200 dark:border-white/10 glass-nav">
+<div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center text-white">
+<svg class="w-6 h-6" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="text-xl font-bold tracking-tight">Simtropolis</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Product</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Solutions</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Integrations</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Resources</a>
+</nav>
+<div class="flex items-center gap-3">
+<button class="px-4 h-9 text-sm font-semibold border border-slate-300 dark:border-white/20 hover:bg-slate-100 dark:hover:bg-white/5 rounded transition-all">
+            Login
+          </button>
+<button class="px-4 h-9 text-sm font-semibold bg-primary text-white hover:opacity-90 rounded transition-all">
+            Get Started
+          </button>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-20">
+<!-- Breadcrumbs Section -->
+<div class="max-w-7xl mx-auto px-6 mb-8">
+<div class="flex items-center gap-2 py-2">
+<a class="text-slate-500 dark:text-[#9d9db9] text-sm font-medium hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-xs text-slate-400">chevron_right</span>
+<a class="text-slate-500 dark:text-[#9d9db9] text-sm font-medium hover:text-primary" href="#">Platform</a>
+<span class="material-symbols-outlined text-xs text-slate-400">chevron_right</span>
+<span class="text-slate-900 dark:text-white text-sm font-medium">Interactive AI</span>
+</div>
+</div>
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-6 mb-24 hero-glow">
+<div class="flex flex-col items-center text-center max-w-4xl mx-auto">
+<div class="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+            System Status: Operational
+          </div>
+<h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-8 bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-600 dark:from-white dark:to-white/60">
+            The Operating System for Human-AI Interaction
+          </h1>
+<p class="text-lg md:text-xl text-slate-600 dark:text-[#9d9db9] mb-10 max-w-2xl leading-relaxed">
+            Unify your customer touchpoints into a single, intelligent neural layer. Experience the power of a unified business operating system designed for the next era.
+          </p>
+<div class="flex flex-wrap justify-center gap-4">
+<button class="min-w-[160px] h-14 bg-primary text-white rounded-lg font-bold text-lg hover:scale-[1.02] transition-transform flex items-center justify-center gap-2">
+              Start for free
+              <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="min-w-[160px] h-14 bg-slate-200 dark:bg-[#282839] text-slate-900 dark:text-white rounded-lg font-bold text-lg hover:bg-slate-300 dark:hover:bg-[#32324a] transition-colors">
+              Book a demo
+            </button>
+</div>
+</div>
+<!-- Central Visualization -->
+<div class="mt-20 relative max-w-5xl mx-auto aspect-[21/9] rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#1c1c27]/50 p-1 flex items-center justify-center">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent"></div>
+<!-- Abstract Visualization Content -->
+<div class="relative w-full h-full flex items-center justify-center gap-12 overflow-hidden">
+<!-- Source Nodes -->
+<div class="flex flex-col gap-6 z-10">
+<div class="flex items-center gap-4 bg-white dark:bg-[#111118] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xl">
+<span class="material-symbols-outlined text-primary">chat</span>
+<div class="h-2 w-12 bg-slate-200 dark:bg-white/10 rounded-full"></div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-[10px] uppercase font-bold text-slate-400">Live</span>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-white dark:bg-[#111118] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xl translate-x-4">
+<span class="material-symbols-outlined text-primary">mail</span>
+<div class="h-2 w-16 bg-slate-200 dark:bg-white/10 rounded-full"></div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-[10px] uppercase font-bold text-slate-400">Syncing</span>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-white dark:bg-[#111118] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xl">
+<span class="material-symbols-outlined text-primary">call</span>
+<div class="h-2 w-10 bg-slate-200 dark:bg-white/10 rounded-full"></div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-[10px] uppercase font-bold text-slate-400">Live</span>
+</div>
+</div>
+</div>
+<!-- Central Core -->
+<div class="relative w-48 h-48 flex items-center justify-center">
+<div class="absolute inset-0 bg-primary/20 blur-3xl rounded-full"></div>
+<div class="relative w-32 h-32 bg-primary rounded-3xl rotate-45 flex items-center justify-center shadow-[0_0_50px_rgba(19,19,236,0.5)]">
+<svg class="w-16 h-16 text-white -rotate-45" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+</div>
+<!-- Destination -->
+<div class="flex flex-col gap-4 z-10">
+<div class="w-48 h-32 bg-white dark:bg-[#111118] p-4 rounded-xl border border-slate-200 dark:border-white/10 shadow-xl flex flex-col justify-between">
+<div class="flex justify-between items-center">
+<span class="text-xs font-bold text-slate-400 uppercase">AI Processor</span>
+<span class="material-symbols-outlined text-primary text-sm">bolt</span>
+</div>
+<div class="space-y-2">
+<div class="h-1 w-full bg-primary/20 rounded-full"></div>
+<div class="h-1 w-3/4 bg-primary/20 rounded-full"></div>
+<div class="h-1 w-1/2 bg-primary/20 rounded-full"></div>
+</div>
+<span class="text-[10px] font-mono text-primary">98.4% Accuracy</span>
+</div>
+</div>
+<div class="absolute inset-0 z-0 pointer-events-none opacity-20 dark:opacity-40">
+<img class="w-full h-full object-cover" data-alt="Abstract neural network connections showing data paths" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9UmgJEm914Oa2TqBgrWtTUt0ADQahG0PITRSdLiGK7TP88ZvWHm-hgtqHiA-ebJesNIBv_tSFB0WXZbV_c_-RaBed2QdNJhLvBJdecKRQpKKkKYh3w2gVujeTfLLHRhoKxuSJ7apMfGRLKC_n-tm1rZn8URk4yqntPFVB-tDcySWUCDqLP0D1c6992ahNBfwA4eHZEgt2dmvH93gu4XygJUDrFROJKi-FA5JTTegxESWJPOsvx8oNtp87WoRlv7cEthrGJBDqrj3I"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Section Header -->
+<section class="max-w-7xl mx-auto px-6 mb-12">
+<div class="flex flex-col md:flex-row items-end justify-between gap-6 border-b border-slate-200 dark:border-white/10 pb-8">
+<div>
+<h2 class="text-3xl font-bold tracking-tight mb-2">The Unified AI Layer</h2>
+<p class="text-slate-600 dark:text-[#9d9db9]">Engineered for reliability, scale, and deep integration.</p>
+</div>
+<button class="text-primary font-bold flex items-center gap-2 group">
+            Explore All Features
+            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
+</button>
+</div>
+</section>
+<!-- Features Grid -->
+<section class="max-w-7xl mx-auto px-6 mb-32">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="flex flex-col gap-5 rounded-2xl border border-slate-200 dark:border-[#3b3b54] bg-white dark:bg-[#1c1c27] p-8 hover:border-primary transition-colors group">
+<div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">hub</span>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="text-xl font-bold">Data Fusion</h3>
+<p class="text-slate-600 dark:text-[#9d9db9] leading-relaxed">Consolidate chat, email, and voice into one stream. No more siloed customer conversations.</p>
+</div>
+</div>
+<div class="flex flex-col gap-5 rounded-2xl border border-slate-200 dark:border-[#3b3b54] bg-white dark:bg-[#1c1c27] p-8 hover:border-primary transition-colors group">
+<div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">route</span>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="text-xl font-bold">Neural Routing</h3>
+<p class="text-slate-600 dark:text-[#9d9db9] leading-relaxed">Intelligently route interactions to the right AI agents based on sentiment and urgency.</p>
+</div>
+</div>
+<div class="flex flex-col gap-5 rounded-2xl border border-slate-200 dark:border-[#3b3b54] bg-white dark:bg-[#1c1c27] p-8 hover:border-primary transition-colors group">
+<div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">history</span>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="text-xl font-bold">Real-time Context</h3>
+<p class="text-slate-600 dark:text-[#9d9db9] leading-relaxed">Maintain full historical context across all channels. Your AI never forgets a customer's history.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA / Lead Gen Section -->
+<section class="max-w-7xl mx-auto px-6">
+<div class="relative bg-slate-900 dark:bg-primary rounded-3xl overflow-hidden p-12 md:p-20 flex flex-col items-center text-center">
+<div class="absolute inset-0 bg-[url('https://placeholder.pics/svg/800')] opacity-10 mix-blend-overlay" data-alt="Subtle tech pattern overlay"></div>
+<div class="relative z-10 max-w-2xl">
+<h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Ready to unify your operations?</h2>
+<p class="text-white/80 text-lg mb-10 leading-relaxed">
+              Join 2,000+ companies using Simtropolis to build the future of customer experience.
+            </p>
+<form class="flex flex-col sm:flex-row gap-3 w-full max-w-md mx-auto" onsubmit="return false">
+<input class="flex-1 h-14 rounded-xl border-0 px-6 text-slate-900 focus:ring-2 focus:ring-white" placeholder="Work email address" type="email"/>
+<button class="h-14 px-8 bg-white text-slate-900 dark:text-primary font-bold rounded-xl hover:bg-slate-100 transition-colors">
+                Get Started
+              </button>
+</form>
+<p class="mt-4 text-white/60 text-sm">7-day free trial. No credit card required.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Simple Footer -->
+<footer class="border-t border-slate-200 dark:border-white/10 py-12">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-3 opacity-50">
+<div class="w-6 h-6 bg-slate-900 dark:bg-white rounded flex items-center justify-center text-white dark:text-slate-900">
+<svg class="w-4 h-4" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="font-bold tracking-tight">Simtropolis</span>
+</div>
+<div class="flex gap-8 text-sm text-slate-500">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+<a class="hover:text-primary" href="#">Contact</a>
+</div>
+<div class="flex gap-4">
+<a class="p-2 rounded-lg bg-slate-100 dark:bg-white/5 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">public</span>
+</a>
+<a class="p-2 rounded-lg bg-slate-100 dark:bg-white/5 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+</div>
+</div>
+<div class="text-center mt-8 text-xs text-slate-400">
+        © 2024 Simtropolis Technologies Inc. All rights reserved.
+      </div>
+</footer>
+</div>
+</body></html>

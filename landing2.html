@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Simtropolis Landing Page - Variant 1</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1313ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101022",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .spectrum-border {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .spectrum-gradient {
+            background: radial-gradient(circle at top left, rgba(19, 19, 236, 0.15), transparent 40%),
+                        radial-gradient(circle at bottom right, rgba(19, 19, 236, 0.05), transparent 40%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Top Navigation -->
+<div class="layout-container flex h-full grow flex-col">
+<div class="flex flex-1 justify-center">
+<div class="layout-content-container flex flex-col w-full max-w-[1200px] flex-1">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-slate-200 dark:border-b-white/10 px-10 py-3">
+<div class="flex items-center gap-4">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-[-0.015em]">Simtropolis</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="hidden md:flex items-center gap-9">
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Platform</a>
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Solutions</a>
+<a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Pricing</a>
+</div>
+<div class="flex gap-2">
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold tracking-[0.015em]">
+                                Request Demo
+                            </button>
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-slate-200 dark:bg-white/10 text-slate-900 dark:text-white text-sm font-bold tracking-[0.015em]">
+                                Sign In
+                            </button>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<div class="px-4 py-12 md:py-24">
+<div class="@container">
+<div class="flex flex-col items-center justify-center text-center gap-8 spectrum-gradient rounded-xl p-8 spectrum-border">
+<div class="flex flex-col gap-4 max-w-3xl">
+<h1 class="text-4xl md:text-6xl font-black leading-[1.1] tracking-[-0.033em]">
+                                    Your Business <br/><span class="text-primary"> Agentic Operating System</span>
+</h1>
+<p class="text-slate-600 dark:text-slate-400 text-lg md:text-xl font-normal leading-relaxed max-w-2xl mx-auto">
+                                    Unify every customer interaction with enterprise-grade AI. Streamline support, sales, and sentiment in one central dashboard.
+                                </p>
+</div>
+<div class="flex flex-wrap gap-4 justify-center">
+<button class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-lg h-14 px-8 bg-primary text-white text-base font-bold tracking-[0.015em] shadow-lg shadow-primary/20">
+                                    Request Demo
+                                </button>
+<button class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-lg h-14 px-8 bg-slate-200 dark:bg-white/10 text-slate-900 dark:text-white text-base font-bold tracking-[0.015em]">
+                                    Learn More
+                                </button>
+</div>
+<div class="mt-8 w-full max-w-4xl opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+<p class="text-xs uppercase tracking-widest font-bold mb-6">Trusted by Enterprise Leaders</p>
+<div class="flex flex-wrap justify-center items-center gap-12">
+<span class="text-2xl font-bold italic">ADOBE</span>
+<span class="text-2xl font-bold">SPHERE</span>
+<span class="text-2xl font-bold">TECHGEN</span>
+<span class="text-2xl font-bold italic">LUMINA</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section Header -->
+<div class="px-4 mt-8">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">dashboard</span>
+<h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em]">Unified AI Dashboard</h2>
+</div>
+<p class="text-slate-500 dark:text-slate-400 mt-1 mb-4">Real-time intelligence across all communication channels</p>
+</div>
+<!-- Stats/Top Metrics -->
+<div class="flex flex-wrap gap-4 p-4">
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg p-6 border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Live Sentiment</p>
+<div class="flex items-end gap-2">
+<p class="tracking-light text-3xl font-bold leading-tight">88%</p>
+<p class="text-[#0bda68] text-sm font-medium leading-normal mb-1 flex items-center">
+<span class="material-symbols-outlined text-sm">trending_up</span>+12%
+                            </p>
+</div>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg p-6 border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Active Interactions</p>
+<div class="flex items-end gap-2">
+<p class="tracking-light text-3xl font-bold leading-tight">1,240</p>
+<p class="text-[#0bda68] text-sm font-medium leading-normal mb-1 flex items-center">
+<span class="material-symbols-outlined text-sm">trending_up</span>+5%
+                            </p>
+</div>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg p-6 border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">AI Accuracy</p>
+<div class="flex items-end gap-2">
+<p class="tracking-light text-3xl font-bold leading-tight">99.9%</p>
+<p class="text-[#0bda68] text-sm font-medium leading-normal mb-1 flex items-center">
+<span class="material-symbols-outlined text-sm">check_circle</span>Stable
+                            </p>
+</div>
+</div>
+</div>
+<!-- Dashboard Preview - Table & Action Logs -->
+<div class="px-4 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Main Interaction Table -->
+<div class="lg:col-span-2">
+<div class="@container">
+<div class="flex overflow-hidden rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm">
+<table class="flex-1 text-left">
+<thead>
+<tr class="bg-slate-50 dark:bg-white/10">
+<th class="px-4 py-4 text-xs font-bold uppercase text-slate-500 dark:text-slate-400 w-[120px]">ID</th>
+<th class="px-4 py-4 text-xs font-bold uppercase text-slate-500 dark:text-slate-400">Customer</th>
+<th class="px-4 py-4 text-xs font-bold uppercase text-slate-500 dark:text-slate-400 w-32">Sentiment</th>
+<th class="px-4 py-4 text-xs font-bold uppercase text-slate-500 dark:text-slate-400 w-32">Status</th>
+<th class="px-4 py-4 text-xs font-bold uppercase text-slate-500 dark:text-slate-400">AI Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-white/10">
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<td class="px-4 py-4 text-slate-500 text-sm">#8921</td>
+<td class="px-4 py-4 text-sm font-semibold">Adobe Systems</td>
+<td class="px-4 py-4">
+<span class="inline-flex items-center rounded-full bg-green-500/10 px-2 py-1 text-xs font-medium text-green-500">Positive</span>
+</td>
+<td class="px-4 py-4">
+<span class="inline-flex items-center rounded-full bg-primary/10 px-2 py-1 text-xs font-medium text-primary">Resolved</span>
+</td>
+<td class="px-4 py-4 text-slate-500 dark:text-slate-400 text-xs font-medium">Auto-reply sent</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<td class="px-4 py-4 text-slate-500 text-sm">#8922</td>
+<td class="px-4 py-4 text-sm font-semibold">Global Corp</td>
+<td class="px-4 py-4">
+<span class="inline-flex items-center rounded-full bg-slate-500/10 px-2 py-1 text-xs font-medium text-slate-500">Neutral</span>
+</td>
+<td class="px-4 py-4">
+<span class="inline-flex items-center rounded-full bg-yellow-500/10 px-2 py-1 text-xs font-medium text-yellow-500">Pending</span>
+</td>
+<td class="px-4 py-4 text-slate-500 dark:text-slate-400 text-xs font-medium">Routing to Human</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<td class="px-4 py-4 text-slate-500 text-sm">#8923</td>
+<td class="px-4 py-4 text-sm font-semibold">Tech Start</td>
+<td class="px-4 py-4">
+<span class="inline-flex items-center rounded-full bg-green-500/10 px-2 py-1 text-xs font-medium text-green-500">Positive</span>
+</td>
+<td class="px-4 py-4">
+<span class="inline-flex items-center rounded-full bg-blue-500/10 px-2 py-1 text-xs font-medium text-blue-500">Active</span>
+</td>
+<td class="px-4 py-4 text-slate-500 dark:text-slate-400 text-xs font-medium">Summarizing Log</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Side Log Feed -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-col flex-1 rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-4 overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">Live AI Feed</h3>
+<div class="size-2 bg-red-500 rounded-full animate-pulse"></div>
+</div>
+<div class="flex flex-col gap-4 font-mono text-xs">
+<div class="p-3 rounded bg-slate-100 dark:bg-white/10 border-l-2 border-primary">
+<span class="text-primary font-bold">[14:21:05]</span> Analyzing inquiry from user@adobe.com...
+                                </div>
+<div class="p-3 rounded bg-slate-100 dark:bg-white/10 border-l-2 border-green-500">
+<span class="text-green-500 font-bold">[14:21:08]</span> Sentiment: High Positive. Triggering auto-thank.
+                                </div>
+<div class="p-3 rounded bg-slate-100 dark:bg-white/10 border-l-2 border-slate-400">
+<span class="text-slate-400 font-bold">[14:21:12]</span> Global Corp ticket #8922 escalated.
+                                </div>
+<div class="p-3 rounded bg-slate-100 dark:bg-white/10 border-l-2 border-primary">
+<span class="text-primary font-bold">[14:21:15]</span> LLM summarizing Tech Start interaction...
+                                </div>
+</div>
+<button class="mt-4 text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                                View Full Logs <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="mt-20 border-t border-slate-200 dark:border-white/10 py-12 px-10">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<div class="size-5 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold">Simtropolis</h2>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                                The next generation of business operations, powered by enterprise AI and human-centric design.
+                            </p>
+</div>
+<div>
+<h4 class="font-bold text-sm mb-6 uppercase tracking-widest text-primary">Platform</h4>
+<ul class="flex flex-col gap-4 text-sm text-slate-600 dark:text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Unified Inbox</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">AI Automation</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sentiment Engine</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Integrations</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-sm mb-6 uppercase tracking-widest text-primary">Company</h4>
+<ul class="flex flex-col gap-4 text-sm text-slate-600 dark:text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-sm mb-6 uppercase tracking-widest text-primary">Connect</h4>
+<div class="flex gap-4">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white cursor-pointer transition-all">
+<span class="material-symbols-outlined text-xl">share</span>
+</div>
+<div class="size-10 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white cursor-pointer transition-all">
+<span class="material-symbols-outlined text-xl">alternate_email</span>
+</div>
+<div class="size-10 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white cursor-pointer transition-all">
+<span class="material-symbols-outlined text-xl">hub</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-20 pt-8 border-t border-slate-200 dark:border-white/10 flex justify-between items-center text-xs text-slate-500">
+<p>© 2024 Simtropolis Technologies Inc. All rights reserved.</p>
+<p class="flex items-center gap-1">Designed for Enterprise <span class="material-symbols-outlined text-[10px]">shield</span></p>
+</div>
+</footer>
+</div>
+</div>
+</div>
+</body></html>
