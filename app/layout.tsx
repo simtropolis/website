@@ -1,45 +1,33 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Figtree, Inter, Geist_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import "./globals.css"
-
-const figtree = Figtree({
-  subsets: ["latin"],
-  variable: "--font-figtree",
-  weight: ["400", "500", "600"],
-})
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-})
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
-  weight: ["400", "500", "600"],
-})
+import type { Metadata } from 'next'
+import './globals.css'
 
 export const metadata: Metadata = {
-  title: "Simtropolis - Build Better Customer Experiences with Agents",
-  description: "Simtropolis connects every customer interaction into a unified AI layer — delivering more human and interactive customer experiences using natural language.",
-  icons: {
-    icon: "/favicon.ico",
+  metadataBase: new URL('https://simtropolis.ai'),
+  title: 'Made by Simtropolis — Focused tools for people who build',
+  description:
+    'Meet Copper: a Rust development environment with native agent workflows, Cargo tooling, and a Zed-derived editor. Built on Made by Simtropolis.',
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'Made by Simtropolis',
+    description:
+      'Focused tools for people who build. Meet Copper, the Rust development environment with agents built in.',
+    url: '/',
+    siteName: 'Simtropolis',
+    type: 'website',
+    locale: 'en_GB',
   },
+  twitter: {
+    card: 'summary',
+    title: 'Made by Simtropolis',
+    description: 'Meet Copper, the Rust development environment with agents built in.',
+  },
+  icons: { icon: '/icon.svg' },
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${figtree.variable} ${geistMono.variable} font-sans antialiased`}>
-        {children}
-        <Analytics />
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

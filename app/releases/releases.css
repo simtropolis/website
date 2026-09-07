@@ -1,0 +1,387 @@
+.releases-page .release-latest {
+  padding-block: 40px;
+  border-block: 1px solid var(--line);
+  background: #edeee6;
+}
+.releases-page .latest-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  margin-bottom: 24px;
+}
+.releases-page .latest-heading h2 {
+  margin-top: 22px;
+}
+.releases-page .release-badge {
+  display: inline-block;
+  border: 1px solid #bdc3b2;
+  border-radius: 100px;
+  padding: 6px 11px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.releases-page .stable {
+  color: #79502f;
+  border-color: #9c765c;
+}
+.releases-page .release-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 20px;
+}
+.releases-page .release-meta > span {
+  font-family: var(--font-mono);
+}
+.releases-page .text-link {
+  display: inline-block;
+  font-size: 14px;
+  border-bottom: 1px solid #b4bbab;
+  padding-block: 10px;
+}
+.releases-page .text-link:hover {
+  border-color: var(--ink);
+}
+.releases-page .downloads {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.releases-page .download-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 28px;
+  border-radius: 3px;
+}
+.releases-page .download-card > .eyebrow {
+  margin-top: 0;
+  color: var(--muted);
+}
+.releases-page .architecture {
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  margin: 24px 0 32px;
+}
+.releases-page .download-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--ink);
+  color: white;
+  border-radius: 100px;
+  font-size: 14px;
+}
+.releases-page .download-link:hover,
+.releases-page .pill:hover {
+  background: #414438;
+}
+.releases-page .file-meta {
+  display: block;
+  overflow-wrap: anywhere;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 15px;
+  line-height: 1.7;
+}
+.releases-page .latest-notes {
+  margin-top: 28px;
+  border-block: 1px solid #cdd0c3;
+}
+.releases-page summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+.releases-page summary::-webkit-details-marker {
+  display: none;
+}
+.releases-page .latest-notes > summary {
+  padding-block: 22px;
+  font-size: 16px;
+}
+.releases-page .latest-notes > summary > span {
+  font-size: 23px;
+}
+.releases-page details[open] > summary .expand,
+.releases-page details[open] > summary > span:last-child:not(.history-summary-end) {
+  transform: rotate(45deg);
+}
+.releases-page .release-notes {
+  font-size: 16px;
+  line-height: 1.75;
+  padding-bottom: 25px;
+  max-width: 950px;
+  overflow-wrap: anywhere;
+}
+.releases-page .release-notes h3 {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-block: 28px 14px;
+}
+.releases-page .release-notes li {
+  padding-block: 4px;
+}
+.releases-page .release-notes ul {
+  padding-left: 22px;
+}
+.releases-page .release-notes a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.releases-page .release-notes code {
+  font-size: 0.85em;
+  background: #dfe2d6;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+.releases-page .release-notes pre {
+  overflow-x: auto;
+  padding: 20px;
+  background: #dfe2d6;
+}
+.releases-page .release-notes pre code {
+  padding: 0;
+  background: transparent;
+}
+.releases-page .install-note {
+  max-width: 980px;
+  margin: 26px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.releases-page .install-note a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.releases-page .release-history {
+  padding-block: 85px;
+}
+.releases-page .release-section-heading {
+  margin-bottom: 45px;
+}
+.releases-page .release-section-heading h2 {
+  margin-block: 24px;
+}
+.releases-page .release-section-heading > p:last-child {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+.releases-page .release-entry {
+  border-top: 1px solid var(--line);
+}
+.releases-page .release-entry:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.releases-page .release-entry summary {
+  padding-block: 28px;
+}
+.releases-page .history-name {
+  display: block;
+  font-size: 28px;
+  letter-spacing: -0.025em;
+  margin-bottom: 10px;
+  overflow-wrap: anywhere;
+}
+.releases-page .release-entry time {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--muted);
+}
+.releases-page .history-summary-end {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+.releases-page .expand {
+  display: inline-block;
+  font-size: 27px;
+  font-weight: 300;
+  transition: transform 0.15s;
+}
+.releases-page .history-body {
+  padding-bottom: 35px;
+}
+.releases-page .history-downloads {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  padding-block: 8px 24px;
+}
+.releases-page .history-download .download-link {
+  font-size: 12px;
+  padding: 14px;
+  background: #e8eae0;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+.releases-page .history-download .download-link:hover {
+  background: #dce0d0;
+}
+.releases-page .extra-downloads {
+  grid-column: 1/-1;
+}
+.releases-page .extra-downloads a {
+  display: block;
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+}
+.releases-page .release-source {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  padding-block: 55px 65px;
+  border-top: 1px solid var(--line);
+}
+.releases-page .release-source h2 {
+  margin-block: 25px;
+}
+.releases-page .release-source p {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.releases-page .release-source .eyebrow {
+  font-size: 12px;
+}
+.releases-page .pill {
+  display: inline-block;
+  padding: 18px 25px;
+  border-radius: 100px;
+  color: white;
+  background: var(--ink);
+  white-space: nowrap;
+  font-size: 14px;
+}
+.releases-page .release-hero {
+  padding-block: 40px;
+  background-image:
+    linear-gradient(to right, #20211d06 1px, transparent 1px),
+    linear-gradient(to bottom, #20211d06 1px, transparent 1px);
+  background-size: 100px 100px;
+}
+.releases-page h1 {
+  font-size: clamp(56px, 6.5vw, 100px);
+  line-height: 0.99;
+  letter-spacing: -0.065em;
+  font-weight: 400;
+  margin-block: 28px;
+}
+.releases-page .release-hero-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+}
+.releases-page .release-hero-bottom p {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.65;
+  max-width: 530px;
+}
+.releases-page .release-hero-bottom img {
+  flex-shrink: 0;
+}
+.releases-page .release-empty {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+.releases-page .release-empty h2 {
+  color: var(--ink);
+}
+.releases-page .release-notes ul {
+  list-style: disc;
+}
+.releases-page .release-notes p {
+  margin-block: 14px;
+}
+.releases-page .release-source .pill {
+  display: inline-flex;
+  align-items: center;
+}
+.releases-page .download-card > div + div {
+  margin-top: 18px;
+}
+.releases-page summary:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: 6px;
+}
+@media (max-width: 1000px) {
+  .releases-page .download-card {
+    padding: 20px;
+  }
+  .releases-page .architecture {
+    font-size: 18px;
+  }
+  .releases-page .history-downloads {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 700px) {
+  .releases-page h1 {
+    font-size: clamp(48px, 10vw, 70px);
+  }
+  .releases-page .release-hero-bottom {
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .releases-page .release-hero-bottom p {
+    font-size: 16px;
+  }
+  .releases-page .release-hero-bottom img {
+    width: 50px;
+    height: 50px;
+  }
+  .releases-page .release-latest,
+  .releases-page .release-history {
+    padding-block: 45px;
+  }
+  .releases-page .latest-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .releases-page .downloads {
+    grid-template-columns: 1fr;
+  }
+  .releases-page .download-card {
+    padding: 24px;
+  }
+  .releases-page .architecture {
+    margin-block: 14px 24px;
+    font-size: 20px;
+  }
+  .releases-page .download-link {
+    padding: 16px 22px;
+  }
+  .releases-page .history-name {
+    font-size: 24px;
+  }
+  .releases-page .history-summary-end {
+    gap: 12px;
+  }
+  .releases-page .release-source {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+.releases-page h1 em {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+}
