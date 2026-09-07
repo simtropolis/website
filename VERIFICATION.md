@@ -6,7 +6,7 @@ Both the main website and releases are implemented in the website repository for
 
 - `/releases` is a real prerendered Next.js page with shared navigation and footer. `/releases/` normalizes internally to it. The external redirect and its verification/configuration code are removed.
 - The release generator and rendering tests live in the website repository. Every build fetches current public GitHub metadata outside Next's cache, validates it, and writes a public snapshot before prerendering. Binaries stay in GitHub Releases; their actual asset URLs are preserved.
-- The previously added Pages site, workflow, generator registration, serialization special case, and associated configuration have been removed. Made's workflow registry has no diff from its original state. Only the existing release workflow receives a new post-publication `refresh_website` job; unrelated workflows are unchanged.
+- The previously added Pages site, workflow, generator registration, serialization special case, and associated configuration have been removed. Made's workflow registry has no diff from its original state. Only the active `release_promotion.yml` workflow receives a new post-publication `refresh_website` job; unrelated workflows are unchanged.
 - The refresh job directly posts to an Amplify incoming webhook after successful publication, avoiding GitHub token event restrictions and additional workflow chains. It requires the branch-scoped `AMPLIFY_REBUILD_WEBHOOK` Actions secret.
 
 ## Automated validation
@@ -55,3 +55,7 @@ The AWS command `sts get-caller-identity --profile smart-dev-support` fails beca
 The Made Actions secret list was inspected without reading secret values; `AMPLIFY_REBUILD_WEBHOOK` is not configured. An authorized operator must create a main-branch incoming webhook on the existing app and add its complete URL to that secret. No AWS app, domain, webhook, or deployment was created during local verification.
 
 Follow [README.md](README.md#verify-the-existing-amplify-app) for exact read-only account checks, enabling automatic builds if necessary, webhook setup, merge order, and rollback. Then verify a website merge automatically deploys its commit and a normal Copper release causes a subsequent successful Amplify rebuild with updated `/releases` content. A local build or accepted webhook request does not prove that live deployment has completed.
+
+## Integration with current main
+
+Before merging, the latest Made main-branch history was integrated. It retires `release.yml` and moves publication to `release_promotion.yml`. The Amplify refresh job was adapted to the active workflow while preserving the retired placeholder and all newer build/publication steps. Its generator, tests, and Clippy checks were rerun on the combined changes. The change reaches a normal Copper release through the existing `main` to `release` promotion process.
