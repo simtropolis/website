@@ -93,14 +93,25 @@ If the repository connection or production domain maps elsewhere, correct that c
 
 ## Automatic refresh after Copper publication
 
-The existing Made release workflow now has a `refresh_website` job after successful `publish_product`. It sends an HTTPS POST to an Amplify incoming webhook scoped to the website's `main` branch. It runs directly in the publication workflow, so `GITHUB_TOKEN` event restrictions and chained `workflow_run` limits do not prevent updates. The original Copper packaging and publishing steps remain unchanged.
+The Made release workflow has a `refresh_website` job directly after successful `publish_product`, using the triggering release tag. It verifies the published GitHub metadata, requests an Amplify main-branch rebuild when needed, then checks the deployed release article for that version, publication timestamp, and exact uploaded asset URL set. A successful POST or unchanged website commit marker does not establish fresh release content. The job runs directly in the publication workflow, so `GITHUB_TOKEN` event restrictions and chained `workflow_run` limits do not prevent updates. Copper packaging and publication remain separate.
 
 1. In the existing Amplify app, open **Hosting → Build settings → Incoming webhooks → Create webhook**. Name it **Copper release refresh**, selecting branch **main**. This operation does not replace the app or domain.
-2. Copy the complete webhook URL, including `operation=startbuild`, into the **simtropolis/made Actions secret `AMPLIFY_REBUILD_WEBHOOK`**. For an interactive masked prompt, use `gh secret set AMPLIFY_REBUILD_WEBHOOK --repo simtropolis/made`. Do not paste the URL into a commit, issue, browser bundle, or environment-file export. The secret was not present when checked locally.
+2. Copy the complete webhook URL, including `operation=startbuild`, into the **simtropolis/made Actions secret `AMPLIFY_REBUILD_WEBHOOK`**. For an interactive masked prompt, use `gh secret set AMPLIFY_REBUILD_WEBHOOK --repo simtropolis/made`. Do not paste the URL into a commit, issue, browser bundle, or environment-file export. Neither the repository secret list nor the organization-secret list available to Made contained this secret when checked on 7 September 2026. The opaque webhook URL cannot establish its target: confirm the existing app ID and **Branch to build: main** in Amplify before saving it. No credential value is needed in chat.
 3. Merge the website changes into `simtropolis/website/main` and verify its automatic deployment first. Then merge Made's generator change and generated `.github/workflows/release_promotion.yml` into Made's `main`. The update reaches Copper publication through Made's normal `main` → `release` promotion process; keep its retired `release.yml` inert. Regenerate Made workflows with `cargo xtask workflows` and validate with `cargo xtask check-workflows`.
 4. After the next normal Copper release, verify `publish_product` and `refresh_website` both succeed, and an Amplify `main` build starts **after** release publication. Confirm its successful deployment, then compare the newest version, publication date, notes, and asset URLs at `/releases` against GitHub.
 
-The webhook is a branch-scoped bearer credential. The job validates the AWS HTTPS hostname, rejects redirects, disables shell tracing, and avoids printing URLs, exception details, or response bodies. It needs no AWS access key, website repository token, or client credential. Rotate it by replacing the incoming webhook and updating the Actions secret. Missing or failed webhook configuration fails the refresh job visibly while leaving the Copper release published. Fix configuration and rerun **failed jobs only** to retry. Request acceptance is not deployment completion.
+The shared implementation is Made's `script/refresh_website.py`, embedded by its Rust workflow generator in both the publication job and the manual `website_refresh.yml` workflow. Neither refresh path checks out, builds, tags, uploads, or republishes Copper. It uses only read access to GitHub release metadata and keeps credentials out of logs and generated public data. A common concurrency group serializes active refresh jobs.
+
+HTTP 429/503 responses have at most three POST attempts, respect Retry-After, and allow at most 120 seconds of retry sleep. The page is checked again before a repeat POST. A 503 can still follow server-side acceptance, so up to three duplicate website builds are possible. Lost responses, timeouts, and ambiguous HTTP 408/500/502/504 responses are **not automatically reposted**: the script observes deployment for up to 15 minutes, then fails visibly if the required content is still absent. Invalid configuration, redirects, and authentication/permission errors fail immediately. An accepted POST also waits for matching deployed content; acceptance alone is not success. Existing matching content skips duplicate rebuilds.
+
+After fixing setup, recover only the website using **Made → Actions → website_refresh → Run workflow → main**, with the existing triggering tag, or:
+
+```sh
+gh workflow run website_refresh.yml --repo simtropolis/made --ref main \
+  -f release_tag=rust-v1.16.6
+```
+
+Use the actual published tag. Check Amplify's build queue first if a previous POST's outcome was uncertain. Do not rerun publication or create a dummy release for website recovery. Full setup, retry semantics, and read-only verification instructions are in [Made's workflow guide](https://github.com/simtropolis/made/blob/main/.github/workflows/README.md#website-refresh-after-publication). The manual workflow must be merged into Made's `main` before dispatch.
 
 Release-note edits or manual refreshes can be rebuilt in the Amplify console or using:
 
@@ -116,7 +127,7 @@ aws amplify start-job --app-id "$amplify_app_id" --branch-name main --job-type R
 
 Check `/` and `/releases` return 200, `/releases/` resolves internally to `/releases`, `/robots.txt` and `/sitemap.xml` return 200, and unknown routes return 404. Test main and release navigation at desktop/mobile widths, history disclosures with the keyboard, and all three latest GitHub download links. Inspect canonical and social metadata; confirm no external hosting URL or credentials appear in page source. Amplify builds include a public `simtropolis-build` meta tag containing `AWS_COMMIT_ID`; compare it to the pushed commit to verify the exact deployed revision without AWS account access.
 
-Deployment checks still require hosting-account access. Local build and mocked webhook tests establish code behavior; they do not prove the remote branch connection, webhook delivery, or completed production deployment. See [VERIFICATION.md](VERIFICATION.md) for recorded results and screenshots.
+The website commit `3458c28af384d22ad9b2419379651422378fc6bc` was observed deployed automatically after its main-branch push; live route and download checks passed. The existing Copper 1.16.6 version, publication date, and exact asset URLs also passed the shared refresh verifier. This does not prove publication-triggered webhook delivery: that secret and its app/branch target still require hosting-account setup. No dummy release or real webhook request was made for verification. See [VERIFICATION.md](VERIFICATION.md) for recorded results and screenshots.
 
 To roll back, use the existing Amplify deployment history. Disable or rotate the incoming webhook if automated refreshes need to stop. Binaries remain available directly in GitHub Releases throughout.
 
