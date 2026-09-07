@@ -102,7 +102,7 @@ test('paginates with build-only authentication and bypasses fetch caches', async
 })
 test('API failure cannot become an empty success or expose secrets', async () => {
   await assert.rejects(
-    fetchReleases({ fetcher: async () => new Response('', { status: 403 }) }),
+    fetchReleases({ log: () => {}, fetcher: async () => new Response('', { status: 403 }) }),
     /HTTP 403/,
   )
   await assert.rejects(
@@ -111,6 +111,8 @@ test('API failure cannot become an empty success or expose secrets', async () =>
   )
   await assert.rejects(
     fetchReleases({
+      sleep: async () => {},
+      log: () => {},
       fetcher: async () => {
         throw new Error('test-secret')
       },
@@ -124,7 +126,11 @@ test('writes a public allowlist atomically; failed refresh preserves last genera
   try {
     await writeFile(output, 'previous')
     await assert.rejects(
-      generateReleases({ output, fetcher: async () => new Response('', { status: 500 }) }),
+      generateReleases({
+        output,
+        requestOptions: { sleep: async () => {}, log: () => {} },
+        fetcher: async () => new Response('', { status: 500 }),
+      }),
     )
     assert.equal(await readFile(output, 'utf8'), 'previous')
     await generateReleases({
@@ -140,9 +146,8 @@ test('writes a public allowlist atomically; failed refresh preserves last genera
     await rm(directory, { recursive: true, force: true })
   }
 })
-test('production config generates metadata and has no external redirect', async () => {
+test('production configuration validates snapshots without fetching releases', async () => {
   const source = await readFile(new URL('../next.config.mjs', import.meta.url), 'utf8')
-  assert.match(source, /PHASE_PRODUCTION_BUILD/)
-  assert.match(source, /await generateReleases\(\)/)
-  assert.doesNotMatch(source, /redirects|RELEASES_URL|verifyReleases/)
+  assert.match(source, /await readSnapshot\(\)/)
+  assert.doesNotMatch(source, /generateReleases|fetchReleases|redirects|RELEASES_URL/)
 })

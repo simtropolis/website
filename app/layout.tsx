@@ -1,7 +1,14 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
+const buildRevision = process.env.AWS_COMMIT_ID
+
 export const metadata: Metadata = {
+  // A public commit identifier lets operators verify the deployed revision without account access.
+  other:
+    buildRevision && /^[a-f0-9]{40}$/i.test(buildRevision)
+      ? { 'simtropolis-build': buildRevision }
+      : undefined,
   metadataBase: new URL('https://simtropolis.ai'),
   title: 'Made by Simtropolis — Focused tools for people who build',
   description:

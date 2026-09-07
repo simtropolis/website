@@ -1,6 +1,26 @@
 # Verification — Amplify hosting, 7 September 2026
 
-Both the main website and releases are implemented in the website repository for the existing AWS Amplify app. This report records verification performed before merging; deployment and account checks are tracked separately below.
+Both the main website and releases are implemented in the website repository for the existing AWS Amplify app. This report distinguishes local verification from deployment and account checks.
+
+## GitHub 403 build fix
+
+The original exception discarded GitHub's response message and headers, so the historical 403 cannot be classified from that exception. The fixed client records only the status, classified/sanitized message (including whether a token was supplied), request ID, remaining/reset rate-limit headers, and Retry-After. No raw response bodies, headers, URLs, credentials, or network exception details are logged.
+
+The final local production build made exactly one GitHub request and generated one fresh snapshot containing five Copper releases. Its safe response was HTTP 200, no token configured, request ID `CE05:116740:3D457:42946:6A9ED0D2`, remaining `57`, reset `1788796238`, Retry-After absent. This is evidence from the local network, not the failed Amplify build.
+
+`bun run build` now generates before launching Next.js. Repeated Next configuration evaluations only validate the snapshot. A unique run ID prevents reuse across builds; generation failures stop before Next launches. Local development uses the same wrapper with one fresh snapshot per session. The token and webhook variables are removed from the Next child process environment.
+
+Validation for this fix:
+
+- 23 Node tests and five rendering tests passed. New cases cover safe diagnostics and credential exclusion, primary and secondary limits, Retry-After seconds and dates, exhausted retry budgets, transient/network errors, authentication and permission failures without retries, pagination retry without duplication, invalid JSON, one generation across repeated real Next configuration evaluations, development arguments/exit status, and rejection of missing or stale snapshots.
+- Formatting, ESLint, TypeScript, and frozen Bun installation passed.
+- The production build passed using Node 22.22.0 and Bun 1.3.6, with `/releases` statically prerendered.
+- The local production HTTP smoke check passed for both release paths, the canonical/social metadata, sitemap, all five history entries, and the three actual latest download URLs (each returned HTTP 200 to HEAD). A browser keyboard check expanded Copper 1.16.5 and exposed its release notes and all three historical download links.
+- The only dependency addition is explicit `@next/env` 15.5.25, already present transitively and matching Next.js.
+
+Before pushing this fix, the public `https://simtropolis.ai/releases` returned HTTP 404 with no build revision marker. The fix adds a public `simtropolis-build` meta tag sourced from Amplify's `AWS_COMMIT_ID`, allowing the exact deployed revision to be checked independently of AWS login.
+
+AWS account access was deferred at the user's request. The Amplify main-branch token, automatic-build setting, and historical failure response remain unverified. See the authentication section in README for the main-branch variable and least-privilege setup if the new build diagnostics show authentication is needed. Pushing the fix requests the existing main-branch automatic deployment; a push alone is not proof of a successful deployment.
 
 ## Implementation checked
 

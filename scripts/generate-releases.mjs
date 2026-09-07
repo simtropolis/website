@@ -1,3 +1,4 @@
+import { fetchReleases } from './github-releases.mjs'
 import { randomUUID } from 'node:crypto'
 import { mkdir, rename, writeFile, rm } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
@@ -41,35 +42,7 @@ function repositoryUrl(value, path) {
   return url.href
 }
 
-export async function fetchReleases({
-  token = process.env.RELEASES_GITHUB_TOKEN,
-  fetcher = fetch,
-} = {}) {
-  const releases = []
-  for (let page = 1; ; page++) {
-    const headers = {
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-      'User-Agent': 'simtropolis-website',
-    }
-    if (token) headers.Authorization = 'Bearer ' + token
-    let response
-    try {
-      response = await fetcher(
-        'https://api.github.com/repos/' + repository + '/releases?per_page=100&page=' + page,
-        { headers, cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(30000) },
-      )
-    } catch {
-      throw new Error('GitHub release request failed; previous deployment must be retained')
-    }
-    if (!response.ok)
-      throw new Error('GitHub release request failed (HTTP ' + response.status + ')')
-    const batch = await response.json()
-    if (!Array.isArray(batch)) throw new Error('GitHub did not return a release list')
-    releases.push(...batch)
-    if (batch.length < 100) return releases
-  }
-}
+export { fetchReleases } from './github-releases.mjs'
 
 export function normalizeReleases(releases) {
   if (!Array.isArray(releases)) throw new Error('Expected a release list')
@@ -142,9 +115,16 @@ export async function generateReleases({
   fetcher = fetch,
   token = process.env.RELEASES_GITHUB_TOKEN,
   output = resolve('.generated/releases.json'),
+  runId = randomUUID(),
+  requestOptions = {},
 } = {}) {
-  const releases = normalizeReleases(await fetchReleases({ fetcher, token }))
-  const data = { repository, releases, platforms }
+  const releases = normalizeReleases(await fetchReleases({ ...requestOptions, fetcher, token }))
+  const data = {
+    repository,
+    releases,
+    platforms,
+    snapshot: { runId, generatedAt: new Date().toISOString() },
+  }
   await mkdir(dirname(output), { recursive: true })
   const temporary = output + '.' + randomUUID() + '.tmp'
   try {

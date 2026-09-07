@@ -34,6 +34,10 @@ const { releases } = JSON.parse(
 const stable = latestStable(releases)
 assert.ok(stable)
 assert.ok(html.includes(stable.tag))
+for (const release of releases)
+  assert.ok(html.includes('id="' + release.tag + '"'), 'Missing history entry: ' + release.tag)
+assert.ok(html.includes('<details'))
+console.log('Latest stable release and all ' + releases.length + ' history entries verified')
 for (const asset of stable.assets) {
   assert.ok(html.includes(asset.url), asset.name + ' must use its exact metadata URL')
   const response = await fetch(asset.url, { method: 'HEAD', signal: AbortSignal.timeout(30000) })

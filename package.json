@@ -9,8 +9,8 @@
     "node": ">=22.13.0 <23"
   },
   "scripts": {
-    "build": "next build",
-    "dev": "next dev",
+    "build": "node scripts/run-next.mjs build",
+    "dev": "node scripts/run-next.mjs dev",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
@@ -28,7 +28,8 @@
     "next": "15.5.25",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "tailwind-merge": "3.6.0"
+    "tailwind-merge": "3.6.0",
+    "@next/env": "15.5.25"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.3.7",

@@ -1,5 +1,4 @@
-import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
+import { readSnapshot } from '@/scripts/release-snapshot.mjs'
 
 export interface ReleaseAsset {
   name: string
@@ -25,5 +24,5 @@ export interface Platform {
 }
 
 export async function readReleases(): Promise<{ releases: Release[]; platforms: Platform[] }> {
-  return JSON.parse(await readFile(join(process.cwd(), '.generated/releases.json'), 'utf8'))
+  return readSnapshot()
 }
