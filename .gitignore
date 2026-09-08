@@ -28,4 +28,5 @@ next-env.d.ts
 .DS_Store
 !.env.example
 /artifacts/
+/fixtures/copper-demo/*/target/
 /.generated/

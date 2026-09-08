@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
+import { gzipSync } from 'node:zlib'
+
+// Run after the normal production build. No network or release fetch is needed.
+const html = await readFile('.next/server/app/index.html', 'utf8')
+assert.ok(html.includes('Open guided demo'))
+assert.ok(html.includes('Enable JavaScript to edit files'))
+assert.ok(html.includes('pub fn parse_port'))
+assert.ok(html.indexOf('id="hero-title"') < html.indexOf('id="demo"'))
+assert.ok(html.indexOf('id="demo"') < html.indexOf('class="product-strip'))
+const tags = html.match(/<(script|link)\b[^>]*>/g) || []
+const manifest = JSON.parse(await readFile('.next/react-loadable-manifest.json', 'utf8'))
+const chunks = manifest['components/copper-demo/index.tsx -> ./workspace'].files
+let raw = 0
+let gzip = 0
+for (const file of chunks) {
+  assert.ok(!tags.some((tag) => tag.includes(file)), 'Heavy editor must not preload in server HTML')
+  const bytes = await readFile('.next/' + file)
+  raw += bytes.length
+  gzip += gzipSync(bytes).length
+}
+assert.ok(!/RELEASES_GITHUB_TOKEN|AMPLIFY_REBUILD_WEBHOOK/.test(html))
+console.log(
+  'Server introduction, static preview, no-JS guidance, hero placement, lazy asset boundary and credential checks passed.',
+)
+console.log(JSON.stringify({ lazyRawBytes: raw, lazyGzipBytes: gzip }))

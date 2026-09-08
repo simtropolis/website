@@ -1,0 +1,5 @@
+{
+  "sha256": "d4f42af80c29f2abe11a927497182d29036a12fad73d6f79e516fc32ec2e2aa9",
+  "command": "cargo test --offline --locked --test parser -- --test-threads=1",
+  "normalization": "Only test-count and individual test-result lines; no elapsed time or machine paths."
+}

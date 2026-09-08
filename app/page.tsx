@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { CopperDemo } from '@/components/copper-demo'
 import {
   ArrowDown,
   ArrowUpRight,
@@ -87,6 +88,7 @@ export default function Page() {
             <span>01 — Copper</span>
           </div>
         </section>
+        <CopperDemo />
         <div className="product-strip wrap">
           <span className="eyebrow">
             <span className="status-dot" /> Copper is available

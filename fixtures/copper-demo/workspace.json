@@ -1,0 +1,15 @@
+{
+  "before": {
+    "Cargo.toml": "[package]\nname = \"port-parser\"\nversion = \"0.1.0\"\nedition = \"2021\"\npublish = false\n\n[dependencies]\n",
+    "src/lib.rs": "/// Read a port from a small configuration file.\npub fn parse_port(input: &str) -> u16 {\n    input.trim().parse::<u16>().unwrap()\n}\n",
+    "src/main.rs": "use port_parser::parse_port;\n\nfn main() {\n    let port = parse_port(\"8080\");\n    println!(\"Listening on port {port}\");\n}\n",
+    "tests/parser.rs": "use port_parser::parse_port;\n\n#[test]\nfn accepts_valid_port() {\n    assert_eq!(parse_port(\"8080\"), 8080);\n}\n\n#[test]\nfn trims_whitespace() {\n    assert_eq!(parse_port(\" 3000\\n\"), 3000);\n}\n"
+  },
+  "after": {
+    "Cargo.toml": "[package]\nname = \"port-parser\"\nversion = \"0.1.0\"\nedition = \"2021\"\npublish = false\n\n[dependencies]\n",
+    "src/lib.rs": "use std::num::ParseIntError;\n\n/// Return an error instead of panicking on invalid input.\npub fn parse_port(input: &str) -> Result<u16, ParseIntError> {\n    input.trim().parse::<u16>()\n}\n",
+    "src/main.rs": "use port_parser::parse_port;\n\nfn main() {\n    match parse_port(\"8080\") {\n        Ok(port) => println!(\"Listening on port {port}\"),\n        Err(error) => eprintln!(\"Invalid port: {error}\"),\n    }\n}\n",
+    "tests/parser.rs": "use port_parser::parse_port;\n\n#[test]\nfn accepts_valid_port() {\n    assert_eq!(parse_port(\"8080\").unwrap(), 8080);\n}\n\n#[test]\nfn trims_whitespace() {\n    assert_eq!(parse_port(\" 3000\\n\").unwrap(), 3000);\n}\n\n#[test]\nfn rejects_empty_input() {\n    assert!(parse_port(\"\").is_err());\n}\n\n#[test]\nfn rejects_letters() {\n    assert!(parse_port(\"copper\").is_err());\n}\n\n#[test]\nfn rejects_negative_ports() {\n    assert!(parse_port(\"-1\").is_err());\n}\n\n#[test]\nfn rejects_out_of_range_ports() {\n    assert!(parse_port(\"65536\").is_err());\n}\n"
+  },
+  "recordedOutput": "running 6 tests\ntest accepts_valid_port ... ok\ntest rejects_empty_input ... ok\ntest rejects_letters ... ok\ntest rejects_negative_ports ... ok\ntest rejects_out_of_range_ports ... ok\ntest trims_whitespace ... ok\n"
+}

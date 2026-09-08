@@ -1,0 +1,7 @@
+running 6 tests
+test accepts_valid_port ... ok
+test rejects_empty_input ... ok
+test rejects_letters ... ok
+test rejects_negative_ports ... ok
+test rejects_out_of_range_ports ... ok
+test trims_whitespace ... ok
