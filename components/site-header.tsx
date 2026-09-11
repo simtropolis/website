@@ -59,7 +59,7 @@ export function SiteHeader() {
           </SheetTrigger>
           <SheetContent className="mobile-sheet">
             <SheetTitle className="wordmark">simtropolis✳</SheetTitle>
-            <SheetDescription>Focused tools for people who build.</SheetDescription>
+            <SheetDescription>An open platform for agentic software development.</SheetDescription>
             <nav aria-label="Mobile navigation">
               {[...links, { href: repository, label: 'GitHub' }].map((link) => (
                 <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
