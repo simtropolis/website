@@ -726,6 +726,51 @@ footer.cw-bar {
 .cw-review-footer {
   font-size: 10px !important;
 }
+/* Editor view: branch rows with two-line content */
+.cw-branch-row {
+  height: 44px;
+}
+.cw-branch-row .cw-thread-select > span:last-child {
+  white-space: normal;
+  text-overflow: unset;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  gap: 1px;
+}
+.cw-branch-row .cw-thread-select > span:last-child > span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.cw-branch-meta {
+  font-size: 11px;
+  color: #8a8e96;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* View toggle above the demo reserved area */
+.cw-view-toggle {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.cw-view-toggle button {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid #d0d2d7;
+  cursor: pointer;
+  color: #66686e;
+  background: transparent;
+}
+.cw-view-toggle button[aria-pressed='true'] {
+  background: #e3e4e8;
+  color: #212328;
+  border-color: #bebfc5;
+}
 .cw-collapsed {
   border-right: 1px solid var(--cw-line);
 }

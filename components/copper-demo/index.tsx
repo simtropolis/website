@@ -5,6 +5,7 @@ import { ArrowUpRight, Braces } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import './demo.css'
 
+const EditorView = lazy(() => import('./editor-view'))
 const Workspace = lazy(() => import('./workspace'))
 
 function Preview({ children }: { children: ReactNode }) {
@@ -27,6 +28,7 @@ function Preview({ children }: { children: ReactNode }) {
     </div>
   )
 }
+
 class DemoBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false }
   static getDerivedStateFromError() {
@@ -36,7 +38,7 @@ class DemoBoundary extends Component<{ children: ReactNode }, { failed: boolean 
     return this.state.failed ? (
       <Preview>
         <p role="status">
-          The interactive demo couldn’t load. You can still explore the full editor.
+          The interactive demo couldn&apos;t load. You can still explore the full editor.
         </p>
         <a className="text-link" href="/releases">
           Download Copper <ArrowUpRight size={16} />
@@ -47,9 +49,12 @@ class DemoBoundary extends Component<{ children: ReactNode }, { failed: boolean 
     )
   }
 }
+
 export function CopperDemo() {
   const [ready, setReady] = useState(false)
+  const [view, setView] = useState<'editor' | 'workspace'>('editor')
   const anchor = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (!anchor.current || !('IntersectionObserver' in window)) return
     const observer = new IntersectionObserver(
@@ -64,6 +69,7 @@ export function CopperDemo() {
     observer.observe(anchor.current)
     return () => observer.disconnect()
   }, [])
+
   return (
     <section id="demo" className="demo-section wrap" aria-labelledby="demo-title">
       <div className="demo-intro">
@@ -80,19 +86,43 @@ export function CopperDemo() {
         </a>
       </div>
       <p className="demo-description">
-        Follow a guided conversation. Review a Rust fix, inspect the patch, and make it your own.
+        Switch between the editor and the collaborative workspace view.
       </p>
+      <div className="cw-view-toggle" role="group" aria-label="Demo view">
+        <button
+          aria-pressed={view === 'editor'}
+          onClick={() => {
+            setView('editor')
+            setReady(true)
+          }}
+        >
+          Editor
+        </button>
+        <button
+          aria-pressed={view === 'workspace'}
+          onClick={() => {
+            setView('workspace')
+            setReady(true)
+          }}
+        >
+          Workspace
+        </button>
+      </div>
       <div ref={anchor} className="demo-reserved">
         <DemoBoundary>
           {ready ? (
             <Suspense
               fallback={
                 <Preview>
-                  <p role="status">Loading the guided workspace…</p>
+                  <p role="status">
+                    {view === 'editor'
+                      ? 'Loading the editor demo…'
+                      : 'Loading the guided workspace…'}
+                  </p>
                 </Preview>
               }
             >
-              <Workspace />
+              {view === 'editor' ? <EditorView /> : <Workspace />}
             </Suspense>
           ) : (
             <Preview>
