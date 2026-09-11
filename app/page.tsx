@@ -62,15 +62,18 @@ export default function Page() {
             <span className="rule" /> Made by Simtropolis
           </p>
           <h1 id="hero-title">
-            Your next idea.
+            The Integral
             <br />
-            Made <em>in Rust.</em>
+            Development <em>Experience.</em>
           </h1>
           <div className="hero-bottom">
             <p>
-              Focused tools for people who build.
-              <br />
-              Meet Copper, the Rust development environment with agents built in.
+              Made stands for Multiplayer Agentic Development Environment —
+              building focused development environments from a shared, Zed-derived editor platform.
+            </p>
+            <p>
+              An open platform for agentic software development.
+              A workspace where humans and specialised agents all work together.
             </p>
             <div className="hero-actions">
               <Button asChild className="pill">
@@ -79,13 +82,13 @@ export default function Page() {
                 </a>
               </Button>
               <a className="text-link" href="#copper">
-                Explore the environment <ArrowDown size={16} />
+                Explore the platform <ArrowDown size={16} />
               </a>
             </div>
           </div>
           <div className="hero-footnote mono">
             <span>Made / Multiplayer Agentic Development Environment</span>
-            <span>01 — Copper</span>
+            <span>Building the Integral Development Experience</span>
           </div>
         </section>
         <CopperDemo />
@@ -99,7 +102,7 @@ export default function Page() {
 
         <section id="copper" className="section wrap" aria-labelledby="copper-title">
           <div className="section-heading">
-            <p className="eyebrow">01 / The environment</p>
+            <p className="eyebrow">01 / Copper</p>
             <div>
               <h2 id="copper-title">
                 Less friction.
