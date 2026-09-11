@@ -730,6 +730,14 @@ footer.cw-bar {
 .cw-branch-row {
   height: 44px;
 }
+.cw-branch-row .cw-thread-select {
+  align-items: flex-start;
+  padding-top: 9px;
+}
+.cw-branch-row .cw-read-dot {
+  margin-top: 6px;
+  flex-shrink: 0;
+}
 .cw-branch-row .cw-thread-select > span:last-child {
   white-space: normal;
   text-overflow: unset;
@@ -737,7 +745,7 @@ footer.cw-bar {
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
-  gap: 1px;
+  gap: 3px;
 }
 .cw-branch-row .cw-thread-select > span:last-child > span {
   overflow: hidden;

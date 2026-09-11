@@ -93,24 +93,24 @@ type BranchRow = {
   title: string
   meta: string
   active?: boolean
-  section: 'zed' | 'cloud' | 'zed.dev'
+  section: 'copper' | 'cloud' | 'copper.dev'
 }
 
 const branches: BranchRow[] = [
-  { id: 'accesskit', title: 'Add AccessKit support to GPUI elements', meta: 'gpu-accesskit · main · 4m', active: true, section: 'zed' },
-  { id: 'rope-panic', title: 'Fix panic in buffer rope on large p…', meta: 'rope-panic-fix · 12m', section: 'zed' },
-  { id: 'vim-motion', title: 'Add vim motion for surround pairs', meta: '+23 −2 · 48m', section: 'zed' },
-  { id: 'close-button', title: 'Workspace close button hidden wi…', meta: '2h', section: 'zed' },
-  { id: 'text-shaping', title: 'GPUI text shaping perf regression', meta: 'text-shaping-opt · 5h', section: 'zed' },
-  { id: 'lsp-hover', title: 'LSP hover tooltip positioning off-s…', meta: '1d', section: 'zed' },
-  { id: 'tree-diff', title: 'Refactor project panel tree diffing', meta: 'tree-diff-refactor · 2d', section: 'zed' },
-  { id: 'multicursor', title: 'Add multicursor support in search …', meta: '4d', section: 'zed' },
+  { id: 'accesskit', title: 'Add AccessKit support to GPUI elements', meta: 'gpu-accesskit · main · 4m', active: true, section: 'copper' },
+  { id: 'rope-panic', title: 'Fix panic in buffer rope on large p…', meta: 'rope-panic-fix · 12m', section: 'copper' },
+  { id: 'vim-motion', title: 'Add vim motion for surround pairs', meta: '+23 −2 · 48m', section: 'copper' },
+  { id: 'close-button', title: 'Workspace close button hidden wi…', meta: '2h', section: 'copper' },
+  { id: 'text-shaping', title: 'GPUI text shaping perf regression', meta: 'text-shaping-opt · 5h', section: 'copper' },
+  { id: 'lsp-hover', title: 'LSP hover tooltip positioning off-s…', meta: '1d', section: 'copper' },
+  { id: 'tree-diff', title: 'Refactor project panel tree diffing', meta: 'tree-diff-refactor · 2d', section: 'copper' },
+  { id: 'multicursor', title: 'Add multicursor support in search …', meta: '4d', section: 'copper' },
   { id: 'axum-billing', title: 'Migrate billing endpoints to axum …', meta: 'axum-billing · +43 −11 · 8m', section: 'cloud' },
   { id: 'tanstack', title: 'Add TanStack query keys for team…', meta: '+2 −127 · 1h', section: 'cloud' },
   { id: 'stale-cache', title: 'Fix stale cache on org membershi…', meta: '6h', section: 'cloud' },
   { id: 'sdk-pagination', title: 'Rust SDK pagination for collab ses…', meta: 'sdk-pagination · first-pass · 1d', section: 'cloud' },
   { id: 'table-sort', title: 'Dashboard table sorting with TanS…', meta: '3d', section: 'cloud' },
-  { id: 'page-sections', title: 'Break out page sections into comp…', meta: '5d', section: 'zed.dev' },
+  { id: 'page-sections', title: 'Break out page sections into comp…', meta: '5d', section: 'copper.dev' },
 ]
 
 function BranchList({ section }: { section: BranchRow['section'] }) {
@@ -182,12 +182,12 @@ export default function EditorView() {
         </button>
       </header>
       <div className="cw-nav-scroll">
-        <h3>zed</h3>
-        <BranchList section="zed" />
+        <h3>copper</h3>
+        <BranchList section="copper" />
         <h3>cloud</h3>
         <BranchList section="cloud" />
-        <h3>zed.dev</h3>
-        <BranchList section="zed.dev" />
+        <h3>copper.dev</h3>
+        <BranchList section="copper.dev" />
       </div>
       <footer className="cw-bar cw-nav-footer">
         <span className="cw-avatar" aria-hidden="true">
