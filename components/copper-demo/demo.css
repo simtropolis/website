@@ -728,11 +728,12 @@ footer.cw-bar {
 }
 /* Editor view: branch rows with two-line content */
 .cw-branch-row {
-  height: 44px;
+  height: 52px;
+  overflow: hidden;
 }
 .cw-branch-row .cw-thread-select {
   align-items: flex-start;
-  padding-top: 9px;
+  padding-top: 8px;
 }
 .cw-branch-row .cw-read-dot {
   margin-top: 6px;
@@ -745,7 +746,8 @@ footer.cw-bar {
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
-  gap: 3px;
+  gap: 2px;
+  line-height: 1.45;
 }
 .cw-branch-row .cw-thread-select > span:last-child > span {
   overflow: hidden;
