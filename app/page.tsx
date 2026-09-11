@@ -68,12 +68,12 @@ export default function Page() {
           </h1>
           <div className="hero-bottom">
             <p>
-              Made stands for Multiplayer Agentic Development Environment —
-              building focused development environments from a shared, Zed-derived editor platform.
+              Made stands for Multiplayer Agentic Development Environment — building focused
+              development environments from a shared, Zed-derived editor platform.
             </p>
             <p>
-              An open platform for agentic software development.
-              A workspace where humans and specialised agents all work together.
+              An open platform for agentic software development. A workspace where humans and
+              specialised agents all work together.
             </p>
             <div className="hero-actions">
               <Button asChild className="pill">

@@ -2,14 +2,7 @@
 
 import { useState, useRef, type KeyboardEvent } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
-import {
-  ChevronRight,
-  Maximize2,
-  Minimize2,
-  PanelLeft,
-  PanelRight,
-  Search,
-} from 'lucide-react'
+import { ChevronRight, Maximize2, Minimize2, PanelLeft, PanelRight, Search } from 'lucide-react'
 import CodeEditor from './code-editor'
 import type { FilePath } from '@/lib/copper-demo'
 
@@ -97,20 +90,71 @@ type BranchRow = {
 }
 
 const branches: BranchRow[] = [
-  { id: 'accesskit', title: 'Add AccessKit support to GPUI elements', meta: 'gpu-accesskit · main · 4m', active: true, section: 'copper' },
-  { id: 'rope-panic', title: 'Fix panic in buffer rope on large p…', meta: 'rope-panic-fix · 12m', section: 'copper' },
-  { id: 'vim-motion', title: 'Add vim motion for surround pairs', meta: '+23 −2 · 48m', section: 'copper' },
+  {
+    id: 'accesskit',
+    title: 'Add AccessKit support to GPUI elements',
+    meta: 'gpu-accesskit · main · 4m',
+    active: true,
+    section: 'copper',
+  },
+  {
+    id: 'rope-panic',
+    title: 'Fix panic in buffer rope on large p…',
+    meta: 'rope-panic-fix · 12m',
+    section: 'copper',
+  },
+  {
+    id: 'vim-motion',
+    title: 'Add vim motion for surround pairs',
+    meta: '+23 −2 · 48m',
+    section: 'copper',
+  },
   { id: 'close-button', title: 'Workspace close button hidden wi…', meta: '2h', section: 'copper' },
-  { id: 'text-shaping', title: 'GPUI text shaping perf regression', meta: 'text-shaping-opt · 5h', section: 'copper' },
+  {
+    id: 'text-shaping',
+    title: 'GPUI text shaping perf regression',
+    meta: 'text-shaping-opt · 5h',
+    section: 'copper',
+  },
   { id: 'lsp-hover', title: 'LSP hover tooltip positioning off-s…', meta: '1d', section: 'copper' },
-  { id: 'tree-diff', title: 'Refactor project panel tree diffing', meta: 'tree-diff-refactor · 2d', section: 'copper' },
-  { id: 'multicursor', title: 'Add multicursor support in search …', meta: '4d', section: 'copper' },
-  { id: 'axum-billing', title: 'Migrate billing endpoints to axum …', meta: 'axum-billing · +43 −11 · 8m', section: 'cloud' },
-  { id: 'tanstack', title: 'Add TanStack query keys for team…', meta: '+2 −127 · 1h', section: 'cloud' },
+  {
+    id: 'tree-diff',
+    title: 'Refactor project panel tree diffing',
+    meta: 'tree-diff-refactor · 2d',
+    section: 'copper',
+  },
+  {
+    id: 'multicursor',
+    title: 'Add multicursor support in search …',
+    meta: '4d',
+    section: 'copper',
+  },
+  {
+    id: 'axum-billing',
+    title: 'Migrate billing endpoints to axum …',
+    meta: 'axum-billing · +43 −11 · 8m',
+    section: 'cloud',
+  },
+  {
+    id: 'tanstack',
+    title: 'Add TanStack query keys for team…',
+    meta: '+2 −127 · 1h',
+    section: 'cloud',
+  },
   { id: 'stale-cache', title: 'Fix stale cache on org membershi…', meta: '6h', section: 'cloud' },
-  { id: 'sdk-pagination', title: 'Rust SDK pagination for collab ses…', meta: 'sdk-pagination · first-pass · 1d', section: 'cloud' },
+  {
+    id: 'sdk-pagination',
+    title: 'Rust SDK pagination for collab ses…',
+    meta: 'sdk-pagination · first-pass · 1d',
+    section: 'cloud',
+  },
   { id: 'table-sort', title: 'Dashboard table sorting with TanS…', meta: '3d', section: 'cloud' },
-  { id: 'page-sections', title: 'Break out page sections into comp…', meta: '5d', section: 'copper.dev' },
+  {
+    id: 'page-sections',
+    title: 'Break out page sections into comp…',
+    meta: '5d',
+    section: 'copper.dev',
+  },
 ]
 
 function BranchList({ section }: { section: BranchRow['section'] }) {
@@ -119,16 +163,16 @@ function BranchList({ section }: { section: BranchRow['section'] }) {
       {branches
         .filter((b) => b.section === section)
         .map((b) => (
-          <div className={`cw-thread-row cw-branch-row ${b.active ? 'is-selected' : ''}`} key={b.id}>
+          <div
+            className={`cw-thread-row cw-branch-row ${b.active ? 'is-selected' : ''}`}
+            key={b.id}
+          >
             <button
               className="cw-thread-select"
               aria-current={b.active ? 'true' : undefined}
               title={b.title}
             >
-              <span
-                className={`cw-read-dot ${b.active ? 'unread' : ''}`}
-                aria-hidden="true"
-              />
+              <span className={`cw-read-dot ${b.active ? 'unread' : ''}`} aria-hidden="true" />
               <span>
                 <span>{b.title}</span>
                 <small className="cw-branch-meta">{b.meta}</small>
@@ -255,9 +299,9 @@ export default function EditorView() {
               </p>
             </details>
             <p>
-              Let me look at the GPUI element trait and the window&apos;s paint cycle to
-              understand where we can hook into the tree. I&apos;ll also check if there&apos;s
-              any existing accessibility scaffolding.
+              Let me look at the GPUI element trait and the window&apos;s paint cycle to understand
+              where we can hook into the tree. I&apos;ll also check if there&apos;s any existing
+              accessibility scaffolding.
             </p>
           </div>
         </div>
@@ -313,12 +357,7 @@ export default function EditorView() {
   )
 
   const content = (
-    <div
-      className="copper-workspace"
-      data-sidebar={sidebar}
-      data-review={true}
-      data-pane={pane}
-    >
+    <div className="copper-workspace" data-sidebar={sidebar} data-review={true} data-pane={pane}>
       <div
         className="cw-mobile-tabs"
         role="tablist"
