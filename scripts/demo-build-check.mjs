@@ -4,6 +4,7 @@ import { gzipSync } from 'node:zlib'
 
 // Run after the normal production build. No network or release fetch is needed.
 const html = await readFile('.next/server/app/index.html', 'utf8')
+const copperHtml = await readFile('.next/server/app/copper.html', 'utf8')
 assert.ok(html.includes('Open guided demo'))
 assert.ok(html.includes('Enable JavaScript to edit files'))
 assert.ok(html.includes('pub fn parse_port'))
@@ -21,7 +22,14 @@ for (const file of chunks) {
   gzip += gzipSync(bytes).length
 }
 assert.ok(!/RELEASES_GITHUB_TOKEN|AMPLIFY_REBUILD_WEBHOOK/.test(html))
+assert.ok(copperHtml.includes('Building the Integral Development Experience'))
+assert.ok(copperHtml.includes('Serious Rust.'))
+assert.ok(copperHtml.includes('Open guided demo'))
+assert.ok(copperHtml.includes('https://simtropolis.ai/copper'))
+assert.ok(copperHtml.includes('/copper/social-card.png'))
+assert.ok(copperHtml.includes('application/ld+json'))
+assert.ok(!/RELEASES_GITHUB_TOKEN|AMPLIFY_REBUILD_WEBHOOK/.test(copperHtml))
 console.log(
-  'Server introduction, static preview, no-JS guidance, hero placement, lazy asset boundary and credential checks passed.',
+  'Homepage and Copper introduction, static preview, no-JS guidance, metadata, lazy asset boundary and credential checks passed.',
 )
 console.log(JSON.stringify({ lazyRawBytes: raw, lazyGzipBytes: gzip }))

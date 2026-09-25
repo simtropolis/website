@@ -62,7 +62,7 @@ export default function Page() {
             <span className="rule" /> Made by Simtropolis
           </p>
           <h1 id="hero-title">
-            The Integral
+            Building the Integral
             <br />
             Development <em>Experience.</em>
           </h1>
@@ -72,8 +72,8 @@ export default function Page() {
               development environments from a shared, Zed-derived editor platform.
             </p>
             <p>
-              An open platform for agentic software development. A workspace where humans and
-              specialised agents all work together.
+              An open platform for agentic software development — with you in control. One workspace
+              where people, tools, and specialised agents work together.
             </p>
             <div className="hero-actions">
               <Button asChild className="pill">
@@ -81,8 +81,8 @@ export default function Page() {
                   Get Copper <ArrowUpRight size={17} />
                 </a>
               </Button>
-              <a className="text-link" href="#copper">
-                Explore the platform <ArrowDown size={16} />
+              <a className="text-link" href="/copper">
+                Meet Copper <ArrowDown size={16} />
               </a>
             </div>
           </div>
@@ -136,6 +136,9 @@ export default function Page() {
               </p>
               <a className="text-link light-link" href="/releases">
                 Find your download <ArrowUpRight size={18} />
+              </a>
+              <a className="text-link light-link" href="/copper">
+                Explore Copper <ArrowUpRight size={18} />
               </a>
             </div>
             <div className="copper-tools">

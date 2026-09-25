@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { latestStable } from './generate-releases.mjs'
 
 const base = process.argv[2] ?? 'http://127.0.0.1:3000'
-for (const path of ['/', '/releases', '/robots.txt', '/sitemap.xml']) {
+for (const path of ['/', '/copper', '/releases', '/robots.txt', '/sitemap.xml']) {
   const response = await fetch(new URL(path, base), { redirect: 'manual' })
   assert.equal(response.status, 200, path)
   console.log(path + ': HTTP 200')
@@ -15,19 +15,28 @@ assert.equal((await fetch(new URL('/releases/', base))).status, 200)
 console.log('/releases/: internal 308 → /releases → 200')
 assert.equal((await fetch(new URL('/nonexistent-verification-path', base))).status, 404)
 const html = await (await fetch(new URL('/releases', base))).text()
+const copperHtml = await (await fetch(new URL('/copper', base))).text()
 assert.ok(html.includes('rel="canonical" href="https://simtropolis.ai/releases"'))
 assert.ok(html.includes('property="og:url" content="https://simtropolis.ai/releases"'))
+assert.ok(copperHtml.includes('rel="canonical" href="https://simtropolis.ai/copper"'))
+assert.ok(copperHtml.includes('property="og:url" content="https://simtropolis.ai/copper"'))
+assert.ok(copperHtml.includes('content="https://simtropolis.ai/copper/social-card.png"'))
+assert.ok(copperHtml.includes('Building the Integral Development Experience'))
+assert.ok(copperHtml.includes('application/ld+json'))
 assert.ok(
   !/simtropolis\.github\.io|made-release-site|RELEASES_URL|RELEASES_GITHUB_TOKEN|AMPLIFY_REBUILD_WEBHOOK/.test(
-    html,
+    html + copperHtml,
   ),
 )
-assert.ok(
-  (await (await fetch(new URL('/sitemap.xml', base))).text()).includes(
-    '<loc>https://simtropolis.ai/releases</loc>',
-  ),
-)
-console.log('Canonical, social metadata, sitemap and credential checks passed')
+const sitemap = await (await fetch(new URL('/sitemap.xml', base))).text()
+assert.ok(sitemap.includes('<loc>https://simtropolis.ai/copper</loc>'))
+assert.ok(sitemap.includes('<loc>https://simtropolis.ai/releases</loc>'))
+for (const asset of ['/copper/rust-mascot.png', '/copper/social-card.png']) {
+  const response = await fetch(new URL(asset, base))
+  assert.equal(response.status, 200, asset)
+  assert.match(response.headers.get('content-type') ?? '', /^image\/png/)
+}
+console.log('Canonical, social metadata, structured data, sitemap and credential checks passed')
 const { releases } = JSON.parse(
   await readFile(new URL('../.generated/releases.json', import.meta.url), 'utf8'),
 )

@@ -10,14 +10,14 @@ export const metadata: Metadata = {
       ? { 'simtropolis-build': buildRevision }
       : undefined,
   metadataBase: new URL('https://simtropolis.ai'),
-  title: 'Made by Simtropolis — Focused tools for people who build',
+  title: 'Simtropolis — Building the Integral Development Experience',
   description:
-    'Meet Copper: a Rust development environment with native agent workflows, Cargo tooling, and a Zed-derived editor. Built on Made by Simtropolis.',
+    'Made is an open platform for agentic software development. Meet Copper, its Rust-focused development experience, with you in control.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Made by Simtropolis',
+    title: 'Simtropolis — Building the Integral Development Experience',
     description:
-      'Focused tools for people who build. Meet Copper, the Rust development environment with agents built in.',
+      'Made is an open platform for agentic software development. Meet Copper, its Rust-focused development experience, with you in control.',
     url: '/',
     siteName: 'Simtropolis',
     type: 'website',
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'Made by Simtropolis',
-    description: 'Meet Copper, the Rust development environment with agents built in.',
+    title: 'Simtropolis — Building the Integral Development Experience',
+    description: 'Made is an open platform for agentic development. Meet Copper for Rust.',
   },
   icons: { icon: '/icon.svg' },
 }

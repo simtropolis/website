@@ -135,8 +135,10 @@ export function ReleaseList({
           </div>
         )}
         <p className="install-note">
-          Copper is under active development. Signing varies by build; macOS may use ad-hoc signing
-          and Windows builds may be unsigned. Review the{' '}
+          Download links point to the exact assets stored in GitHub Releases. GitHub may require
+          repository access while Made is private; this site never passes its build credential to a
+          browser. Copper is under active development. Signing varies by build; macOS may use ad-hoc
+          signing and Windows builds may be unsigned. Review the{' '}
           <a href={repository + '/blob/main/docs/src/development/product-flavors.md#signing'}>
             signing documentation
           </a>

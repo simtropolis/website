@@ -14,7 +14,7 @@ import {
 import { repository } from '@/lib/content'
 
 const links = [
-  { href: '/#copper', label: 'Copper' },
+  { href: '/copper', label: 'Copper' },
   { href: '/#platform', label: 'The platform' },
   { href: '/#get-started', label: 'Get started' },
   { href: '/releases', label: 'Releases' },

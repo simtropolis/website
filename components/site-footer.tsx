@@ -17,7 +17,7 @@ export function SiteFooter() {
         <nav aria-label="Footer navigation">
           <div>
             <span className="eyebrow">Explore</span>
-            <Link href="/#copper">Copper</Link>
+            <Link href="/copper">Copper</Link>
             <a href="/releases">Releases</a>
             <Link href="/#platform">The platform</Link>
           </div>

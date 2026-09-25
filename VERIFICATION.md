@@ -1,5 +1,26 @@
 # Verification — Amplify hosting, 7 September 2026
 
+## Copper product-page update — 25 September 2026
+
+Work was performed on `codex/copper-integral-experience`, created from website `main` at `25c61383ab638f36a4195b04aca679e3ba214f7a`. The supplied `copper-website.zip` was inspected as reference material; only its mascot and social card were copied, byte-for-byte. The standalone HTML, deployment scripts, documentation, build output, and historical QA evidence are not part of the application.
+
+Product claims were checked against the local Made checkout at `7c19425ff56e4816dabb5fa851c666a248d18a14`. The README and product manifest confirm Copper as the only enabled product, its `agentic-tools,rust-tools` release profile, supported Linux x86_64/macOS ARM64/Windows x86_64 targets, native agent and ACP support, Rust defaults, Cargo and Tests panels, and the opt-in status of multiplayer and native visual workflows. Orbit and Forge remain planned. Agent-panel documentation confirms visible tool activity, changed-file counts, checkpoints, hunk-level keep/reject review, provider configuration, and allow/deny/confirm tool permissions. The Rust guide confirms Cargo/test/Clippy/format/build/run/documentation workflows and explicitly excludes automatic network and dependency mutation.
+
+The resulting `/copper` page uses the archive’s warm paper, orange, large editorial typography, fine rules, numbered sections, supplied mascot, and social card in scoped Next.js components. The ByteAsk reference informed the emphasis on visible commands, inspectable outputs, review, and explicit evidence; no ByteAsk wording, branding, C/C++ claims, gdb/sanitizer claims, retention/security promises, prices, model promises, or benchmarks were copied. The existing guided demo remains local and now opens in its conversation-first Rust parser workspace.
+
+Local validation:
+
+- Frozen Bun installation completed without dependency changes. Prettier, ESLint, TypeScript, 24 Node release/build tests, 16 release/demo rendering tests, and both before/after Rust fixture suites passed.
+- A standard fresh-snapshot build failed closed before Next started because the local environment has no `RELEASES_GITHUB_TOKEN`; the safe diagnostic was HTTP 404, resource inaccessible, no token configured. This is the expected private-repository failure and did not silently reuse old data.
+- An explicitly labelled offline compilation reused the checked-in `rust-v1.16.6` snapshot, which matches the currently deployed release page. Next’s production build passed, statically prerendering `/`, `/copper`, `/releases`, `/robots.txt`, and `/sitemap.xml`. The Copper route adds 1.22 kB route code and reports 140 kB first-load JS. The existing lazy workspace chunk remains 436,633 raw bytes / 143,937 gzip and is not preloaded in server HTML.
+- Local HTTP checks passed for `/`, `/copper`, `/releases`, `/robots.txt`, `/sitemap.xml`, the `/releases/` internal 308 normalization, Copper canonical/Open Graph/JSON-LD metadata, sitemap entries, archive image delivery, all five release-history entries, and credential exclusion.
+- Browser checks passed at 1440, 1920, 390, and 320 CSS pixels with no horizontal overflow or console/hydration warnings. They covered the homepage and Copper navigation, mobile menu/Escape/focus return, default conversation workspace, mobile pane switching, recorded-output disclosure, thread context menu, pin and rename, editing and cross-file retention, explicit patch-conflict keep/replace paths, reset, expanded view/Escape/focus return, and exact release asset hrefs. Reduced-motion rules disable site, mascot, ticker, and workspace animation/transition behavior.
+- Review screenshots were captured in the browser session for the 1440 and 1920 Copper hero, 390 and 320 Copper hero, homepage, releases page, desktop guided workspace, and mobile guided workspace.
+
+External availability finding: `simtropolis/made`, its release page, and each `rust-v1.16.6` asset URL returned HTTP 404 to an unauthenticated GET on 25 September 2026. The website preserves the exact GitHub URLs and now explains that private-repository access is enforced by GitHub. `RELEASES_GITHUB_TOKEN` lets Amplify generate the page but cannot make browser downloads public and must never be sent to visitors. Public downloads require Made and its release assets to be publicly readable, or an explicitly selected public GitHub Releases repository.
+
+Live state before this branch is deployed: `/` and `/releases` return 200, `/releases/` resolves to `/releases`, and the deployed build marker is `25c61383ab638f36a4195b04aca679e3ba214f7a`. `/copper` returns 404 because this branch has not been merged into Amplify’s connected `main` branch. A successful branch push is therefore not evidence of a production deployment; deployment and the new live-route checks remain pending until this branch is merged or an Amplify preview branch is configured.
+
 Both the main website and releases are implemented in the website repository for the existing AWS Amplify app. This report distinguishes local verification from deployment and account checks.
 
 ## GitHub 403 build fix

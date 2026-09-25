@@ -52,7 +52,7 @@ class DemoBoundary extends Component<{ children: ReactNode }, { failed: boolean 
 
 export function CopperDemo() {
   const [ready, setReady] = useState(false)
-  const [view, setView] = useState<'editor' | 'workspace'>('editor')
+  const [view, setView] = useState<'editor' | 'workspace'>('workspace')
   const anchor = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export function CopperDemo() {
             <span className="rule" /> A little room to experiment
           </p>
           <h2 id="demo-title">
-            Small change. <em>Better Rust.</em>
+            Follow the work. <em>Review the evidence.</em>
           </h2>
         </div>
         <a href="/releases" className="text-link">
@@ -86,7 +86,8 @@ export function CopperDemo() {
         </a>
       </div>
       <p className="demo-description">
-        Switch between the editor and the collaborative workspace view.
+        Edit the sample directly, or follow a recorded task from request and tool activity to tests
+        and a reviewable diff.
       </p>
       <div className="cw-view-toggle" role="group" aria-label="Demo view">
         <button

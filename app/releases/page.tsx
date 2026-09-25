@@ -10,7 +10,7 @@ import { sourceGuide } from '@/lib/content'
 export const dynamic = 'force-static'
 const title = 'Copper releases — Made by Simtropolis'
 const description =
-  'Download Copper for macOS, Windows, and Linux. Find the latest stable release, release notes, and previous versions.'
+  'Browse Copper releases for macOS, Windows, and Linux, with exact GitHub assets, release notes, and previous versions.'
 export const metadata: Metadata = {
   title,
   description,

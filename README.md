@@ -1,6 +1,6 @@
 # Made by Simtropolis
 
-The main website and Copper releases page are served by the **existing AWS Amplify application** at **https://simtropolis.ai/** and **https://simtropolis.ai/releases**. Its source is `simtropolis/website`, production branch `main`. Binaries remain attached to [simtropolis/made GitHub Releases](https://github.com/simtropolis/made/releases).
+The main website, dedicated Copper page, and Copper releases page are served by the **existing AWS Amplify application** at **https://simtropolis.ai/**, **https://simtropolis.ai/copper**, and **https://simtropolis.ai/releases**. Its source is `simtropolis/website`, production branch `main`. Binaries remain attached to [simtropolis/made GitHub Releases](https://github.com/simtropolis/made/releases).
 
 ## Local development and verification
 
@@ -12,7 +12,7 @@ bun install --frozen-lockfile
 bun run dev
 ```
 
-Node 22.22.0 and Bun 1.3.6 match `amplify.yml`. Public GitHub release metadata supports unauthenticated requests with a smaller shared rate limit. For reliable Amplify builds, configure the build-only `RELEASES_GITHUB_TOKEN` as described below; never prefix it with `NEXT_PUBLIC_`. The wrapper uses Next.js's matching `@next/env` package to load local `.env` files before generation. No Python runtime is required for the website generator.
+Node 22.22.0 and Bun 1.3.6 match `amplify.yml`. Made currently requires authenticated GitHub API access, so local and Amplify builds need a read-only `RELEASES_GITHUB_TOKEN` as described below; never prefix it with `NEXT_PUBLIC_`. The wrapper uses Next.js's matching `@next/env` package to load local `.env` files before generation. No Python runtime is required for the website generator.
 
 ```sh
 bun run format:check
@@ -23,6 +23,16 @@ bun run build
 bun run start
 ```
 
+## Copper product page
+
+`/copper` carries the primary product story: **Building the Integral Development Experience — an open platform for agentic software development, with you in control.** Its editorial composition adapts the supplied archive’s warm paper, Copper orange, oversized type, thin rules, numbered sections, mascot, and human tone inside the existing Next.js application. The archive’s standalone HTML, scripts, owner notes, build output, and QA evidence are not shipped.
+
+The page explains “integral” as editor context, Rust language intelligence, Cargo, tests, terminal, source control, debugging, agents, evidence, and human review working in one environment. It separates standard Copper capabilities from opt-in Made source features and planned products. Its guided workspace remains deterministic and local; the conversation, activity, and test output are recorded fixtures rather than a live agent or compiler.
+
+ByteAsk informed the emphasis on visible commands, inspectable evidence, review before applying, and clear tool failures. All wording and examples are original to Simtropolis. C/C++ tooling, gdb, sanitizers, retention claims, pricing, provider promises, benchmarks, and editor integrations were not transferred.
+
+The supplied mascot and social card are the only archive assets published, at `public/copper/`. The mascot is identified as artwork supplied by Simtropolis; the archive supplied no separate third-party license or attribution record. Confirm that ownership record before redistributing the artwork outside this site.
+
 ## Release-page architecture
 
 `bun run build` invokes `scripts/run-next.mjs build`. The wrapper loads the appropriate Next.js environment files, generates **one fresh snapshot**, then launches Next.js with a new snapshot run ID. `bun run dev` does the same for a development session; restart it to refresh release data. Do not call `next build` or `next dev` directly: configuration and the page reader reject a missing, malformed, or mismatched snapshot instead of silently reusing one from a previous run.
@@ -32,6 +42,8 @@ bun run start
 `next.config.mjs` performs read-only validation. Repeated configuration evaluations cannot trigger another GitHub request or generation. `amplify.yml` continues to invoke `bun run build` once and does not export environment variables into a file.
 
 `app/releases/page.tsx` prerenders a real static Next.js page from that snapshot, sharing navigation, typography, footer, focus styles, and reduced-motion behavior with the main site. It features the latest stable version independently of prereleases, renders history and publication dates, labels actual platform downloads, and identifies missing assets. Release notes support a small Markdown subset rendered through React's escaping, with the original notes linked on GitHub. There is no browser GitHub API request or client credential.
+
+The snapshot preserves GitHub’s exact release asset URLs. It does not proxy binaries or grant access to them. If `simtropolis/made` is private, GitHub requires each visitor to have repository access; the build-only token cannot and must not be sent to the browser. Public downloads therefore require the repository and its release assets to be publicly readable, or another public GitHub Releases repository chosen as the documented source of truth.
 
 `/releases` returns 200. `/releases/` uses Next.js's normal server-side 308 normalization to `/releases`, then returns the same page. Its canonical URL and sitemap entry are `https://simtropolis.ai/releases`. No external release redirect or separate hosting configuration remains. Remove the obsolete `RELEASES_URL` environment variable and any existing Amplify rule redirecting either release path.
 
@@ -145,7 +157,7 @@ To roll back, use the existing Amplify deployment history. Disable or rotate the
 
 Product content is centralized in `lib/content.ts` and `app/page.tsx`. Copper is the only enabled product. The full multiplayer workspace and native visual workflows are explicitly opt-in; Orbit and Forge are planned. Updater and signing limitations are described without promising unavailable services.
 
-Source references, checked 7 September 2026:
+Source references, checked 25 September 2026 against Made `dev` commit `7c19425ff56e4816dabb5fa851c666a248d18a14`:
 
 - [Made README](https://github.com/simtropolis/made/blob/main/README.md)
 - [Product catalog](https://github.com/simtropolis/made/blob/main/products/flavors.toml)
@@ -153,12 +165,13 @@ Source references, checked 7 September 2026:
 - [Release workflow documentation](https://github.com/simtropolis/made/blob/main/.github/workflows/README.md)
 - [Published Copper releases](https://github.com/simtropolis/made/releases)
 - [Visual reference](https://v0-optimus-delta.vercel.app/)
+- [ByteAsk positioning reference](https://byteask.ai/)
 
-`public/copper.svg` is the authentic icon copied from Made's `assets/product_flavors/rust/app-icon.svg`. Made is derived from Zed and primarily GPL-3.0-or-later, with Apache-2.0 components where marked. Public attribution links to both license files. The Simtropolis favicon uses the site's typographic mark. No customer imagery, testimonials, statistics, pricing, or compliance claims have been invented.
+`public/copper.svg` is the authentic icon copied from Made's `assets/product_flavors/rust/app-icon.svg`. `public/copper/rust-mascot.png` and `public/copper/social-card.png` preserve the supplied archive assets byte-for-byte. Made is derived from Zed and primarily GPL-3.0-or-later, with Apache-2.0 components where marked. Public attribution links to both license files. The Simtropolis favicon uses the site's typographic mark. No customer imagery, testimonials, statistics, pricing, or compliance claims have been invented.
 
 ## Guided Copper workspace
 
-The homepage now includes an interactive demo directly below the hero (`components/copper-demo/`). It is a conversation-first, local browser illustration of Copper’s editor, agent, changes, and Cargo workflow. Desktop panes use 23% project/thread navigation, 40% conversation, and 37% review. Closing review expands the conversation to 77%. Neutral chrome, fixed workspace bars, and independently scrollable panes follow the supplied visual references. At 800px and below, accessible pane tabs show one pane at a time. Files are editable with Rust/TOML syntax highlighting, line numbers, and undo; content stays in React memory. Switching files, panes, or expanded view preserves content. Reloading or navigating away starts over. Tab leaves the editor normally; arrow keys/Home/End operate tab groups. The expanded Radix dialog supports Escape, contained modal focus, and focus restoration.
+The homepage and `/copper` include an interactive demo (`components/copper-demo/`). It opens in the conversation-first workspace and remains a local browser illustration of Copper’s editor, agent, changes, and Cargo workflow. Desktop panes use 23% project/thread navigation, 40% conversation, and 37% review. Closing review expands the conversation to 77%. Neutral chrome, fixed workspace bars, and independently scrollable panes follow the supplied visual references. At 800px and below, accessible pane tabs show one pane at a time. Files are editable with Rust/TOML syntax highlighting, line numbers, and undo; content stays in React memory. Switching files, panes, or expanded view preserves content. Reloading or navigating away starts over. Tab leaves the editor normally; arrow keys/Home/End operate tab groups. The expanded Radix dialog supports Escape, contained modal focus, and focus restoration.
 
 The task, proposed diff, and output are deterministic fixtures. There is no live agent, compiler, multiplayer connection, unrestricted chat, sign-in, external AI request, local storage, or backend execution. Output always says it is recorded and detects when the current files differ from the tested fixture. The proposal is shown independently of visitor edits. Applying it checks all affected files before changing any; conflicts require an explicit keep/replace decision. Edits to the unaffected Cargo.toml survive application. Reset always asks before discarding local work and restores files, thread names, pins, unread/archive states, navigation, panels, activity, and output. It keeps the current inline/expanded presentation.
 
