@@ -1,13 +1,28 @@
 'use client'
 
-import { useState, useRef, type KeyboardEvent } from 'react'
-import * as Dialog from '@radix-ui/react-dialog'
-import { ChevronRight, Maximize2, Minimize2, PanelLeft, PanelRight, Search } from 'lucide-react'
+import { useState, type KeyboardEvent } from 'react'
+import {
+  Check,
+  ChevronDown,
+  ChevronRight,
+  FileCode2,
+  FolderOpen,
+  Play,
+  SquareTerminal,
+} from 'lucide-react'
+import {
+  before,
+  changedPaths,
+  filePaths,
+  recordedOutput,
+  type FilePath,
+  type Files,
+} from '@/lib/copper-demo'
 import CodeEditor from './code-editor'
-import type { FilePath } from '@/lib/copper-demo'
+import { Counts, DiffCard } from './diff-view'
 
-type Pane = 'navigation' | 'conversation' | 'review'
-type Tab = 'scheduler.tsx' | 'catware.rs' | 'uncommit'
+type EditorPane = 'files' | 'work'
+type EditorMode = 'code' | 'review'
 
 function tabKeys(event: KeyboardEvent<HTMLElement>) {
   const tabs = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="tab"]'))
@@ -29,415 +44,237 @@ function tabKeys(event: KeyboardEvent<HTMLElement>) {
   }
 }
 
-const SCHEDULER_FIXTURE = `/**
- * MeetingScheduler - Because your calendar wasn't full enough
- * @description Helps you schedule meetings about scheduling
- */
+export default function EditorView({
+  files,
+  path,
+  mode,
+  output,
+  applied,
+  recorded,
+  onSelectFile,
+  onModeChange,
+  onChange,
+  onApply,
+  onOutputChange,
+}: {
+  files: Files
+  path: FilePath
+  mode: EditorMode
+  output: boolean
+  applied: boolean
+  recorded: boolean
+  onSelectFile: (path: FilePath) => void
+  onModeChange: (mode: EditorMode) => void
+  onChange: (path: FilePath, value: string) => void
+  onApply: () => void
+  onOutputChange: (open: boolean) => void
+}) {
+  const [pane, setPane] = useState<EditorPane>('work')
+  const pristine = filePaths.every((file) => files[file] === before[file])
 
-export function MeetingScheduler({
-    defaultDuration = 60,
-    maxAttendees = 100,
-    requiresSnacks = true,
-    onMeetingCreate,
-    onEscapeAttempt,
-}: MeetingSchedulerProps): React.ReactElement {
-  const [meetings, setMeetings] = React.useState<Meeting[]>([])
-  const [excuseIndex, setExcuseIndex] = React.useState(0)
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
-
-  const formRef = React.useRef<HTMLFormElement>(null)
-  const sanityRef = React.useRef<number>(100)
-
-  // Memoized excuse rotation
-  const currentExcuse = React.useMemo(() => {
-    return MEETING_EXCUSES[excuseIndex % MEETING_EXCUSES.length]
-  }, [excuseIndex])
-`
-
-const CATWARE_FIXTURE = `use std::collections::HashMap;
-
-pub struct CatWare {
-    cats: HashMap<String, Cat>,
-}
-
-impl CatWare {
-    pub fn new() -> Self {
-        Self { cats: HashMap::new() }
-    }
-
-    pub fn register(&mut self, name: &str, breed: &str) {
-        self.cats.insert(name.to_string(), Cat::new(breed));
-    }
-
-    pub fn lookup(&self, name: &str) -> Option<&Cat> {
-        self.cats.get(name)
-    }
-}
-`
-
-const TOOL_CALLS = [
-  'Read crates/gpui/src/element.rs',
-  'Search "accessibility" in crates/gpui/',
-  'List crates/gpui/src/platform/',
-]
-
-type BranchRow = {
-  id: string
-  title: string
-  meta: string
-  active?: boolean
-  section: 'copper' | 'cloud' | 'copper.dev'
-}
-
-const branches: BranchRow[] = [
-  {
-    id: 'accesskit',
-    title: 'Add AccessKit support to GPUI elements',
-    meta: 'gpu-accesskit · main · 4m',
-    active: true,
-    section: 'copper',
-  },
-  {
-    id: 'rope-panic',
-    title: 'Fix panic in buffer rope on large p…',
-    meta: 'rope-panic-fix · 12m',
-    section: 'copper',
-  },
-  {
-    id: 'vim-motion',
-    title: 'Add vim motion for surround pairs',
-    meta: '+23 −2 · 48m',
-    section: 'copper',
-  },
-  { id: 'close-button', title: 'Workspace close button hidden wi…', meta: '2h', section: 'copper' },
-  {
-    id: 'text-shaping',
-    title: 'GPUI text shaping perf regression',
-    meta: 'text-shaping-opt · 5h',
-    section: 'copper',
-  },
-  { id: 'lsp-hover', title: 'LSP hover tooltip positioning off-s…', meta: '1d', section: 'copper' },
-  {
-    id: 'tree-diff',
-    title: 'Refactor project panel tree diffing',
-    meta: 'tree-diff-refactor · 2d',
-    section: 'copper',
-  },
-  {
-    id: 'multicursor',
-    title: 'Add multicursor support in search …',
-    meta: '4d',
-    section: 'copper',
-  },
-  {
-    id: 'axum-billing',
-    title: 'Migrate billing endpoints to axum …',
-    meta: 'axum-billing · +43 −11 · 8m',
-    section: 'cloud',
-  },
-  {
-    id: 'tanstack',
-    title: 'Add TanStack query keys for team…',
-    meta: '+2 −127 · 1h',
-    section: 'cloud',
-  },
-  { id: 'stale-cache', title: 'Fix stale cache on org membershi…', meta: '6h', section: 'cloud' },
-  {
-    id: 'sdk-pagination',
-    title: 'Rust SDK pagination for collab ses…',
-    meta: 'sdk-pagination · first-pass · 1d',
-    section: 'cloud',
-  },
-  { id: 'table-sort', title: 'Dashboard table sorting with TanS…', meta: '3d', section: 'cloud' },
-  {
-    id: 'page-sections',
-    title: 'Break out page sections into comp…',
-    meta: '5d',
-    section: 'copper.dev',
-  },
-]
-
-function BranchList({ section }: { section: BranchRow['section'] }) {
-  return (
-    <>
-      {branches
-        .filter((b) => b.section === section)
-        .map((b) => (
-          <div
-            className={`cw-thread-row cw-branch-row ${b.active ? 'is-selected' : ''}`}
-            key={b.id}
-          >
-            <button
-              className="cw-thread-select"
-              aria-current={b.active ? 'true' : undefined}
-              title={b.title}
-            >
-              <span className={`cw-read-dot ${b.active ? 'unread' : ''}`} aria-hidden="true" />
-              <span>
-                <span>{b.title}</span>
-                <small className="cw-branch-meta">{b.meta}</small>
-              </span>
-            </button>
-          </div>
-        ))}
-    </>
-  )
-}
-
-export default function EditorView() {
-  const [sidebar, setSidebar] = useState(true)
-  const [pane, setPaneState] = useState<Pane>('conversation')
-  const [expanded, setExpanded] = useState(false)
-  const [activity, setActivity] = useState(false)
-  const [tab, setTab] = useState<Tab>('scheduler.tsx')
-  const expandRef = useRef<HTMLButtonElement>(null)
-  const collapseRef = useRef<HTMLButtonElement>(null)
-
-  const focus = (selector: string) =>
-    requestAnimationFrame(() => {
-      const el = document.querySelector<HTMLElement>(selector)
-      if (el?.getClientRects().length) el.focus()
-    })
-
-  const setPane = (next: Pane) => {
-    setPaneState(next)
-    if (next === 'navigation') setSidebar(true)
+  const selectFile = (file: FilePath) => {
+    onSelectFile(file)
+    onModeChange('code')
+    setPane('work')
   }
 
-  const navigation = (
-    <aside className="cw-navigation" aria-label="Project and branch navigation">
-      <header className="cw-bar cw-nav-bar">
-        <span className="cw-window-dots" aria-hidden="true">
-          <i />
-          <i />
-          <i />
-        </span>
+  return (
+    <div className="cev-shell" data-pane={pane}>
+      <div className="cev-mobile-tabs" role="tablist" aria-label="Editor panes" onKeyDown={tabKeys}>
         <button
-          aria-label="Collapse sidebar"
+          role="tab"
+          aria-selected={pane === 'files'}
+          tabIndex={pane === 'files' ? 0 : -1}
+          onClick={() => setPane('files')}
+        >
+          Files
+        </button>
+        <button
+          role="tab"
+          aria-selected={pane === 'work' && mode === 'code'}
+          tabIndex={pane === 'work' && mode === 'code' ? 0 : -1}
           onClick={() => {
-            setSidebar(false)
-            focus('[aria-label="Expand sidebar"]')
+            setPane('work')
+            onModeChange('code')
           }}
         >
-          <PanelLeft size={16} />
+          Code
         </button>
-        <button aria-label="Search branches" className="cw-last">
-          <Search size={16} />
-        </button>
-      </header>
-      <div className="cw-nav-scroll">
-        <h3>copper</h3>
-        <BranchList section="copper" />
-        <h3>cloud</h3>
-        <BranchList section="cloud" />
-        <h3>copper.dev</h3>
-        <BranchList section="copper.dev" />
-      </div>
-      <footer className="cw-bar cw-nav-footer">
-        <span className="cw-avatar" aria-hidden="true">
-          Y
-        </span>
-        <span>
-          You <small>Demo participant</small>
-        </span>
-        <span className="cw-last">Copper</span>
-      </footer>
-    </aside>
-  )
-
-  const conversation = (
-    <section className="cw-conversation" aria-label="Agent conversation">
-      <header className="cw-bar cw-conversation-bar">
-        <span title="Add AccessKit support to GPUI elements">
-          Add AccessKit support to GPUI elements
-        </span>
         <button
-          className="cw-last"
-          aria-label="Toggle code pane"
-          onClick={() => setPane(pane === 'review' ? 'conversation' : 'review')}
+          role="tab"
+          aria-selected={pane === 'work' && mode === 'review'}
+          tabIndex={pane === 'work' && mode === 'review' ? 0 : -1}
+          onClick={() => {
+            setPane('work')
+            onModeChange('review')
+          }}
         >
-          <PanelRight size={16} />
+          Review
         </button>
-      </header>
-      <div
-        className="cw-conversation-scroll"
-        tabIndex={0}
-        aria-label="Scrollable guided conversation"
-      >
-        <div className="cw-message">
-          <span className="cw-avatar" aria-label="You, demo participant">
-            Y
-          </span>
-          <div>
-            <p className="cw-sample-label">You · sample request</p>
-            <p>
-              I want to add AccessKit support to GPUI so screen readers can traverse the element
-              tree. Can you start by figuring out where the accessibility tree should be built and
-              how elements currently expose their roles?
-            </p>
+      </div>
+
+      <div className="cev-layout">
+        <aside className="cev-files" aria-label="Rust workspace files">
+          <header className="cw-bar">
+            <FolderOpen size={16} aria-hidden="true" />
+            <span>port-parser</span>
+            <span className="cw-last cev-branch">main</span>
+          </header>
+          <div className="cev-file-list">
+            <p className="cev-tree-label">Files</p>
+            {filePaths.map((file) => (
+              <button
+                key={file}
+                className={path === file ? 'is-selected' : ''}
+                aria-current={path === file ? 'page' : undefined}
+                onClick={() => selectFile(file)}
+              >
+                <FileCode2 size={15} aria-hidden="true" />
+                <span>{file}</span>
+                {files[file] !== before[file] && <span aria-label="Modified">●</span>}
+              </button>
+            ))}
+            <div className="cev-file-note">
+              <strong>{changedPaths.length} proposed files</strong>
+              <Counts />
+              <span>Edits stay in this browser tab.</span>
+            </div>
           </div>
-        </div>
-        <div className="cw-message">
-          <span className="cw-ai" aria-label="Scripted agent">
-            AI
-          </span>
-          <div>
-            <details
-              className="cw-activity"
-              open={activity}
-              onToggle={(e) => setActivity(e.currentTarget.open)}
+          <footer className="cw-bar">
+            <span>Rust workspace</span>
+            <span className="cw-last">Local fixture</span>
+          </footer>
+        </aside>
+
+        <section className="cev-work" aria-label="Editable Rust workspace">
+          <header className="cw-bar cev-work-bar">
+            <div role="tablist" aria-label="Editor mode" onKeyDown={tabKeys}>
+              <button
+                role="tab"
+                aria-selected={mode === 'code'}
+                tabIndex={mode === 'code' ? 0 : -1}
+                onClick={() => onModeChange('code')}
+              >
+                Code
+              </button>
+              <button
+                role="tab"
+                aria-selected={mode === 'review'}
+                tabIndex={mode === 'review' ? 0 : -1}
+                onClick={() => onModeChange('review')}
+              >
+                Review Changes <Counts />
+              </button>
+            </div>
+            <button
+              className="cw-last cev-run"
+              aria-label="Show recorded test output"
+              aria-expanded={output}
+              onClick={() => onOutputChange(!output)}
             >
-              <summary>
-                Read crates/gpui/src/element.rs <ChevronRight size={13} />
-              </summary>
-              <p>
-                {TOOL_CALLS.map((call) => (
-                  <span key={call} style={{ display: 'block' }}>
-                    {call}
-                  </span>
+              <Play size={14} aria-hidden="true" /> Recorded test
+            </button>
+          </header>
+
+          {mode === 'code' ? (
+            <div className="cev-code-pane">
+              <div
+                className="cev-file-tabs"
+                role="tablist"
+                aria-label="Open files"
+                onKeyDown={tabKeys}
+              >
+                {filePaths.map((file) => (
+                  <button
+                    role="tab"
+                    aria-selected={path === file}
+                    tabIndex={path === file ? 0 : -1}
+                    key={file}
+                    onClick={() => onSelectFile(file)}
+                  >
+                    {file.split('/').pop()}
+                    {files[file] !== before[file] && <span aria-label="Modified">●</span>}
+                  </button>
                 ))}
+              </div>
+              <div className="cev-editor" role="tabpanel" aria-label={`Editing ${path}`}>
+                <CodeEditor
+                  key={path}
+                  path={path}
+                  value={files[path]}
+                  onChange={(value) => onChange(path, value)}
+                />
+              </div>
+              <div className="cev-diagnostic" role="status">
+                <span className={recorded ? 'is-clear' : pristine ? 'is-recorded' : 'is-edited'} />
+                {recorded
+                  ? 'The files match the tested fixture: six recorded tests passed.'
+                  : pristine
+                    ? 'Recorded diagnostic: parse_port can panic at unwrap(). Review the proposed patch.'
+                    : 'Visitor edits are not compiled. Recorded diagnostics describe the checked-in fixture.'}
+              </div>
+            </div>
+          ) : (
+            <div className="cev-review-pane" tabIndex={0} aria-label="Proposed Rust changes">
+              <div className="cev-review-heading">
+                <div>
+                  <p className="cw-sample-label">Sample proposal</p>
+                  <h3>{changedPaths.length} files ready for review</h3>
+                </div>
+                <button onClick={onApply} disabled={applied && recorded}>
+                  {applied && recorded ? (
+                    <>
+                      <Check size={14} aria-hidden="true" /> Applied
+                    </>
+                  ) : (
+                    'Apply sample patch'
+                  )}
+                </button>
+              </div>
+              {changedPaths.map((file) => (
+                <article key={file}>
+                  <button className="cw-review-file" onClick={() => selectFile(file)}>
+                    <u>{file.split('/').pop()}</u>
+                    <span>{file.slice(0, file.lastIndexOf('/') + 1)}</span>
+                    <ChevronRight size={13} aria-hidden="true" />
+                  </button>
+                  <DiffCard path={file} />
+                </article>
+              ))}
+            </div>
+          )}
+
+          <details
+            className="cev-output"
+            open={output}
+            onToggle={(event) => onOutputChange(event.currentTarget.open)}
+          >
+            <summary>
+              <SquareTerminal size={14} aria-hidden="true" />
+              Output
+              <span>Recorded cargo test</span>
+              <ChevronDown className="cw-last" size={14} aria-hidden="true" />
+            </summary>
+            <div>
+              <p>
+                {recorded
+                  ? 'These files match the tested fixture.'
+                  : 'These results belong to the tested fixture, not your current edits.'}
               </p>
-            </details>
-            <p>
-              Let me look at the GPUI element trait and the window&apos;s paint cycle to understand
-              where we can hook into the tree. I&apos;ll also check if there&apos;s any existing
-              accessibility scaffolding.
-            </p>
-          </div>
-        </div>
-      </div>
-      <footer className="cw-bar cw-conversation-footer">
-        <span>zed · gpu-accesskit / main</span>
-        <span className="cw-last cw-guided-label">Guided demo · local only</span>
-      </footer>
-    </section>
-  )
+              <code>cargo test --offline --locked --test parser -- --test-threads=1</code>
+              <pre>{recordedOutput}</pre>
+            </div>
+          </details>
 
-  const reviewPane = (
-    <section className="cw-review" aria-label="Code view">
-      <header className="cw-bar cw-review-bar">
-        <div role="tablist" aria-label="Open files" onKeyDown={tabKeys}>
-          {(['scheduler.tsx', 'catware.rs', 'uncommit'] as Tab[]).map((t) => (
-            <button
-              key={t}
-              role="tab"
-              aria-selected={tab === t}
-              tabIndex={tab === t ? 0 : -1}
-              onClick={() => setTab(t)}
-            >
-              {t === 'uncommit' ? 'Uncommit' : t}
-            </button>
-          ))}
-        </div>
-        <button className="cw-last" aria-label="Search in file">
-          <Search size={16} />
-        </button>
-      </header>
-      <div className="cw-review-body">
-        {tab === 'uncommit' ? (
-          <div className="cw-review-scroll">
-            <p className="cw-proposal-note">No uncommitted changes in this workspace.</p>
-          </div>
-        ) : (
-          <div className="cw-editor-content" role="tabpanel" aria-label={tab}>
-            <CodeEditor
-              key={tab}
-              path={`src/components/${tab}` as unknown as FilePath}
-              value={tab === 'scheduler.tsx' ? SCHEDULER_FIXTURE : CATWARE_FIXTURE}
-              onChange={() => {}}
-            />
-          </div>
-        )}
+          <footer className="cw-bar">
+            <span>{path.endsWith('.rs') ? 'Rust' : 'TOML'} · UTF-8</span>
+            <span className="cw-last">Editable · In memory</span>
+          </footer>
+        </section>
       </div>
-      <footer className="cw-bar cw-review-footer">
-        <span>{tab === 'catware.rs' ? 'Rust · UTF-8' : 'TypeScript · UTF-8'}</span>
-        <span className="cw-last">In memory</span>
-      </footer>
-    </section>
-  )
-
-  const content = (
-    <div className="copper-workspace" data-sidebar={sidebar} data-review={true} data-pane={pane}>
-      <div
-        className="cw-mobile-tabs"
-        role="tablist"
-        aria-label="Workspace panes"
-        onKeyDown={tabKeys}
-      >
-        {(['navigation', 'conversation', 'review'] as Pane[]).map((id) => (
-          <button
-            role="tab"
-            id={`cev-pane-${id}`}
-            aria-selected={pane === id}
-            tabIndex={pane === id ? 0 : -1}
-            key={id}
-            onClick={() => setPane(id)}
-          >
-            {id === 'navigation' ? 'Branches' : id === 'conversation' ? 'Conversation' : 'Code'}
-          </button>
-        ))}
-      </div>
-      <div className="cw-layout">
-        {sidebar ? (
-          navigation
-        ) : (
-          <aside className="cw-collapsed">
-            <button
-              aria-label="Expand sidebar"
-              onClick={() => {
-                setSidebar(true)
-                focus('[aria-label="Collapse sidebar"]')
-              }}
-            >
-              <PanelLeft size={17} />
-            </button>
-          </aside>
-        )}
-        {conversation}
-        {reviewPane}
-      </div>
-      <div className="cw-demo-controls">
-        <span>Editor demo · Scripted conversation. No live agent or compiler.</span>
-        <div>
-          <button
-            ref={expanded ? collapseRef : expandRef}
-            aria-label={expanded ? 'Collapse demo' : 'Expand demo'}
-            onClick={() => setExpanded(!expanded)}
-          >
-            {expanded ? <Minimize2 size={13} /> : <Maximize2 size={13} />}
-            {expanded ? 'Collapse' : 'Expand'}
-          </button>
-        </div>
-      </div>
+      <p id="copper-editor-help" className="cw-editor-help">
+        Editable code · Tab leaves the editor · ⌘/Ctrl Z to undo
+      </p>
     </div>
-  )
-
-  return (
-    <>
-      <div className="demo-inline-slot">{!expanded && content}</div>
-      <Dialog.Root open={expanded} onOpenChange={setExpanded}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="demo-overlay" />
-          <Dialog.Content
-            className="demo-expanded"
-            onOpenAutoFocus={(e) => {
-              e.preventDefault()
-              collapseRef.current?.focus()
-            }}
-            onCloseAutoFocus={(e) => {
-              e.preventDefault()
-              requestAnimationFrame(() => expandRef.current?.focus())
-            }}
-          >
-            <Dialog.Title className="sr-only">Copper editor demo</Dialog.Title>
-            <Dialog.Description className="sr-only">
-              Editor browser demonstration. Escape closes the expanded view. No live agent or
-              compiler is connected.
-            </Dialog.Description>
-            {expanded && content}
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-    </>
   )
 }

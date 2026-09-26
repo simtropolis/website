@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { latestStable } from './generate-releases.mjs'
 
 const base = process.argv[2] ?? 'http://127.0.0.1:3000'
+const expectPrivateAssets = process.env.SMOKE_EXPECT_PRIVATE_ASSETS === '1'
 for (const path of ['/', '/copper', '/releases', '/robots.txt', '/sitemap.xml']) {
   const response = await fetch(new URL(path, base), { redirect: 'manual' })
   assert.equal(response.status, 200, path)
@@ -15,17 +16,25 @@ assert.equal((await fetch(new URL('/releases/', base))).status, 200)
 console.log('/releases/: internal 308 → /releases → 200')
 assert.equal((await fetch(new URL('/nonexistent-verification-path', base))).status, 404)
 const html = await (await fetch(new URL('/releases', base))).text()
+const homeHtml = await (await fetch(new URL('/', base))).text()
 const copperHtml = await (await fetch(new URL('/copper', base))).text()
+assert.ok(homeHtml.includes('rel="canonical" href="https://simtropolis.ai"'))
 assert.ok(html.includes('rel="canonical" href="https://simtropolis.ai/releases"'))
 assert.ok(html.includes('property="og:url" content="https://simtropolis.ai/releases"'))
 assert.ok(copperHtml.includes('rel="canonical" href="https://simtropolis.ai/copper"'))
 assert.ok(copperHtml.includes('property="og:url" content="https://simtropolis.ai/copper"'))
 assert.ok(copperHtml.includes('content="https://simtropolis.ai/copper/social-card.png"'))
-assert.ok(copperHtml.includes('Building the Integral Development Experience'))
+assert.ok(homeHtml.includes('Focused development tools'))
+assert.ok(homeHtml.includes('Products built on Made'))
+assert.ok(homeHtml.includes('Copper'))
+assert.ok(homeHtml.includes('Orbit'))
+assert.ok(homeHtml.includes('Forge'))
+assert.ok(copperHtml.includes('Copper is a Rust'))
+assert.ok(homeHtml.includes('Enable JavaScript to edit files and use the demo controls.'))
 assert.ok(copperHtml.includes('application/ld+json'))
 assert.ok(
   !/simtropolis\.github\.io|made-release-site|RELEASES_URL|RELEASES_GITHUB_TOKEN|AMPLIFY_REBUILD_WEBHOOK/.test(
-    html + copperHtml,
+    homeHtml + html + copperHtml,
   ),
 )
 const sitemap = await (await fetch(new URL('/sitemap.xml', base))).text()
@@ -50,6 +59,11 @@ console.log('Latest stable release and all ' + releases.length + ' history entri
 for (const asset of stable.assets) {
   assert.ok(html.includes(asset.url), asset.name + ' must use its exact metadata URL')
   const response = await fetch(asset.url, { method: 'HEAD', signal: AbortSignal.timeout(30000) })
-  assert.equal(response.status, 200, asset.name)
-  console.log(asset.name + ': HTTP 200 (HEAD)')
+  assert.equal(response.status, expectPrivateAssets ? 404 : 200, asset.name)
+  console.log(
+    asset.name +
+      (expectPrivateAssets
+        ? ': HTTP 404 without repository authentication, as expected'
+        : ': HTTP 200 (HEAD)'),
+  )
 }

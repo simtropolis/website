@@ -1,48 +1,39 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
+import { ArrowDown, ArrowUpRight, Gamepad2, Orbit as OrbitIcon } from 'lucide-react'
 import { CopperDemo } from '@/components/copper-demo'
-import {
-  ArrowDown,
-  ArrowUpRight,
-  Braces,
-  GitBranch,
-  Terminal,
-  Sparkles,
-  Layers,
-  Cpu,
-} from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
-import { FAQ } from '@/components/faq'
-import { SourceCommand } from '@/components/source-command'
-import { repository, documentation, sourceGuide } from '@/lib/content'
+import { documentation } from '@/lib/content'
+import { products } from '@/lib/product-catalog'
 
-const capabilities = [
-  {
-    number: '01',
-    icon: Braces,
-    title: 'Rust, right at home.',
-    text: 'Built-in Rust support, rust-analyzer defaults, and toolchain onboarding. An environment that speaks your language.',
+export const metadata: Metadata = {
+  title: 'Simtropolis | Focused development tools',
+  description:
+    'Simtropolis builds focused development tools on Made. Copper is available for Rust development; Orbit and Forge are planned.',
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'Simtropolis | Focused development tools',
+    description:
+      'Made supplies the shared editor and agent foundation behind Simtropolis products. Copper is available for Rust development.',
+    url: '/',
+    siteName: 'Simtropolis',
+    type: 'website',
+    locale: 'en_GB',
   },
-  {
-    number: '02',
-    icon: Sparkles,
-    title: 'Agents in the workflow.',
-    text: 'Work with native agents, model providers, skills, and Agent Client Protocol integrations from inside your editor.',
+  twitter: {
+    card: 'summary',
+    title: 'Simtropolis | Focused development tools',
+    description:
+      'Made supplies the shared foundation behind Simtropolis products. Copper is available for Rust development.',
   },
-  {
-    number: '03',
-    icon: Terminal,
-    title: 'Keep Cargo close.',
-    text: 'A dedicated Cargo panel, build and run actions, and Rust test exploration. Less switching. More making.',
-  },
-  {
-    number: '04',
-    icon: GitBranch,
-    title: 'The whole workspace.',
-    text: 'A terminal, Git tools, a debugger, and remote development, built on the foundations of the Zed editor.',
-  },
-]
+}
+
+const productIcons = {
+  rust: <Image src="/copper.svg" alt="" width={72} height={72} />,
+  jvm: <OrbitIcon aria-hidden="true" />,
+  game: <Gamepad2 aria-hidden="true" />,
+}
 
 export default function Page() {
   return (
@@ -52,291 +43,83 @@ export default function Page() {
       </a>
       <SiteHeader />
       <main id="main">
-        <section className="hero wrap" aria-labelledby="hero-title">
-          <div className="hero-grid" aria-hidden="true">
-            {Array.from({ length: 9 }, (_, index) => (
-              <span key={index}>+</span>
-            ))}
-          </div>
+        <section className="home-hero wrap" aria-labelledby="hero-title">
+          <div className="home-hero-grid" aria-hidden="true" />
           <p className="eyebrow">
-            <span className="rule" /> Made by Simtropolis
+            <span className="rule" /> Simtropolis
           </p>
           <h1 id="hero-title">
-            Building the Integral
+            Focused development
             <br />
-            Development <em>Experience.</em>
+            <em>tools.</em>
           </h1>
-          <div className="hero-bottom">
+          <div className="home-hero-copy">
             <p>
-              Made stands for Multiplayer Agentic Development Environment — building focused
-              development environments from a shared, Zed-derived editor platform.
+              Simtropolis builds software for specific technical domains. Copper, our first
+              available product, focuses on Rust.
             </p>
-            <p>
-              An open platform for agentic software development — with you in control. One workspace
-              where people, tools, and specialised agents work together.
-            </p>
-            <div className="hero-actions">
-              <Button asChild className="pill">
-                <a href="/releases">
-                  Get Copper <ArrowUpRight size={17} />
-                </a>
-              </Button>
-              <a className="text-link" href="/copper">
-                Meet Copper <ArrowDown size={16} />
-              </a>
-            </div>
-          </div>
-          <div className="hero-footnote mono">
-            <span>Made / Multiplayer Agentic Development Environment</span>
-            <span>Building the Integral Development Experience</span>
-          </div>
-        </section>
-        <CopperDemo />
-        <div className="product-strip wrap">
-          <span className="eyebrow">
-            <span className="status-dot" /> Copper is available
-          </span>
-          <p>Rust at the core. Agents by your side.</p>
-          <span className="mono">macOS ARM64 · Windows x86_64 · Linux x86_64</span>
-        </div>
-
-        <section id="copper" className="section wrap" aria-labelledby="copper-title">
-          <div className="section-heading">
-            <p className="eyebrow">01 / Copper</p>
-            <div>
-              <h2 id="copper-title">
-                Less friction.
-                <br />
-                More <em>flow.</em>
-              </h2>
-              <p className="section-intro">
-                From the first line to the next commit.
-                <br />
-                Copper brings your Rust workflow together.
-              </p>
-            </div>
-          </div>
-          <div className="copper-panel">
-            <div className="copper-intro">
-              <div className="panel-label mono">
-                <span>
-                  <span className="status-dot" /> Currently enabled
-                </span>
-                <span>RUST / 001</span>
-              </div>
-              <div className="copper-name">
-                <h3>
-                  Copper<span>Built for your kind of work.</span>
-                </h3>
-                <Image src="/copper.svg" alt="Copper application icon" width={112} height={112} />
-              </div>
-              <p>
-                A focused desktop environment.
-                <br />A shared foundation. Room to build.
-              </p>
-              <a className="text-link light-link" href="/releases">
-                Find your download <ArrowUpRight size={18} />
-              </a>
-              <a className="text-link light-link" href="/copper">
-                Explore Copper <ArrowUpRight size={18} />
-              </a>
-            </div>
-            <div className="copper-tools">
-              <span className="eyebrow">In your corner</span>
-              <div>
-                <Braces size={23} />
-                <span>
-                  rust-analyzer<small>Language intelligence</small>
-                </span>
-              </div>
-              <div>
-                <Terminal size={23} />
-                <span>
-                  Cargo tooling<small>Build, run, and explore tests</small>
-                </span>
-              </div>
-              <div>
-                <Sparkles size={23} />
-                <span>
-                  Native agents<small>Context, skills, and model providers</small>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="capabilities">
-            {capabilities.map(({ number, icon: Icon, title, text }) => (
-              <article key={number}>
-                <div className="capability-top">
-                  <span className="mono">{number}</span>
-                  <Icon size={24} strokeWidth={1.3} />
-                </div>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section
-          id="platform"
-          className="platform-section section wrap"
-          aria-labelledby="platform-title"
-        >
-          <div className="section-heading">
-            <p className="eyebrow">02 / The platform</p>
-            <div>
-              <h2 id="platform-title">
-                One foundation.
-                <br />
-                Different <em>possibilities.</em>
-              </h2>
-              <p className="section-intro">
-                Made is our Multiplayer Agentic Development Environment platform. We’re building
-                focused tools on a shared, Zed-derived editor.
-              </p>
-            </div>
-          </div>
-          <div className="platform-grid">
-            <article className="platform-card">
-              <Cpu size={28} strokeWidth={1.3} />
-              <h3>A capable starting point.</h3>
-              <p>
-                A GPU-accelerated GPUI editor, language servers, Tree-sitter, and WASM extensions.
-                Proven editor foundations, carried forward into focused environments.
-              </p>
-              <a className="text-link" href={`${repository}/tree/main/crates`}>
-                Explore the source <ArrowUpRight size={16} />
-              </a>
-            </article>
-            <div className="product-catalog">
-              <div className="catalog-row">
-                <span className="catalog-index mono">01</span>
-                <div>
-                  <h3>Copper</h3>
-                  <p>Rust development</p>
-                </div>
-                <span className="badge available">Available</span>
-              </div>
-              <div className="catalog-row">
-                <span className="catalog-index mono">02</span>
-                <div>
-                  <h3>Orbit</h3>
-                  <p>JVM development</p>
-                </div>
-                <span className="badge">Planned</span>
-              </div>
-              <div className="catalog-row">
-                <span className="catalog-index mono">03</span>
-                <div>
-                  <h3>Forge</h3>
-                  <p>Game development</p>
-                </div>
-                <span className="badge">Planned</span>
-              </div>
-            </div>
-          </div>
-          <div className="opt-in-note">
-            <Layers size={21} />
-            <p>
-              <strong>More to explore, by choice.</strong> Made’s full multiplayer workspace and
-              native visual workflows are opt-in features. They are not included in the standard
-              Copper release.
-            </p>
-            <a href={`${repository}/blob/main/docs/src/development/multiplayer-tools.md`}>
-              Build profiles <ArrowUpRight size={15} />
+            <a className="text-link" href="#products">
+              View the products <ArrowDown size={16} />
             </a>
           </div>
         </section>
 
-        <section id="get-started" className="section wrap" aria-labelledby="start-title">
-          <div className="section-heading">
-            <p className="eyebrow">03 / Get started</p>
-            <div>
-              <h2 id="start-title">
-                Open a project.
-                <br />
-                Make it <em>yours.</em>
-              </h2>
-            </div>
-          </div>
-          <div className="start-grid">
-            <div className="steps">
-              <article>
-                <span className="mono">I</span>
-                <div>
-                  <h3>Choose your download.</h3>
-                  <p>Find the latest Copper release for your operating system and architecture.</p>
-                  <a className="text-link" href="/releases">
-                    View releases <ArrowUpRight size={16} />
-                  </a>
-                </div>
-              </article>
-              <article>
-                <span className="mono">II</span>
-                <div>
-                  <h3>Bring your Rust project.</h3>
-                  <p>Open your workspace and follow Rust toolchain onboarding to get set up.</p>
-                </div>
-              </article>
-              <article>
-                <span className="mono">III</span>
-                <div>
-                  <h3>Build with your tools together.</h3>
-                  <p>
-                    Use Cargo, explore tests, and work with native agents in the same environment.
-                  </p>
-                </div>
-              </article>
-            </div>
-            <div>
-              <SourceCommand />
-              <p className="source-prerequisites">
-                Building from source requires Git, Rustup, and your platform’s native dependencies.{' '}
-                <a href={sourceGuide}>
-                  Read the setup guide <ArrowUpRight size={13} />
-                </a>
-              </p>
-              <a className="text-link" href={documentation}>
-                Read the project documentation <ArrowUpRight size={16} />
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section id="faq" className="faq-section section wrap" aria-labelledby="faq-title">
+        <section id="made" className="home-made wrap" aria-labelledby="made-title">
+          <p className="eyebrow">01 / Made</p>
           <div>
-            <p className="eyebrow">A few details</p>
-            <h2 id="faq-title">
-              Good
-              <br />
-              <em>questions.</em>
-            </h2>
+            <h2 id="made-title">Made supplies the shared code behind our products.</h2>
             <p>
-              Made is under active development.
-              <br />
-              Here’s where things stand.
+              It combines editor, language server, terminal, Git, debugger, and agent
+              infrastructure. Product profiles select the tools, defaults, and release targets that
+              ship together.
             </p>
+            <a className="text-link" href={documentation}>
+              Documentation <ArrowUpRight size={16} />
+            </a>
           </div>
-          <FAQ />
         </section>
 
-        <section className="closing-section wrap" aria-labelledby="closing-title">
-          <p className="eyebrow">The next line is yours</p>
-          <div>
-            <h2 id="closing-title">
-              Let’s make
-              <br />
-              something <em>Made.</em>
-            </h2>
-            <Button asChild className="pill">
-              <a href="/releases">
-                Get Copper <ArrowUpRight size={18} />
-              </a>
-            </Button>
+        <section id="products" className="home-products wrap" aria-labelledby="products-title">
+          <div className="home-section-heading">
+            <p className="eyebrow">02 / Products</p>
+            <h2 id="products-title">Products built on Made.</h2>
+          </div>
+          <div className="home-product-grid">
+            {products.map((product, index) => (
+              <article
+                className={`home-product-card ${product.status === 'Available' ? 'is-available' : 'is-planned'}`}
+                key={product.id}
+              >
+                <div className="home-product-top">
+                  <span className="mono">0{index + 1}</span>
+                  <span className={`home-product-status ${product.status.toLowerCase()}`}>
+                    {product.status}
+                  </span>
+                </div>
+                <div className="home-product-icon">{productIcons[product.id]}</div>
+                <p className="home-product-area">{product.area}</p>
+                <h3>{product.name}</h3>
+                <p>{product.description}</p>
+                {product.productHref && product.releasesHref ? (
+                  <div className="home-product-actions">
+                    <a href={product.productHref}>
+                      Copper details <ArrowUpRight size={15} />
+                    </a>
+                    <a href={product.releasesHref}>
+                      Releases <ArrowUpRight size={15} />
+                    </a>
+                  </div>
+                ) : (
+                  <p className="home-product-boundary">No build or download is available.</p>
+                )}
+              </article>
+            ))}
           </div>
         </section>
+
+        <CopperDemo />
       </main>
-      <SiteFooter />
+      <SiteFooter minimal />
     </>
   )
 }

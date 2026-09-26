@@ -4,20 +4,20 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 export function CopperMascot() {
-  const [greeting, setGreeting] = useState(false)
+  const [details, setDetails] = useState(false)
 
   return (
     <figure className="cp-mascot">
       <span className="cp-mascot-coordinate mono" aria-hidden="true">
-        Rust, with character
+        Copper mascot
       </span>
       <span className="cp-mascot-orbit" aria-hidden="true" />
       <button
         className="cp-mascot-button"
         type="button"
-        aria-pressed={greeting}
-        aria-label={greeting ? 'Hide Copper mascot greeting' : 'Say hello to the Copper mascot'}
-        onClick={() => setGreeting((current) => !current)}
+        aria-pressed={details}
+        aria-label={details ? 'Hide mascot note' : 'Show mascot note'}
+        onClick={() => setDetails((current) => !current)}
       >
         <Image
           src="/copper/rust-mascot.png"
@@ -28,13 +28,11 @@ export function CopperMascot() {
         />
       </button>
       <figcaption>
-        <span>
-          {greeting ? 'Hello. Let’s build something sturdy.' : 'A serious tool can still smile.'}
-        </span>
-        <small aria-hidden="true">Psst. Say hello ↗</small>
+        <span>{details ? 'Artwork supplied by Simtropolis.' : 'The Copper Rust mascot.'}</span>
+        <small aria-hidden="true">{details ? 'Hide note ↗' : 'Artwork note ↗'}</small>
       </figcaption>
       <p className="sr-only" role="status" aria-live="polite">
-        {greeting ? 'The Copper mascot says hello.' : ''}
+        {details ? 'Mascot artwork supplied by Simtropolis.' : ''}
       </p>
     </figure>
   )

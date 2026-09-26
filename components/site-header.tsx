@@ -14,9 +14,9 @@ import {
 import { repository } from '@/lib/content'
 
 const links = [
+  { href: '/#products', label: 'Products' },
+  { href: '/#demo', label: 'Demo' },
   { href: '/copper', label: 'Copper' },
-  { href: '/#platform', label: 'The platform' },
-  { href: '/#get-started', label: 'Get started' },
   { href: '/releases', label: 'Releases' },
 ]
 
@@ -39,11 +39,11 @@ export function SiteHeader() {
       </nav>
       <div className="header-actions">
         <a className="source-link" href={repository}>
-          GitHub <ArrowUpRight size={14} />
+          Source <ArrowUpRight size={14} />
         </a>
         <Button asChild className="pill header-cta">
           <a href="/releases">
-            Get Copper <ArrowUpRight size={16} />
+            Download Copper <ArrowUpRight size={16} />
           </a>
         </Button>
         <Sheet open={open} onOpenChange={setOpen}>
@@ -59,9 +59,9 @@ export function SiteHeader() {
           </SheetTrigger>
           <SheetContent className="mobile-sheet">
             <SheetTitle className="wordmark">simtropolis✳</SheetTitle>
-            <SheetDescription>An open platform for agentic software development.</SheetDescription>
+            <SheetDescription>Focused development tools built on Made.</SheetDescription>
             <nav aria-label="Mobile navigation">
-              {[...links, { href: repository, label: 'GitHub' }].map((link) => (
+              {[...links, { href: repository, label: 'Source' }].map((link) => (
                 <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
                   {link.label}
                   <ArrowUpRight size={20} />

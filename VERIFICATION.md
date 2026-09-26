@@ -1,5 +1,42 @@
 # Verification — Amplify hosting, 7 September 2026
 
+## Company homepage and product catalog — 26 September 2026
+
+The homepage now introduces Simtropolis, explains Made once, renders the Made product catalog, and then presents the guided Copper demo. Copper is labelled Available and links to `/copper` and `/releases`. Orbit and Forge are labelled Planned and have no action links. This status model was checked against the current Made `products/flavors.toml`, README, build profiles, workflows, and authenticated release metadata. Copper remains the only enabled product and `rust-v1.16.6` remains the latest stable release with Linux x86_64, macOS ARM64, and Windows x86_64 assets.
+
+The demo now has Collaborative and Editor views over one Rust fixture and one parent-owned file state. The Editor view provides file navigation, tabs, editable CodeMirror content with syntax and line gutters, proposal review, recorded output, and mobile Files/Code/Review tabs. Browser checks confirmed cross-file and cross-view edit retention, explicit conflict handling, reset confirmation, expanded-view Escape and focus restoration, keyboard tab switching, mobile pane switching, and the recorded/local disclosure.
+
+Local validation passed:
+
+- ESLint, TypeScript, 24 Node release/build tests, 17 release/demo rendering tests, and both Rust fixture suites.
+- A production Next.js build using the existing, explicitly identified release snapshot. The normal fresh-snapshot wrapper failed closed because the local shell has no valid `RELEASES_GITHUB_TOKEN`; Amplify's configured token was not read or exposed.
+- The production smoke check returned 200 for `/`, `/copper`, `/releases`, `/robots.txt`, and `/sitemap.xml`; `/releases/` returned the expected internal 308 before 200. It verified canonical and social metadata, structured data, all five history entries, and every current asset URL.
+- Desktop browser checks at 1440 and 1920 CSS pixels and mobile checks at 390 and 320 CSS pixels. The product grid and both demo views had no horizontal document overflow, console error, or hydration warning. Screenshots of those states were captured in the browser session.
+- Homepage first-load JavaScript remains 138 kB. The lazy demo is 444,103 raw bytes and 145,150 gzip bytes, 2,541 gzip bytes above the preceding single-view measurement. The editor remains behind the existing lazy boundary and is absent from server HTML.
+
+The public copy passed the Simtropolis `brand-writer` rubric after the `humanizer` pass: technical grounding 5/5, natural syntax 5/5, quiet confidence 5/5, developer respect 5/5, information priority 5/5, specificity and status 5/5, voice and product consistency 5/5, and earned claims 5/5. The taboo-language scan was clear. The root `bun run format:check` still reports the pre-existing, untracked `.agents/skills/humanizer/SKILL.md`; every file changed for this homepage work passes the repository formatter.
+
+No commit, push, Amplify build, or production-site change was made.
+
+## Content audit — 25 September 2026
+
+The homepage, `/copper`, the browser demo, `/releases`, shared navigation and footer, loading/error/no-JavaScript text, route metadata, structured data, and public-messaging sections of the README were reviewed with the repository `brand-writer` skill and then the `humanizer` skill. The resulting inventory, factual sources, scorecard, and intentional repetition are recorded in [CONTENT_AUDIT.md](CONTENT_AUDIT.md).
+
+The rewrite assigns one job to each surface. The homepage introduces Simtropolis, Made, Copper, and developer control. `/copper` documents current capabilities, agent controls, release scope, and practical FAQs. The browser demo supplies a concrete Rust example. `/releases` handles downloads, history, repository access, signing, and updates. Duplicate homepage capability, FAQ, and closing sections were removed, as was the alternate demo mode with unrelated fixtures.
+
+Product claims were checked against Made default-branch commit `5c824980796c0896c6f5cf3067fbcb206af1d835`, local development commit `7c19425ff56e4816dabb5fa851c666a248d18a14`, the product manifest, README, build-profile documentation, agent and Cargo code, and authenticated GitHub metadata. GitHub reported the Made repository as private with `main` as its default branch. The latest release remained stable `rust-v1.16.6`, published 5 September 2026, with the three Linux x86_64, macOS ARM64, and Windows x86_64 assets rendered by the site’s fresh build snapshot.
+
+Local validation passed:
+
+- Prettier, ESLint, TypeScript, 24 Node release/build tests, 16 release/demo rendering tests, and both Rust fixture suites.
+- A credentialed production build generated five Copper releases and prerendered `/`, `/copper`, `/releases`, `/robots.txt`, and `/sitemap.xml`.
+- The production smoke script passed with `SMOKE_EXPECT_PRIVATE_ASSETS=1`: local routes returned 200 for `/`, `/copper`, and `/releases`; `/releases/` returned the expected internal 308 to `/releases`; an unknown route returned 404. It verified each exact asset URL and confirmed that GitHub returns 404 without repository authentication.
+- Canonical, Open Graph, Twitter, sitemap, robots, structured data, exact GitHub asset URLs, no-JavaScript copy, and accessibility names were inspected.
+- Browser checks found no console or hydration messages. Desktop captures at 1440 and 1920 pixels and exact mobile emulation at 390 and 320 CSS pixels showed no horizontal overflow or poor heading wraps.
+- Current route output is 138 kB first-load JavaScript for `/` and 139 kB for `/copper`. The prior Copper report was 140 kB. The single lazy demo now totals 436,763 raw bytes and 142,609 gzip bytes, about 1.3 kB less gzip than the previous two-mode measurement. These are build sizes, not network performance claims.
+
+All checks were local. No commit, push, Amplify build, or production-site change was made for this content audit.
+
 ## Copper product-page update — 25 September 2026
 
 Work was performed on `codex/copper-integral-experience`, created from website `main` at `25c61383ab638f36a4195b04aca679e3ba214f7a`. The supplied `copper-website.zip` was inspected as reference material; only its mascot and social card were copied, byte-for-byte. The standalone HTML, deployment scripts, documentation, build output, and historical QA evidence are not part of the application.

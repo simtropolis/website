@@ -132,7 +132,7 @@ export const initialThreads: DemoThread[] = [
     unread: false,
     archived: false,
     section: 'threads',
-    note: 'Select Files, edit a file, and switch tabs. Your text is retained in memory. Reset restores code, thread names, pins, read states, panels, and the guided conversation after confirmation.',
+    note: 'Select Files, edit a file, and switch tabs. Your text stays in memory. Reset restores the code, thread state, and panel layout after confirmation.',
   },
 ]
 export type ThreadAction =

@@ -8,9 +8,9 @@ import { readReleases } from '@/lib/releases'
 import { sourceGuide } from '@/lib/content'
 
 export const dynamic = 'force-static'
-const title = 'Copper releases — Made by Simtropolis'
+const title = 'Copper releases | Simtropolis'
 const description =
-  'Browse Copper releases for macOS, Windows, and Linux, with exact GitHub assets, release notes, and previous versions.'
+  'Download published Copper builds for macOS, Windows, and Linux, and read the release history.'
 export const metadata: Metadata = {
   title,
   description,
@@ -31,17 +31,13 @@ export default async function ReleasesPage() {
         <section className="release-hero wrap">
           <p className="eyebrow">
             <span className="rule" />
-            Made / Downloads &amp; releases
+            Copper / Downloads
           </p>
           <h1>
             Copper <em>releases.</em>
           </h1>
           <div className="release-hero-bottom">
-            <p>
-              Downloads and release notes.
-              <br />
-              Your next step with Copper, the Rust environment from Made.
-            </p>
+            <p>Download a published build and read its notes, including previous versions.</p>
             <Image
               src="/copper.svg"
               alt="Copper application icon"
@@ -54,14 +50,14 @@ export default async function ReleasesPage() {
         <ReleaseList {...data} />
         <section className="release-source wrap">
           <div>
-            <p className="eyebrow">Made to be explored</p>
+            <p className="eyebrow">Source build</p>
             <h2>
-              Prefer the <em>source?</em>
+              Build <em>Copper.</em>
             </h2>
-            <p>Read the code, build Copper, or contribute to what comes next.</p>
+            <p>The setup guide lists the Rust toolchain and platform dependencies.</p>
           </div>
           <a className="pill" href={sourceGuide}>
-            Build from source ↗
+            Documentation ↗
           </a>
         </section>
       </main>

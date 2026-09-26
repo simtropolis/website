@@ -35,8 +35,10 @@ import {
 import { initialThreads, threadReducer, type DemoThread } from '@/lib/copper-threads'
 import CodeEditor from './code-editor'
 import { Counts, DiffCard } from './diff-view'
+import EditorView from './editor-view'
 
 type Pane = 'navigation' | 'conversation' | 'review'
+type Experience = 'collaborative' | 'editor'
 type Menu = { id: string; x: number; y: number; origin: HTMLElement } | null
 const mainId = 'safety'
 function tabKeys(event: KeyboardEvent<HTMLElement>) {
@@ -67,6 +69,8 @@ export default function Workspace() {
   )
   const [selected, setSelected] = useState(mainId)
   const [path, setPath] = useState<FilePath>('src/lib.rs')
+  const [experience, setExperience] = useState<Experience>('collaborative')
+  const [editorMode, setEditorMode] = useState<'code' | 'review'>('code')
   const [mode, setMode] = useState<'threads' | 'files'>('threads')
   const [review, setReview] = useState(true)
   const [sidebar, setSidebar] = useState(true)
@@ -84,9 +88,7 @@ export default function Workspace() {
   const [rename, setRename] = useState<string | null>(null)
   const [name, setName] = useState('')
   const [confirm, setConfirm] = useState<'reset' | 'replace' | null>(null)
-  const [notice, setNotice] = useState(
-    'Guided conversation loaded. Review the proposal or edit a file.',
-  )
+  const [notice, setNotice] = useState('Sample task loaded. Review the patch or edit a file.')
   const expandRef = useRef<HTMLButtonElement>(null)
   const collapseRef = useRef<HTMLButtonElement>(null)
   const resetRef = useRef<HTMLButtonElement>(null)
@@ -143,7 +145,7 @@ export default function Workspace() {
     setSelected(thread.id)
     if (thread.unread) dispatch({ type: 'read', id: thread.id })
     setPane('conversation')
-    setNotice(`Opened demo thread: ${thread.title}`)
+    setNotice(`Opened sample thread: ${thread.title}`)
     conversationRef.current?.scrollTo({ top: 0 })
     focus('#cw-pane-conversation')
   }
@@ -184,6 +186,8 @@ export default function Workspace() {
     dispatch({ type: 'reset' })
     setSelected(mainId)
     setPath('src/lib.rs')
+    setExperience('collaborative')
+    setEditorMode('code')
     setMode('threads')
     setReview(true)
     setSidebar(true)
@@ -199,7 +203,7 @@ export default function Workspace() {
     setMenu(null)
     setRename(null)
     setConfirm(null)
-    setNotice('Complete guided workspace reset: files, threads, read states, pins and panels.')
+    setNotice('Sample reset: files, threads, read states, pins, and panels restored.')
     conversationRef.current?.scrollTo({ top: 0 })
     requestAnimationFrame(() => resetRef.current?.focus())
   }
@@ -355,7 +359,7 @@ export default function Workspace() {
                   id="cw-search"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Find a demo thread…"
+                  placeholder="Find a sample thread…"
                 />
               </label>
             )}
@@ -404,7 +408,7 @@ export default function Workspace() {
               </button>
             ))}
             <p className="cw-file-note">
-              Edits stay in browser memory.
+              Edits stay in this browser tab.
               <br />
               The sample changes {changedPaths.length} files.
             </p>
@@ -450,7 +454,7 @@ export default function Workspace() {
             Y
           </span>
           <div>
-            <p className="cw-sample-label">You · sample request</p>
+            <p className="cw-sample-label">Sample request</p>
             <p>
               {selected === mainId
                 ? 'Make this port parser return an error instead of panicking. Keep whitespace handling, update the caller, and add tests for bad input.'
@@ -474,11 +478,10 @@ export default function Workspace() {
                     Read 2 files, prepared {changedPaths.length} changes <ChevronRight size={13} />
                   </summary>
                   <p>
-                    Recorded activity: inspected{' '}
+                    Inspected{' '}
                     <button onClick={() => openFile('src/lib.rs', true)}>src/lib.rs</button> and{' '}
                     <button onClick={() => openFile('src/main.rs', true)}>src/main.rs</button>.
-                    Identified the unwrap call and checked the existing whitespace test. No agent
-                    ran in this browser.
+                    Found the unwrap call and checked the existing whitespace test.
                   </p>
                 </details>
                 <p>
@@ -515,7 +518,7 @@ export default function Workspace() {
                 AI
               </span>
               <div>
-                <p className="cw-activity-label">Updated the caller · recorded</p>
+                <p className="cw-activity-label">Recorded activity · updated the caller</p>
                 <button className="cw-file-reference" onClick={() => openFile('src/main.rs')}>
                   Edit <u>src/main.rs</u> <ChevronDown size={13} />
                 </button>
@@ -545,7 +548,7 @@ export default function Workspace() {
                 AI
               </span>
               <div>
-                <p className="cw-activity-label">Added four error cases · recorded</p>
+                <p className="cw-activity-label">Recorded activity · added four error cases</p>
                 <button className="cw-file-reference" onClick={() => openFile('tests/parser.rs')}>
                   Edit <u>tests/parser.rs</u> <ChevronDown size={13} />
                 </button>
@@ -568,17 +571,17 @@ export default function Workspace() {
                   <div>
                     <p>
                       {exact
-                        ? 'These files match the recorded fixture. Nothing ran in your browser.'
-                        : 'These results are from the patched fixture, not your current edits.'}
+                        ? 'These files match the tested fixture.'
+                        : 'These results belong to the tested fixture, not your current edits.'}
                     </p>
                     <code>cargo test --offline --locked --test parser -- --test-threads=1</code>
                     <pre>{recordedOutput}</pre>
                   </div>
                 </details>
                 <p>
-                  The recorded patched fixture passes six tests: the two original success cases and
-                  four invalid-input cases. This example parses the <code>u16</code> range; it does
-                  not enforce every network-port policy.
+                  The tested fixture passes six tests: two success cases and four invalid-input
+                  cases. It parses the <code>u16</code> range rather than enforcing every
+                  network-port policy.
                 </p>
                 <p className="cw-task-status">
                   {applied
@@ -604,7 +607,7 @@ export default function Workspace() {
                 AI
               </span>
               <div>
-                <p className="cw-activity-label">Guided explanation · no live execution</p>
+                <p className="cw-activity-label">Recorded explanation</p>
                 <p>{current.note}</p>
                 <button
                   className="cw-file-reference"
@@ -623,10 +626,7 @@ export default function Workspace() {
                 >
                   Open the related file <ChevronRight size={13} />
                 </button>
-                <p>
-                  Return to the parser task to review the complete proposal and the recorded test
-                  output.
-                </p>
+                <p>Return to the parser task for the complete patch and recorded test output.</p>
                 <button
                   className="cw-apply"
                   onClick={() => selectThread(threads.find((t) => t.id === mainId)!)}
@@ -653,7 +653,7 @@ export default function Workspace() {
         <button aria-label="Open sample changes" onClick={() => openFile('src/lib.rs')}>
           <Counts />
         </button>
-        <span className="cw-last cw-guided-label">Guided demo · local only</span>
+        <span className="cw-last cw-guided-label">Sample task</span>
       </footer>
     </section>
   )
@@ -702,7 +702,7 @@ export default function Workspace() {
         {view === 'review' ? (
           <div className="cw-review-scroll" tabIndex={0} aria-label="Scrollable proposed changes">
             <p className="cw-proposal-note">
-              {changedPaths.length} files · Original → proposed. Excludes your edits.
+              {changedPaths.length} files · Proposed patch against the original fixture.
             </p>
             {changedPaths.map((file) => (
               <article
@@ -762,55 +762,115 @@ export default function Workspace() {
   )
 
   const content = (
-    <div className="copper-workspace" data-sidebar={sidebar} data-review={review} data-pane={pane}>
+    <div
+      className="copper-workspace"
+      data-sidebar={sidebar}
+      data-review={review}
+      data-pane={pane}
+      data-experience={experience}
+    >
       <div
-        className="cw-mobile-tabs"
+        className="cw-experience-switch"
         role="tablist"
-        aria-label="Workspace panes"
+        aria-label="Copper demo view"
         onKeyDown={tabKeys}
       >
-        {(['navigation', 'conversation', 'review'] as Pane[]).map((id) => (
+        {(['collaborative', 'editor'] as Experience[]).map((id) => (
           <button
             role="tab"
-            id={`cw-pane-${id}`}
-            aria-selected={pane === id}
-            tabIndex={pane === id ? 0 : -1}
+            id={`cw-experience-${id}`}
+            aria-controls="cw-experience-panel"
+            aria-selected={experience === id}
+            tabIndex={experience === id ? 0 : -1}
             key={id}
             onClick={() => {
-              setPane(id)
-              if (id === 'review') setReview(true)
-              if (id === 'navigation') setSidebar(true)
+              setExperience(id)
+              setNotice(`${id === 'collaborative' ? 'Collaborative' : 'Editor'} view opened.`)
             }}
           >
-            {id === 'navigation'
-              ? 'Threads / Files'
-              : id === 'conversation'
-                ? 'Conversation'
-                : 'Review / Code'}
+            {id === 'collaborative' ? 'Collaborative' : 'Editor'}
           </button>
         ))}
+        <span>One local Rust fixture</span>
       </div>
-      <div className="cw-layout">
-        {sidebar ? (
-          navigation
-        ) : (
-          <aside className="cw-collapsed">
-            <button
-              aria-label="Expand sidebar"
-              onClick={() => {
-                setSidebar(true)
-                focus('[aria-label="Collapse sidebar"]')
-              }}
+      <div
+        id="cw-experience-panel"
+        role="tabpanel"
+        aria-labelledby={`cw-experience-${experience}`}
+        className="cw-experience-panel"
+      >
+        {experience === 'collaborative' ? (
+          <>
+            <div
+              className="cw-mobile-tabs"
+              role="tablist"
+              aria-label="Collaborative panes"
+              onKeyDown={tabKeys}
             >
-              <PanelLeft size={17} />
-            </button>
-          </aside>
+              {(['navigation', 'conversation', 'review'] as Pane[]).map((id) => (
+                <button
+                  role="tab"
+                  id={`cw-pane-${id}`}
+                  aria-selected={pane === id}
+                  tabIndex={pane === id ? 0 : -1}
+                  key={id}
+                  onClick={() => {
+                    setPane(id)
+                    if (id === 'review') setReview(true)
+                    if (id === 'navigation') setSidebar(true)
+                  }}
+                >
+                  {id === 'navigation'
+                    ? 'Threads / Files'
+                    : id === 'conversation'
+                      ? 'Conversation'
+                      : 'Review / Code'}
+                </button>
+              ))}
+            </div>
+            <div className="cw-layout">
+              {sidebar ? (
+                navigation
+              ) : (
+                <aside className="cw-collapsed">
+                  <button
+                    aria-label="Expand sidebar"
+                    onClick={() => {
+                      setSidebar(true)
+                      focus('[aria-label="Collapse sidebar"]')
+                    }}
+                  >
+                    <PanelLeft size={17} />
+                  </button>
+                </aside>
+              )}
+              {conversation}
+              {review && reviewPane}
+            </div>
+          </>
+        ) : (
+          <EditorView
+            files={files}
+            path={path}
+            mode={editorMode}
+            output={output}
+            applied={applied}
+            recorded={exact}
+            onSelectFile={setPath}
+            onModeChange={setEditorMode}
+            onChange={(file, value) => setFiles((old) => ({ ...old, [file]: value }))}
+            onApply={apply}
+            onOutputChange={setOutput}
+          />
         )}
-        {conversation}
-        {review && reviewPane}
       </div>
       <div className="cw-demo-controls">
-        <span>Guided demo · Scripted activity, recorded tests. No live execution.</span>
+        <span>
+          Guided local demo ·{' '}
+          {experience === 'collaborative'
+            ? 'Recorded agent activity'
+            : 'Editable files and recorded output'}
+        </span>
         <div>
           <button ref={resetRef} aria-label="Reset demo" onClick={() => openConfirm('reset')}>
             <RotateCcw size={13} /> Reset
@@ -897,7 +957,7 @@ export default function Workspace() {
         <div
           className="cw-local-prompt"
           role="dialog"
-          aria-label="Rename demo thread"
+          aria-label="Rename sample thread"
           onKeyDown={(e) => {
             if (e.key === 'Escape') {
               e.stopPropagation()
@@ -916,7 +976,7 @@ export default function Workspace() {
               setNotice('Thread renamed locally.')
             }}
           >
-            <label htmlFor="cw-thread-name">Rename demo thread</label>
+            <label htmlFor="cw-thread-name">Rename sample thread</label>
             <input
               id="cw-thread-name"
               ref={nameRef}
@@ -954,13 +1014,13 @@ export default function Workspace() {
           }}
           role="alertdialog"
           aria-label={
-            confirm === 'reset' ? 'Reset guided workspace' : 'Sample conflicts with your edits'
+            confirm === 'reset' ? 'Reset sample task' : 'Sample conflicts with your edits'
           }
         >
           <div>
             <strong>
               {confirm === 'reset'
-                ? 'Reset the complete guided workspace?'
+                ? 'Reset files, thread changes, and panel settings?'
                 : 'Your edits need a decision.'}
             </strong>
             <p>
@@ -1038,10 +1098,10 @@ export default function Workspace() {
               requestAnimationFrame(() => expandRef.current?.focus())
             }}
           >
-            <Dialog.Title className="sr-only">Copper guided workspace</Dialog.Title>
+            <Dialog.Title className="sr-only">Copper browser demo</Dialog.Title>
             <Dialog.Description className="sr-only">
-              Conversation-first browser demonstration. Escape closes the expanded view. No live
-              agent or compiler is connected.
+              Local interface demo with recorded agent and test activity. Escape closes the expanded
+              view.
             </Dialog.Description>
             {expanded && content}
           </Dialog.Content>

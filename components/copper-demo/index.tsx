@@ -5,7 +5,6 @@ import { ArrowUpRight, Braces } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import './demo.css'
 
-const EditorView = lazy(() => import('./editor-view'))
 const Workspace = lazy(() => import('./workspace'))
 
 function Preview({ children }: { children: ReactNode }) {
@@ -15,13 +14,12 @@ function Preview({ children }: { children: ReactNode }) {
         <Braces size={18} aria-hidden="true" /> Copper <span>port-parser / src/lib.rs</span>
       </div>
       <div className="demo-preview-body">
-        <p className="eyebrow">A small Rust workspace</p>
+        <p className="eyebrow">Local Rust example</p>
         <pre>
           {'pub fn parse_port(input: &str) -> u16 {\n    input.trim().parse::<u16>().unwrap()\n}'}
         </pre>
         <p>
-          Turn a panic into a useful error. Explore the files, review a sample patch, and make an
-          edit of your own.
+          Replace a panic with a Result, inspect the proposed patch, and edit the files in memory.
         </p>
         {children}
       </div>
@@ -38,7 +36,7 @@ class DemoBoundary extends Component<{ children: ReactNode }, { failed: boolean 
     return this.state.failed ? (
       <Preview>
         <p role="status">
-          The interactive demo couldn&apos;t load. You can still explore the full editor.
+          The browser demo couldn&apos;t load. Copper releases are still available below.
         </p>
         <a className="text-link" href="/releases">
           Download Copper <ArrowUpRight size={16} />
@@ -52,7 +50,6 @@ class DemoBoundary extends Component<{ children: ReactNode }, { failed: boolean 
 
 export function CopperDemo() {
   const [ready, setReady] = useState(false)
-  const [view, setView] = useState<'editor' | 'workspace'>('workspace')
   const anchor = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -75,10 +72,10 @@ export function CopperDemo() {
       <div className="demo-intro">
         <div>
           <p className="eyebrow">
-            <span className="rule" /> A little room to experiment
+            <span className="rule" /> Guided local demo
           </p>
           <h2 id="demo-title">
-            Follow the work. <em>Review the evidence.</em>
+            Follow the task, then <em>edit the code.</em>
           </h2>
         </div>
         <a href="/releases" className="text-link">
@@ -86,44 +83,20 @@ export function CopperDemo() {
         </a>
       </div>
       <p className="demo-description">
-        Edit the sample directly, or follow a recorded task from request and tool activity to tests
-        and a reviewable diff.
+        Collaborative shows the recorded request, tool activity, output, and proposed diff. Editor
+        opens the same Rust files for editing and review.
       </p>
-      <div className="cw-view-toggle" role="group" aria-label="Demo view">
-        <button
-          aria-pressed={view === 'editor'}
-          onClick={() => {
-            setView('editor')
-            setReady(true)
-          }}
-        >
-          Editor
-        </button>
-        <button
-          aria-pressed={view === 'workspace'}
-          onClick={() => {
-            setView('workspace')
-            setReady(true)
-          }}
-        >
-          Workspace
-        </button>
-      </div>
       <div ref={anchor} className="demo-reserved">
         <DemoBoundary>
           {ready ? (
             <Suspense
               fallback={
                 <Preview>
-                  <p role="status">
-                    {view === 'editor'
-                      ? 'Loading the editor demo…'
-                      : 'Loading the guided workspace…'}
-                  </p>
+                  <p role="status">Loading the guided task…</p>
                 </Preview>
               }
             >
-              {view === 'editor' ? <EditorView /> : <Workspace />}
+              <Workspace />
             </Suspense>
           ) : (
             <Preview>
@@ -131,16 +104,16 @@ export function CopperDemo() {
                 Open guided demo <ArrowUpRight size={16} />
               </Button>
               <noscript>
-                <p>Enable JavaScript to edit files and explore the guided task.</p>
+                <p>Enable JavaScript to edit files and use the demo controls.</p>
               </noscript>
             </Preview>
           )}
         </DemoBoundary>
       </div>
       <p className="demo-disclaimer">
-        Guided browser demo · Editable code stays in memory. Agent activity and test output are
-        recorded fixtures, not a live agent or compiler.{' '}
-        <a href="https://github.com/simtropolis/made">Explore the native Copper editor ↗</a>
+        Guided local interface. Edits stay in browser memory. The conversation and test output are
+        recorded fixtures; no live agent, compiler, backend, or multiplayer session is connected.{' '}
+        <a href="https://github.com/simtropolis/made">Source ↗</a>
       </p>
     </section>
   )

@@ -8,8 +8,14 @@ const copperHtml = await readFile('.next/server/app/copper.html', 'utf8')
 assert.ok(html.includes('Open guided demo'))
 assert.ok(html.includes('Enable JavaScript to edit files'))
 assert.ok(html.includes('pub fn parse_port'))
-assert.ok(html.indexOf('id="hero-title"') < html.indexOf('id="demo"'))
-assert.ok(html.indexOf('id="demo"') < html.indexOf('class="product-strip'))
+assert.ok(html.includes('Copper'))
+assert.ok(html.includes('Orbit'))
+assert.ok(html.includes('Forge'))
+assert.ok(html.includes('Available'))
+assert.ok(html.includes('Planned'))
+assert.ok(html.indexOf('id="hero-title"') < html.indexOf('id="made"'))
+assert.ok(html.indexOf('id="made"') < html.indexOf('id="products"'))
+assert.ok(html.indexOf('id="products"') < html.indexOf('id="demo"'))
 const tags = html.match(/<(script|link)\b[^>]*>/g) || []
 const manifest = JSON.parse(await readFile('.next/react-loadable-manifest.json', 'utf8'))
 const chunks = manifest['components/copper-demo/index.tsx -> ./workspace'].files
@@ -22,8 +28,8 @@ for (const file of chunks) {
   gzip += gzipSync(bytes).length
 }
 assert.ok(!/RELEASES_GITHUB_TOKEN|AMPLIFY_REBUILD_WEBHOOK/.test(html))
-assert.ok(copperHtml.includes('Building the Integral Development Experience'))
-assert.ok(copperHtml.includes('Serious Rust.'))
+assert.ok(copperHtml.includes('Copper is a Rust'))
+assert.ok(copperHtml.includes('Rust development with reviewable agent work'))
 assert.ok(copperHtml.includes('Open guided demo'))
 assert.ok(copperHtml.includes('https://simtropolis.ai/copper'))
 assert.ok(copperHtml.includes('/copper/social-card.png'))

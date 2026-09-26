@@ -1,0 +1,7 @@
+interface:
+  display_name: 'Simtropolis Brand Writer'
+  short_description: 'Write grounded Made and Copper product copy'
+  default_prompt: 'Use $brand-writer to draft or review accurate Simtropolis, Made, and Copper copy.'
+
+policy:
+  allow_implicit_invocation: true
