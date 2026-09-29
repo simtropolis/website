@@ -1,76 +1,27 @@
-# Verification — Pointer-informed presentation
+# Sim website verification
 
-Reviewed 29 September 2026 on branch `codex/pointer-inspired-design`. The work remains uncommitted and unpushed for review. No Amplify deployment or production-site change was made.
+## Product evidence checked on 29 September 2026
 
-## Scope
+Made `origin/dev` was checked at `bf2f4b4607999e805a257450b6125c13e0c03a38`. Sim is the website's sole product focus. The Made product catalog still marks its game flavor `planned` with no targets, so there is no verified Sim installer or download.
 
-The homepage, `/copper`, `/releases`, shared header, mobile navigation, footer, loading/error states, metadata, and social card now use one near-black Simtropolis system informed by the supplied Pointer archive. No Pointer asset, copy, brand element, interface screenshot, customer material, metric, testimonial, or dependency is shipped.
+| State                                   | Evidence                                                                                                                                                                                       | Page treatment                                                                     |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Implemented in Made                     | Zed-derived editor, project and code tools, agent workflows, and change review in Made source.                                                                                                 | The foundation behind Sim.                                                         |
+| Available through optional Made builds  | Made's native workflow graph editor, execution runtime, model catalog, and image/video output surfaces use the `comfy` feature flag; `multiplayer-tools` enables separate collaborative tools. | Building blocks, not a released unified Sim harness.                               |
+| Sim product scope requiring integration | Scenes, assets, world-model inputs, code, and review in one game-development workspace; procedural graphics, layers and nodes, nondestructive composition, animation, and VFX workflows.       | Direct product language in the main copy, with the status boundary in one section. |
 
-The homepage is product-led: a framed hero, Copper/Groovy/Sim cards, concrete Copper feature panels, the editor-only guided fixture, and project links. The separate Made foundation diagram was removed because it repeated the product hierarchy.
+[Made's product catalog](https://github.com/simtropolis/made/blob/dev/products/flavors.toml), [feature flags](https://github.com/simtropolis/made/blob/dev/crates/zed/Cargo.toml), [visual graph model](https://github.com/simtropolis/made/blob/dev/crates/comfy_ui/src/graph.rs), and [Graphite's feature descriptions](https://graphite.art/features/) were used for this comparison. The Made source search found no Graphite integration or implemented Sim equivalents of Graphite's procedural graphics, nondestructive layer/node composition, or animation authoring. Graphite's features define creative scope here; its code and roadmap are not presented as part of Sim.
 
-The Products menu and cards share `lib/product-catalog.ts`. Copper is Available. Groovy and Sim are Planned. Sim links to its planned-product page; neither planned product has a download. The public editor demo has no Collaborative switch; dormant collaborative code remains internal.
+No verified Sim world-model integration, multiplayer game harness, supported platforms, performance measurements, installers, or downloads were found. VFX, animation, creative arts, advertising, eCommerce, and other application-area examples describe intended workflows, not production-ready field integrations. Reduced reliance on traditional engines is presented as a long-term vision.
 
-## Source verification
+## Website checks
 
-Product claims were checked against Made `dev` at `d2c855f475539656852526dee8b0f60bccb02c00`, stable `main` at `5c824980796c0896c6f5cf3067fbcb206af1d835`, release at `734279e2f30c11bbbfd96f8dc8426abef6a7073b`, product manifests, README files, Rust/Cargo/task/debugger/agent code, workflows, and licences.
+The following checks passed locally on 29 September 2026:
 
-The `dev` catalog names Groovy, while stable `main` and the `dev` README still name Orbit. Public copy uses Groovy as requested and clearly marks it Planned.
+- `bun run format:check`, `bun run typecheck`, `bun run test` (24 tests), `bun run build`, and `bun run test:build`.
+- `bun run lint` passed with 12 warnings for existing `<img>` use and unused toast code; there were no lint errors. The production build passed with the same class of warnings.
+- `bun run test:smoke` against `next start` passed: the homepage, metadata, sitemap, assets, and former-route boundaries were served as expected.
+- The production page was inspected at 1280 × 720 and 390 × 844. The hero and creative section retained the existing dark visual design. The mobile menu opened and reached status; the status cards remained readable. `document.documentElement.scrollWidth` stayed within the viewport, and the browser reported no console warnings or errors.
+- After the terminology update, the served page and its metadata were checked again at 1280 × 720 and 390 × 844. No public Comfy branding appeared in rendered HTML or visible copy; the native workflow wording fit both viewports without horizontal overflow.
 
-GitHub metadata was checked directly. The latest stable release is Copper 1.16.6 (`rust-v1.16.6`), published 5 September 2026, with these exact assets:
-
-- Linux x86_64: `https://github.com/simtropolis/made/releases/download/rust-v1.16.6/rust-1.16.6-linux-x86_64.tar.gz`
-- macOS ARM64: `https://github.com/simtropolis/made/releases/download/rust-v1.16.6/rust-1.16.6-macos-aarch64.dmg`
-- Windows x86_64: `https://github.com/simtropolis/made/releases/download/rust-v1.16.6/rust-1.16.6-windows-x86_64.exe`
-
-The hero image is a cropped native Made/Copper visual-test capture. Full provenance and processing details are in [DESIGN_INVENTORY.md](DESIGN_INVENTORY.md).
-
-## Local validation
-
-- Targeted Prettier formatting: passed.
-- ESLint: passed.
-- TypeScript: passed.
-- Node release/build tests: 24 passed.
-- Bun rendering and demo tests: 17 passed.
-- Rust fixture before/after tests: passed.
-- Production Next.js build: passed using the explicitly identified authenticated snapshot `2beaa871-162f-4245-b860-23cfd6722964`.
-- Release-generation behaviour remains fail-closed; no empty or stale fallback was added.
-- Route smoke tests: passed for `/`, `/copper`, `/releases`, `/releases/`, `/robots.txt`, `/sitemap.xml`, and the unknown-route 404.
-- Browser review: passed after the homepage diagram removal and final mobile/release layout fixes.
-
-## Build impact
-
-The production build reports:
-
-| Route       | Route JS | First load |
-| ----------- | -------: | ---------: |
-| `/`         |  1.65 kB |     139 kB |
-| `/copper`   |  2.31 kB |     140 kB |
-| `/releases` |    203 B |     138 kB |
-
-The lazy editor chunks total 443,585 raw bytes / 145,050 gzip, about 518 raw bytes and 100 gzip bytes smaller than the preceding branch. They remain absent from the server HTML until the demo approaches the viewport or is opened. The authentic WebP is 40,482 bytes. No dependency was added and the Bun lockfile is unchanged.
-
-## Browser interaction coverage
-
-Final local production-browser checks covered:
-
-- pointer, keyboard, Escape, arrow-key, Home/End, focus restoration, and mobile use of the Products menu;
-- editor file and tab switching, edit retention, Code and Review Changes modes;
-- explicit sample-patch conflict handling;
-- reset confirmation;
-- expanded-dialog Escape and focus restoration;
-- mobile Files/Code/Review switching at 390px and 320px;
-- no horizontal overflow;
-- `/copper` and `/releases` dark layouts;
-- recorded/local disclosure and no visible Collaborative control.
-- Products-menu Escape handling and focus restoration;
-- the corrected 320px mobile product menu;
-- exact release asset URLs and canonical metadata;
-- no console errors, warnings, or hydration messages.
-
-## Copy review
-
-The Simtropolis `brand-writer` rubric scores 5/5 for technical grounding, natural syntax, quiet confidence, developer respect, information priority, specificity/status, product consistency, and earned claims. The `humanizer` pass removed repeated Made definitions, slogan fragments, template rhythms, and vague control/platform/workflow language. See [CONTENT_AUDIT.md](CONTENT_AUDIT.md).
-
-## Deployment boundary
-
-Everything above is local verification. The branch has not been pushed, so Amplify has not built it and no live route was checked. The existing Amplify configuration, Bun workflow, release snapshot generation, `RELEASES_GITHUB_TOKEN`, `AMPLIFY_REBUILD_WEBHOOK`, GitHub-hosted binaries, and release automation were preserved.
+The local build and production server checks do not verify an Amplify deployment. The existing decorative imagery includes remote assets, which remain dependent on that asset host at runtime.

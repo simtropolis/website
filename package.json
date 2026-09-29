@@ -1,6 +1,6 @@
 {
   "name": "website",
-  "description": "Made and Copper by Simtropolis",
+  "description": "Sim by Simtropolis",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -9,14 +9,16 @@
     "node": ">=22.13.0 <23"
   },
   "scripts": {
-    "build": "node scripts/run-next.mjs build",
-    "dev": "node scripts/run-next.mjs dev",
+    "build": "next build",
+    "dev": "next dev",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "test": "node --test scripts/*.test.mjs && bun test components/releases.test.jsx components/copper-demo/demo.test.js",
+    "format:check": "prettier --check app components/landing next.config.mjs scripts/smoke.mjs scripts/demo-build-check.mjs scripts/releases.test.mjs scripts/run-next.test.mjs package.json",
+    "test": "node --test scripts/*.test.mjs",
+    "test:build": "node scripts/demo-build-check.mjs",
+    "test:smoke": "node scripts/smoke.mjs",
     "test:demo:rust": "node scripts/demo-fixtures.mjs --rust"
   },
   "dependencies": {
