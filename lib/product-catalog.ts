@@ -2,7 +2,7 @@ export type ProductStatus = 'Available' | 'Planned'
 
 export type Product = {
   id: 'rust' | 'jvm' | 'game'
-  name: 'Copper' | 'Groovy' | 'Forge'
+  name: 'Copper' | 'Groovy' | 'Sim'
   area: string
   status: ProductStatus
   shortDescription: string
@@ -11,10 +11,9 @@ export type Product = {
   releasesHref?: string
 }
 
-// Copper and Forge were verified against simtropolis/made main at
-// 5c824980796c0896c6f5cf3067fbcb206af1d835. Groovy is the planned JVM product in
-// dev at d2c855f475539656852526dee8b0f60bccb02c00. The stable main branch still says Orbit;
-// the public site follows the requested product rename while preserving Groovy's planned state.
+// Made's catalog at d2c855f475539656852526dee8b0f60bccb02c00 names the planned
+// game product Forge; this site uses the requested public name Sim. Stable main calls the
+// planned JVM product Orbit; dev calls it Groovy. Neither planned product has release targets.
 // Runtime release details continue to come from the build-time GitHub snapshot.
 export const products: readonly Product[] = [
   {
@@ -39,10 +38,11 @@ export const products: readonly Product[] = [
   },
   {
     id: 'game',
-    name: 'Forge',
-    area: 'Game development',
+    name: 'Sim',
+    area: 'Game development and native visual workflows',
     status: 'Planned',
-    shortDescription: 'A planned Made product for game development.',
-    description: 'A game-development product reserved in the Made catalog.',
+    shortDescription: 'A planned Made product for game development and native visual work.',
+    description: 'The planned game product has no enabled build or public download.',
+    productHref: '/sim',
   },
 ] as const

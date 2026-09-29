@@ -54,11 +54,11 @@ Why: the revision distinguishes code that exists from functionality that ships b
 
 Weak:
 
-> Use Groovy for JVM development and Forge for game development.
+> Use Groovy for JVM development and Sim for game development.
 
 Stronger:
 
-> Groovy and Forge are planned product entries. Neither has a release target or public download.
+> Groovy and Sim are planned product entries. Neither has a release target or public download.
 
 Why: the revision preserves roadmap status and names the evidence.
 

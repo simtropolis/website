@@ -40,7 +40,7 @@ Reject copy that:
 
 - presents an opt-in feature as part of standard Copper;
 - presents an experimental crate, flag, test, design note, or prototype as a shipped product capability;
-- uses present tense for Groovy, Forge, or another planned product without fresh evidence;
+- uses present tense for Groovy, Sim, or another planned product without fresh evidence;
 - calls recorded output live;
 - implies a browser demo runs a compiler, backend, remote service, multiplayer session, or agent when it does not;
 - says an agent executed or changed something when it only proposed an action;

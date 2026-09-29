@@ -138,7 +138,11 @@ export function SiteHeader() {
                           <small>{product.area}</small>
                         </span>
                         <span className="product-menu-meta">
-                          <em className="is-available">{product.status}</em>
+                          <em
+                            className={product.status === 'Available' ? 'is-available' : undefined}
+                          >
+                            {product.status}
+                          </em>
                           <ArrowRight size={16} aria-hidden="true" />
                         </span>
                       </a>
@@ -226,13 +230,15 @@ export function SiteHeader() {
                             </span>
                             <em>{product.status}</em>
                           </a>
-                          <a
-                            className="mobile-product-download"
-                            href={product.releasesHref}
-                            onClick={() => setMobileOpen(false)}
-                          >
-                            Download Copper
-                          </a>
+                          {product.releasesHref ? (
+                            <a
+                              className="mobile-product-download"
+                              href={product.releasesHref}
+                              onClick={() => setMobileOpen(false)}
+                            >
+                              Download Copper
+                            </a>
+                          ) : null}
                         </div>
                       ) : (
                         <div className="mobile-product-row is-planned" key={product.id}>

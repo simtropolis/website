@@ -23,7 +23,7 @@ import { products } from '@/lib/product-catalog'
 export const metadata: Metadata = {
   title: 'Simtropolis | Focused development tools built on Made',
   description:
-    'Simtropolis builds focused development tools on Made. Copper is available for Rust development; Groovy and Forge are planned.',
+    'Simtropolis builds focused development tools on Made. Copper is available for Rust development; Groovy and Sim are planned.',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'Simtropolis | Focused development tools built on Made',
@@ -197,7 +197,7 @@ export default function Page() {
             <p className="eyebrow">01 / Products</p>
             <div>
               <h2 id="products-title">Three focused products. One available today.</h2>
-              <p>Copper ships for Rust development. Groovy and Forge remain planned.</p>
+              <p>Copper ships for Rust development. Groovy and Sim remain planned.</p>
             </div>
           </div>
           <div className="pointer-product-grid">
@@ -224,6 +224,13 @@ export default function Page() {
                     <a href={product.releasesHref}>
                       Download <ArrowUpRight size={15} />
                     </a>
+                  </div>
+                ) : product.productHref ? (
+                  <div className="pointer-product-actions">
+                    <a href={product.productHref}>
+                      Explore {product.name} <ArrowUpRight size={15} />
+                    </a>
+                    <p className="pointer-product-boundary">Planned. No download is available.</p>
                   </div>
                 ) : (
                   <p className="pointer-product-boundary">

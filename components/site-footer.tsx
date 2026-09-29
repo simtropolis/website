@@ -13,6 +13,7 @@ export function SiteFooter({ minimal = false }: { minimal?: boolean }) {
             </span>
           </Link>
           <nav aria-label="Footer navigation">
+            <Link href="/sim">Sim · Planned</Link>
             <a href="/releases">Releases</a>
             <a href={documentation}>Documentation</a>
             <a href={repository}>Source</a>
@@ -47,6 +48,7 @@ export function SiteFooter({ minimal = false }: { minimal?: boolean }) {
           <div>
             <span className="eyebrow">Explore</span>
             <Link href="/copper">Copper</Link>
+            <Link href="/sim">Sim · Planned</Link>
             <a href="/releases">Releases</a>
             <Link href="/#products">Products</Link>
           </div>

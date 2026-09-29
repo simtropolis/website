@@ -6,9 +6,9 @@ Reviewed 29 September 2026 on branch `codex/pointer-inspired-design`. The work r
 
 The homepage, `/copper`, `/releases`, shared header, mobile navigation, footer, loading/error states, metadata, and social card now use one near-black Simtropolis system informed by the supplied Pointer archive. No Pointer asset, copy, brand element, interface screenshot, customer material, metric, testimonial, or dependency is shipped.
 
-The homepage is product-led: a framed hero, Copper/Groovy/Forge cards, concrete Copper feature panels, the editor-only guided fixture, and project links. The separate Made foundation diagram was removed because it repeated the product hierarchy.
+The homepage is product-led: a framed hero, Copper/Groovy/Sim cards, concrete Copper feature panels, the editor-only guided fixture, and project links. The separate Made foundation diagram was removed because it repeated the product hierarchy.
 
-The Products menu and cards share `lib/product-catalog.ts`. Copper is Available. Groovy and Forge are Planned and expose no download or documentation action. The public editor demo has no Collaborative switch; dormant collaborative code remains internal.
+The Products menu and cards share `lib/product-catalog.ts`. Copper is Available. Groovy and Sim are Planned. Sim links to its planned-product page; neither planned product has a download. The public editor demo has no Collaborative switch; dormant collaborative code remains internal.
 
 ## Source verification
 

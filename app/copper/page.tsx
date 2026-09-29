@@ -120,8 +120,8 @@ const productStates = [
   {
     label: 'Planned',
     className: 'is-planned',
-    title: 'Groovy and Forge',
-    text: 'Groovy is planned for JVM and Groovy development, and Forge is planned for game development. Neither has a release target or download.',
+    title: 'Groovy and Sim',
+    text: 'Groovy is planned for JVM and Groovy development, and Sim is planned for game development and native visual workflows. Neither has a release target or download.',
   },
 ]
 

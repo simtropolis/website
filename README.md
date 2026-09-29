@@ -25,7 +25,7 @@ bun run start
 
 ## Copper product page
 
-The homepage introduces the product hierarchy once: Simtropolis builds focused development tools, Made supplies their shared editor and development foundation, and Copper is the available Rust product. `/copper` covers Rust editing, Cargo tasks, agent controls, review, release scope, and practical release details.
+The homepage introduces the product hierarchy once: Simtropolis builds focused development tools, Made supplies their shared editor and development foundation, and Copper is the available Rust product. `/copper` covers Rust editing, Cargo tasks, agent controls, review, release scope, and practical release details. `/sim` describes the planned game product and clearly separates its intended composition from opt-in Made code and unavailable downloads.
 
 The page distinguishes the standard Copper release from optional Made source features and planned products. Its browser demo uses editable local files plus recorded agent and test activity. It does not connect to an agent, compiler, multiplayer session, or backend.
 
@@ -155,7 +155,7 @@ To roll back, use the existing Amplify deployment history. Disable or rotate the
 
 ## Content and assets
 
-Shared URLs and build commands live in `lib/content.ts`; the typed public product catalog lives in `lib/product-catalog.ts`; page copy stays with the route that owns it. Copper is available. Groovy and Forge are planned and have no release targets. Multiplayer tools and native visual workflows remain optional source features. Updater and signing notes avoid promising services the project does not provide.
+Shared URLs and build commands live in `lib/content.ts`; the typed public product catalog lives in `lib/product-catalog.ts`; page copy stays with the route that owns it. Copper is available. Groovy and Sim are planned and have no release targets. Made's source catalog still calls the planned game product Forge; the public site uses Sim and links to its planned-product page. Multiplayer tools and native visual workflows remain optional source features. Updater and signing notes avoid promising services the project does not provide.
 
 Source references were checked on 29 September 2026 against Made `dev` at `d2c855f475539656852526dee8b0f60bccb02c00`, stable `main` at `5c824980796c0896c6f5cf3067fbcb206af1d835`, and release at `734279e2f30c11bbbfd96f8dc8426abef6a7073b`. The `dev` catalog calls the planned JVM product Groovy while stable `main` and the `dev` README still say Orbit. Public copy follows the requested Groovy name, labels it Planned, and does not imply a release exists.
 
