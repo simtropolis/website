@@ -15,7 +15,11 @@ assert.ok(html.includes('Available'))
 assert.ok(html.includes('Planned'))
 assert.ok(html.indexOf('id="hero-title"') < html.indexOf('id="made"'))
 assert.ok(html.indexOf('id="made"') < html.indexOf('id="products"'))
+assert.ok(html.indexOf('id="products"') < html.indexOf('id="evidence-title"'))
 assert.ok(html.indexOf('id="products"') < html.indexOf('id="demo"'))
+assert.ok(html.includes('See the actions, output, and proposed diff.'))
+assert.ok(html.includes('Multiplayer tools and native visual tooling are opt-in Made capabilities'))
+assert.ok(html.includes('/social-card.png'))
 const tags = html.match(/<(script|link)\b[^>]*>/g) || []
 const manifest = JSON.parse(await readFile('.next/react-loadable-manifest.json', 'utf8'))
 const chunks = manifest['components/copper-demo/index.tsx -> ./workspace'].files
@@ -36,6 +40,6 @@ assert.ok(copperHtml.includes('/copper/social-card.png'))
 assert.ok(copperHtml.includes('application/ld+json'))
 assert.ok(!/RELEASES_GITHUB_TOKEN|AMPLIFY_REBUILD_WEBHOOK/.test(copperHtml))
 console.log(
-  'Homepage and Copper introduction, static preview, no-JS guidance, metadata, lazy asset boundary and credential checks passed.',
+  'Homepage hierarchy, platform diagram, Copper introduction, static preview, no-JS guidance, metadata, lazy asset boundary and credential checks passed.',
 )
 console.log(JSON.stringify({ lazyRawBytes: raw, lazyGzipBytes: gzip }))

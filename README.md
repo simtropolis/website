@@ -25,7 +25,7 @@ bun run start
 
 ## Copper product page
 
-The homepage introduces the product hierarchy once: Simtropolis develops Made, an open platform for agentic software development, and Copper is its available Rust product. `/copper` covers the product itself: Rust editing, Cargo tasks, agent controls, review, release scope, and practical release details. It defines “integral” as those parts sharing context while remaining visible and independently usable.
+The homepage introduces the product hierarchy once: Simtropolis builds focused development tools, Made supplies their shared editor and development foundation, and Copper is the available Rust product. `/copper` covers Rust editing, Cargo tasks, agent controls, review, release scope, and practical release details.
 
 The page distinguishes the standard Copper release from optional Made source features and planned products. Its browser demo uses editable local files plus recorded agent and test activity. It does not connect to an agent, compiler, multiplayer session, or backend.
 
@@ -157,15 +157,17 @@ To roll back, use the existing Amplify deployment history. Disable or rotate the
 
 Shared URLs and build commands live in `lib/content.ts`; page copy stays with the route that owns it. Copper is the only enabled product. Multiplayer tools and native visual workflows are optional source features; Orbit and Forge are planned. Updater and signing notes avoid promising services the project does not provide.
 
-Source references, checked 25 September 2026 against Made `dev` commit `7c19425ff56e4816dabb5fa851c666a248d18a14`:
+Source references were checked on 27 September 2026 against the shipped Made `main` catalog at `5c824980796c0896c6f5cf3067fbcb206af1d835` and the current `dev` head at `5a5dd464d5c364a9f5bdcf1f4db0dd6491a95bfe`. The public site follows `main`: Copper is enabled, while Orbit and Forge are planned. The development branch contains an unmerged JVM rename to Groovy while its README still says Orbit, so that name is not presented as a shipped product.
 
 - [Made README](https://github.com/simtropolis/made/blob/main/README.md)
 - [Product catalog](https://github.com/simtropolis/made/blob/main/products/flavors.toml)
 - [Multiplayer build profiles](https://github.com/simtropolis/made/blob/main/docs/src/development/multiplayer-tools.md)
 - [Release workflow documentation](https://github.com/simtropolis/made/blob/main/.github/workflows/README.md)
 - [Published Copper releases](https://github.com/simtropolis/made/releases)
-- [Visual reference](https://v0-optimus-delta.vercel.app/)
+- [Coder design reference](https://coder.com/)
 - [ByteAsk positioning reference](https://byteask.ai/)
+
+The current homepage adapts Coder's compact header, framed hero, short supporting copy, alternating light and near-black sections, technical labels, large product panels, and diagram-led explanation. The artwork, product model, interface preview, language, palette, typography, and demo remain original to Simtropolis. See [DESIGN_INVENTORY.md](DESIGN_INVENTORY.md) for the full review record and claim sources.
 
 `public/copper.svg` is the authentic icon copied from Made's `assets/product_flavors/rust/app-icon.svg`. `public/copper/rust-mascot.png` and `public/copper/social-card.png` preserve the supplied archive assets byte-for-byte. Made is derived from Zed and primarily GPL-3.0-or-later, with Apache-2.0 components where marked. Public attribution links to both license files. The Simtropolis favicon uses the site's typographic mark. No customer imagery, testimonials, statistics, pricing, or compliance claims have been invented.
 

@@ -14,8 +14,8 @@ import {
 import { repository } from '@/lib/content'
 
 const links = [
+  { href: '/#made', label: 'Made' },
   { href: '/#products', label: 'Products' },
-  { href: '/#demo', label: 'Demo' },
   { href: '/copper', label: 'Copper' },
   { href: '/releases', label: 'Releases' },
 ]
@@ -59,7 +59,7 @@ export function SiteHeader() {
           </SheetTrigger>
           <SheetContent className="mobile-sheet">
             <SheetTitle className="wordmark">simtropolis✳</SheetTitle>
-            <SheetDescription>Focused development tools built on Made.</SheetDescription>
+            <SheetDescription>Development tools built on Made.</SheetDescription>
             <nav aria-label="Mobile navigation">
               {[...links, { href: repository, label: 'Source' }].map((link) => (
                 <a key={link.href} href={link.href} onClick={() => setOpen(false)}>

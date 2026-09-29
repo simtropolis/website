@@ -26,6 +26,8 @@ assert.ok(copperHtml.includes('property="og:url" content="https://simtropolis.ai
 assert.ok(copperHtml.includes('content="https://simtropolis.ai/copper/social-card.png"'))
 assert.ok(homeHtml.includes('Focused development tools'))
 assert.ok(homeHtml.includes('Products built on Made'))
+assert.ok(homeHtml.includes('See the actions, output, and proposed diff.'))
+assert.ok(homeHtml.includes('content="https://simtropolis.ai/social-card.png"'))
 assert.ok(homeHtml.includes('Copper'))
 assert.ok(homeHtml.includes('Orbit'))
 assert.ok(homeHtml.includes('Forge'))

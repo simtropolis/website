@@ -22,12 +22,21 @@ export const metadata: Metadata = {
     siteName: 'Simtropolis',
     type: 'website',
     locale: 'en_GB',
+    images: [
+      {
+        url: '/social-card.png',
+        width: 1200,
+        height: 630,
+        alt: 'Simtropolis builds focused development tools on Made',
+      },
+    ],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Simtropolis | Focused development tools',
     description:
       'Made supplies the shared code behind Simtropolis products. Copper is available for Rust development.',
+    images: ['/social-card.png'],
   },
   icons: { icon: '/icon.svg' },
 }

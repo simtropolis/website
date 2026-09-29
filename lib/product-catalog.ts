@@ -10,8 +10,9 @@ export type Product = {
   releasesHref?: string
 }
 
-// Verified against simtropolis/made products/flavors.toml on 26 September 2026.
-// Runtime release details continue to come from the build-time GitHub snapshot.
+// Verified against simtropolis/made main products/flavors.toml on 27 September 2026.
+// The public catalog follows the release branch. Runtime release details continue to come from
+// the build-time GitHub snapshot.
 export const products: readonly Product[] = [
   {
     id: 'rust',
@@ -19,7 +20,7 @@ export const products: readonly Product[] = [
     area: 'Rust development',
     status: 'Available',
     description:
-      'Rust defaults, rust-analyzer, Cargo actions, tests, terminal, Git, debugging, and agent tools in the standard build.',
+      'Rust defaults, rust-analyzer, Cargo tasks, tests, terminal, Git, debugging, and agent tools in the standard build.',
     productHref: '/copper',
     releasesHref: '/releases',
   },

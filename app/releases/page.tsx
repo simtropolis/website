@@ -15,8 +15,22 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: '/releases' },
-  openGraph: { title, description, url: '/releases', type: 'website', siteName: 'Simtropolis' },
-  twitter: { card: 'summary', title, description },
+  openGraph: {
+    title,
+    description,
+    url: '/releases',
+    type: 'website',
+    siteName: 'Simtropolis',
+    images: [
+      {
+        url: '/social-card.png',
+        width: 1200,
+        height: 630,
+        alt: 'Copper releases from Simtropolis',
+      },
+    ],
+  },
+  twitter: { card: 'summary_large_image', title, description, images: ['/social-card.png'] },
 }
 
 export default async function ReleasesPage() {

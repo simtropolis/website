@@ -1,0 +1,26 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="paper" x1="96" y1="62" x2="1124" y2="588" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F1DED0"/>
+      <stop offset="0.55" stop-color="#F8F4ED"/>
+      <stop offset="1" stop-color="#E9ECE3"/>
+    </linearGradient>
+    <pattern id="grid" width="58" height="58" patternUnits="userSpaceOnUse">
+      <path d="M58 0H0V58" stroke="#20211D" stroke-opacity="0.075"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#F7F7F2"/>
+  <rect x="42" y="42" width="1116" height="546" rx="20" fill="url(#paper)" stroke="#CFCFC6"/>
+  <rect x="42" y="42" width="1116" height="546" rx="20" fill="url(#grid)"/>
+  <path d="M854 42V588" stroke="#20211D" stroke-opacity="0.12"/>
+  <circle cx="1006" cy="173" r="64" stroke="#925832" stroke-width="2"/>
+  <circle cx="1006" cy="173" r="98" stroke="#925832" stroke-opacity="0.25"/>
+  <path d="M974 173H1038M1006 141V205" stroke="#925832" stroke-width="2"/>
+  <text x="94" y="106" fill="#20211D" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="600">simtropolis ✳</text>
+  <text x="94" y="270" fill="#20211D" font-family="Arial, Helvetica, sans-serif" font-size="74" font-weight="600" letter-spacing="-4">Focused tools for</text>
+  <text x="94" y="348" fill="#925832" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-style="italic" letter-spacing="-3">software development.</text>
+  <text x="98" y="426" fill="#55574F" font-family="Arial, Helvetica, sans-serif" font-size="24">Made is the shared foundation. Copper is available for Rust.</text>
+  <rect x="94" y="494" width="196" height="52" rx="26" fill="#20211D"/>
+  <text x="126" y="528" fill="#F7F7F2" font-family="Arial, Helvetica, sans-serif" font-size="18">Download Copper</text>
+  <text x="921" y="526" fill="#6E7067" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">MADE / COPPER</text>
+</svg>

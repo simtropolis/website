@@ -1,5 +1,31 @@
 # Verification — Amplify hosting, 7 September 2026
 
+## Coder-informed design update — 27 September 2026
+
+Work is on `codex/coder-inspired-design`. No commit, push, Amplify build, or production change was made.
+
+The current Coder desktop and mobile site was reviewed in the in-app browser. The implementation adapts its compact header, framed hero, short supporting copy, light/dark section transitions, monospaced annotations, rounded actions, large product panels, diagram-led explanation, generous spacing, and stacked mobile actions. It does not reuse Coder copy, branding, gradients, artwork, customer proof, metrics, interface screenshots, enterprise claims, or page structure. Simtropolis's paper palette, Copper colour, editorial type, fine grid, product hierarchy, iconography, mascot, and functional Copper demo remain the primary visual language. [DESIGN_INVENTORY.md](DESIGN_INVENTORY.md) records the full comparison.
+
+Product claims were checked against Made `main` at `5c824980796c0896c6f5cf3067fbcb206af1d835`, the stable product catalog, README, `crates/zed` feature profiles, Rust/debugger/agent documentation, CI and release workflows, licenses, and the website's authenticated release snapshot. Copper is enabled with `agentic-tools,rust-tools`; Orbit and Forge are planned; multiplayer tools and native visual tooling remain separate opt-in profiles. Made `dev` at `5a5dd464d5c364a9f5bdcf1f4db0dd6491a95bfe` contains an unmerged JVM rename to Groovy while its README still names Orbit, so the public site continues to follow the stable `main` catalog.
+
+The homepage now includes an original responsive HTML/CSS product diagram, an original Copper task composition, a differentiated product catalog, a near-black evidence section, the unchanged lazy Copper demo, and four project paths. `/copper` and `/releases` retain their route-specific information density while sharing the compact navigation and framed hero treatment. A company social card, loading state, and error state use the same visual system.
+
+Local validation passed:
+
+- Prettier, ESLint, TypeScript, 24 Node release/build tests, 17 release/demo rendering tests, and both Rust fixture suites.
+- Production Next.js compilation using the existing authenticated snapshot ID. The normal wrapper failed closed before Next because this shell has no `RELEASES_GITHUB_TOKEN`; it did not silently use old or empty release data. Amplify retains its separate configured credential path.
+- Route smoke tests returned 200 for `/`, `/copper`, `/releases`, `/robots.txt`, and `/sitemap.xml`; `/releases/` returned the expected internal 308 then 200; an unknown route returned 404.
+- Canonical, Open Graph, Twitter, structured data, sitemap, no-JavaScript guidance, and credential-exclusion checks passed.
+- All five release history entries and the exact three 1.16.6 GitHub asset URLs were present. Each asset returned the expected unauthenticated 404 because the Made repository remains private.
+- Browser review covered 1440×1000 and 1920×1080 desktop layouts and 390×844 and 320×760 mobile layouts. Final document widths showed no horizontal overflow. The console contained no errors, warnings, or hydration messages.
+- Collaborative/Editor switching, in-memory edit retention, reset confirmation, expanded view, Escape and focus restoration, mobile pane switching, mobile navigation, and recorded/local disclosures remained operational. Fixture and component tests cover file tabs, explicit patch conflicts, apply behaviour, line counts, and thread actions.
+
+The route JavaScript totals are unchanged: homepage 138 kB first-load, Copper 139 kB, and releases 136 kB. The lazy editor remains 444,103 raw bytes / 145,150 gzip and is absent from server HTML. `app/globals.css` grew from 4,803 to 7,872 gzip bytes (+3,069 bytes). The new social card is a 68 KiB PNG; no dependency was added.
+
+The final homepage copy passed the Simtropolis brand rubric at 5/5 for technical grounding, natural syntax, quiet confidence, developer respect, information priority, specificity/status, product consistency, and earned claims. The humanizer pass removed repeated platform/control language, template rhythms, rhetorical framing, and unsupported promotional language. The taboo scan was clear.
+
+Review captures were taken in the browser session for the hero, product diagram, product grid, evidence/demo frame, expanded demo, `/copper`, `/releases`, mobile navigation, and both demo modes. Before images remain under `artifacts/copy-audit/`; the in-app browser does not export its screenshots into the repository.
+
 ## Company homepage and product catalog — 26 September 2026
 
 The homepage now introduces Simtropolis, explains Made once, renders the Made product catalog, and then presents the guided Copper demo. Copper is labelled Available and links to `/copper` and `/releases`. Orbit and Forge are labelled Planned and have no action links. This status model was checked against the current Made `products/flavors.toml`, README, build profiles, workflows, and authenticated release metadata. Copper remains the only enabled product and `rust-v1.16.6` remains the latest stable release with Linux x86_64, macOS ARM64, and Windows x86_64 assets.
