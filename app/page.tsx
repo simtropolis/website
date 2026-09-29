@@ -3,16 +3,17 @@ import Image from 'next/image'
 import {
   ArrowRight,
   ArrowUpRight,
-  CircleCheck,
+  Braces,
+  CheckCircle2,
+  Coffee,
   FileDiff,
   Gamepad2,
-  Orbit as OrbitIcon,
   ShieldCheck,
   TerminalSquare,
+  TriangleAlert,
 } from 'lucide-react'
 import { CopperDemo } from '@/components/copper-demo'
-import { HeroWorkspacePreview } from '@/components/hero-workspace-preview'
-import { PlatformDiagram } from '@/components/platform-diagram'
+import { MadeInterfaceImage } from '@/components/made-interface-image'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
 import { Button } from '@/components/ui/button'
@@ -20,12 +21,12 @@ import { documentation, repository } from '@/lib/content'
 import { products } from '@/lib/product-catalog'
 
 export const metadata: Metadata = {
-  title: 'Simtropolis | Focused development tools',
+  title: 'Simtropolis | Focused development tools built on Made',
   description:
-    'Simtropolis builds focused development tools on Made. Copper is available for Rust development; Orbit and Forge are planned.',
+    'Simtropolis builds focused development tools on Made. Copper is available for Rust development; Groovy and Forge are planned.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Simtropolis | Focused development tools',
+    title: 'Simtropolis | Focused development tools built on Made',
     description:
       'Made supplies the shared editor and development foundation behind Simtropolis products. Copper is available for Rust development.',
     url: '/',
@@ -43,43 +44,100 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Simtropolis | Focused development tools',
+    title: 'Simtropolis | Focused development tools built on Made',
     description:
       'Made supplies the shared foundation behind Simtropolis products. Copper is available for Rust development.',
     images: ['/social-card.png'],
   },
 }
 
+const organisation = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Simtropolis, Inc.',
+  url: 'https://simtropolis.ai',
+  description: 'Simtropolis builds focused development tools on Made.',
+  makesOffer: {
+    '@type': 'Offer',
+    itemOffered: {
+      '@type': 'SoftwareApplication',
+      name: 'Copper',
+      applicationCategory: 'DeveloperApplication',
+      operatingSystem: 'macOS, Windows, Linux',
+      url: 'https://simtropolis.ai/copper',
+      downloadUrl: 'https://simtropolis.ai/releases',
+    },
+  },
+}
+
 const productIcons = {
   rust: <Image src="/copper.svg" alt="" width={72} height={72} />,
-  jvm: <OrbitIcon aria-hidden="true" />,
+  jvm: <Coffee aria-hidden="true" />,
   game: <Gamepad2 aria-hidden="true" />,
 }
 
 const evidence = [
   {
+    className: 'is-wide',
     icon: ShieldCheck,
-    label: 'Before execution',
-    title: 'Permission requests name the action.',
-    text: 'Protected tool actions wait for the decision required by the active permission profile.',
+    label: 'Requested action',
+    title: 'The command is visible before it runs.',
+    text: 'Permission-sensitive tools show the requested action and wait for the decision required by the active profile.',
+    visual: (
+      <div className="bento-permission" aria-label="Example recorded permission request">
+        <span className="mono">Run command</span>
+        <code>cargo test -p parser</code>
+        <span className="bento-state">Decision required</span>
+      </div>
+    ),
   },
   {
+    className: '',
     icon: TerminalSquare,
-    label: 'During the task',
-    title: 'Commands and output stay attached.',
-    text: 'Tool calls, terminal output, and failures remain visible in the task history.',
+    label: 'Recorded output',
+    title: 'Output stays with the task.',
+    text: 'Commands, stdout, and failures remain available for inspection.',
+    visual: (
+      <pre className="bento-terminal" aria-label="Example recorded terminal output">
+        <span>$ cargo test</span>
+        {'\n'}
+        <b>test result: ok. 4 passed</b>
+      </pre>
+    ),
   },
   {
-    icon: CircleCheck,
-    label: 'Evidence',
-    title: 'Diagnostics and tests show what passed.',
-    text: 'Results can be inspected beside the files and task that produced them.',
+    className: '',
+    icon: Braces,
+    label: 'Diagnostics',
+    title: 'Compiler evidence stays attached.',
+    text: 'Diagnostics and test results show what was checked and what still needs work.',
+    visual: (
+      <div className="bento-diagnostic">
+        <TriangleAlert size={16} aria-hidden="true" />
+        <span>
+          <code>src/parser.rs:18</code>
+          <small>return type must be Result&lt;_, ParseError&gt;</small>
+        </span>
+      </div>
+    ),
   },
   {
+    className: 'is-wide',
     icon: FileDiff,
-    label: 'Before keeping edits',
-    title: 'Proposed changes open as a diff.',
-    text: 'Review individual hunks, then keep, reject, or restore the edited files.',
+    label: 'Proposed diff',
+    title: 'Review the change before keeping it.',
+    text: 'Open the proposed patch, inspect each hunk, then keep, reject, or restore the file.',
+    visual: (
+      <div className="bento-diff" aria-label="Example proposed Rust diff">
+        <code className="removed">- fn parse(input: &str) -&gt; Config</code>
+        <code className="added">
+          + fn parse(input: &str) -&gt; Result&lt;Config, ParseError&gt;
+        </code>
+        <span>
+          <CheckCircle2 size={15} aria-hidden="true" /> Evidence: recorded tests passed
+        </span>
+      </div>
+    ),
   },
 ] as const
 
@@ -96,95 +154,80 @@ const paths = [
 
 export default function Page() {
   return (
-    <>
+    <div className="pointer-home">
       <a className="skip-link" href="#main">
         Skip to content
       </a>
       <SiteHeader />
       <main id="main">
-        <section className="home-hero-shell wrap" aria-labelledby="hero-title">
-          <div className="home-hero-frame">
-            <div className="home-hero-copy">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organisation) }}
+        />
+        <section className="pointer-hero wrap" aria-labelledby="hero-title">
+          <div className="pointer-hero-frame">
+            <div className="pointer-hero-grid" aria-hidden="true" />
+            <div className="pointer-hero-copy">
               <p className="eyebrow">
-                <span className="rule" /> Simtropolis / Development tools
+                <span className="rule" /> Simtropolis / Made
               </p>
-              <h1 id="hero-title">
-                Focused <em>development tools.</em>
-              </h1>
-              <p className="home-hero-lede">
-                Simtropolis builds products on Made, a shared editor and development foundation.
-                Copper is the available Rust product.
+              <h1 id="hero-title">Focused tools for serious development.</h1>
+              <p>
+                Simtropolis builds development products on Made. Copper is the available Rust
+                product, with editing, Cargo, tests, terminal, Git, debugging, and review in one
+                desktop application.
               </p>
-              <div className="home-hero-actions">
-                <Button asChild className="pill home-primary-action">
+              <div className="pointer-hero-actions">
+                <Button asChild className="pill pointer-primary-action">
                   <a href="/releases">
                     Download Copper <ArrowUpRight size={16} />
                   </a>
                 </Button>
-                <a className="pill home-secondary-action" href="/copper">
+                <a className="pill pointer-secondary-action" href="/copper">
                   Explore Copper <ArrowRight size={16} />
                 </a>
               </div>
             </div>
-            <HeroWorkspacePreview />
-            <span className="home-hero-coordinate mono" aria-hidden="true">
-              51.5072° N / 0.1276° W
-            </span>
+            <MadeInterfaceImage />
           </div>
         </section>
 
-        <section id="made" className="home-made wrap" aria-labelledby="made-title">
-          <div className="home-section-copy">
-            <p className="eyebrow">01 / Product model</p>
-            <h2 id="made-title">Made supplies the common parts.</h2>
-            <p>
-              The editor, language intelligence, terminal, Git, debugger, and agent infrastructure
-              live in one codebase. Product profiles select the tools, defaults, and release targets
-              that ship together.
-            </p>
-            <a className="text-link" href={documentation}>
-              Read the documentation <ArrowUpRight size={16} />
-            </a>
-          </div>
-          <PlatformDiagram />
-        </section>
-
-        <section id="products" className="home-products wrap" aria-labelledby="products-title">
-          <div className="home-section-heading">
-            <p className="eyebrow">02 / Products</p>
+        <section id="products" className="pointer-products wrap" aria-labelledby="products-title">
+          <div className="pointer-section-heading">
+            <p className="eyebrow">01 / Products</p>
             <div>
-              <h2 id="products-title">Products built on Made.</h2>
-              <p>One product is available today. Two remain catalogued for future work.</p>
+              <h2 id="products-title">Three focused products. One available today.</h2>
+              <p>Copper ships for Rust development. Groovy and Forge remain planned.</p>
             </div>
           </div>
-          <div className="home-product-grid">
+          <div className="pointer-product-grid">
             {products.map((product, index) => (
               <article
-                className={`home-product-card ${product.status === 'Available' ? 'is-available' : 'is-planned'}`}
+                className={`pointer-product-card is-${product.status.toLowerCase()}`}
                 key={product.id}
               >
-                <div className="home-product-top">
+                <div className="pointer-product-top">
                   <span className="mono">0{index + 1}</span>
-                  <span className={`home-product-status ${product.status.toLowerCase()}`}>
+                  <span className={`pointer-status ${product.status.toLowerCase()}`}>
                     {product.status}
                   </span>
                 </div>
-                <div className="home-product-icon">{productIcons[product.id]}</div>
-                <p className="home-product-area">{product.area}</p>
+                <div className="pointer-product-icon">{productIcons[product.id]}</div>
+                <p className="pointer-product-area">{product.area}</p>
                 <h3>{product.name}</h3>
-                <p>{product.description}</p>
+                <p>{product.shortDescription}</p>
                 {product.productHref && product.releasesHref ? (
-                  <div className="home-product-actions">
+                  <div className="pointer-product-actions">
                     <a href={product.productHref}>
                       Explore Copper <ArrowUpRight size={15} />
                     </a>
                     <a href={product.releasesHref}>
-                      Releases <ArrowUpRight size={15} />
+                      Download <ArrowUpRight size={15} />
                     </a>
                   </div>
                 ) : (
-                  <p className="home-product-boundary">
-                    Planned. No build or download is available.
+                  <p className="pointer-product-boundary">
+                    Planned. No release or download is available.
                   </p>
                 )}
               </article>
@@ -192,42 +235,41 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="home-evidence" aria-labelledby="evidence-title">
-          <div className="wrap">
-            <div className="home-evidence-heading">
-              <p className="eyebrow">03 / Inspectable work</p>
-              <h2 id="evidence-title">See the actions, output, and proposed diff.</h2>
+        <section id="features" className="pointer-evidence wrap" aria-labelledby="evidence-title">
+          <div className="pointer-section-heading">
+            <p className="eyebrow">02 / Product features</p>
+            <div>
+              <h2 id="evidence-title">Evidence stays close to the change.</h2>
               <p>
-                Copper keeps agent activity close to the code it affects. Failures and missing
-                evidence remain visible, and proposed edits stay open for review.
+                Requested actions, recorded output, diagnostics, and proposed edits remain visible.
               </p>
             </div>
-            <div className="home-evidence-grid">
-              {evidence.map(({ icon: Icon, label, title, text }, index) => (
-                <article key={title}>
-                  <div>
-                    <span className="mono">0{index + 1}</span>
-                    <Icon size={20} aria-hidden="true" />
-                  </div>
-                  <p className="mono">{label}</p>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </article>
-              ))}
-            </div>
+          </div>
+          <div className="pointer-bento-grid">
+            {evidence.map(({ className, icon: Icon, label, title, text, visual }) => (
+              <article className={className} key={title}>
+                <div className="pointer-bento-label">
+                  <span className="mono">{label}</span>
+                  <Icon size={19} aria-hidden="true" />
+                </div>
+                <h3>{title}</h3>
+                <p>{text}</p>
+                {visual}
+              </article>
+            ))}
           </div>
         </section>
 
-        <div className="home-demo-stage">
-          <CopperDemo />
-        </div>
+        <section id="demo" className="pointer-demo-stage" aria-label="Copper guided demo">
+          <CopperDemo sectionLabel="03 / Guided editor" />
+        </section>
 
-        <section className="home-paths wrap" aria-labelledby="paths-title">
-          <div className="home-section-heading">
-            <p className="eyebrow">05 / Project</p>
+        <section className="pointer-paths wrap" aria-labelledby="paths-title">
+          <div className="pointer-section-heading">
+            <p className="eyebrow">04 / Project paths</p>
             <h2 id="paths-title">Download, read, or contribute.</h2>
           </div>
-          <div className="home-path-grid">
+          <div className="pointer-path-grid">
             {paths.map(({ label, text, href }, index) => (
               <a href={href} key={label}>
                 <span className="mono">0{index + 1}</span>
@@ -242,6 +284,6 @@ export default function Page() {
         </section>
       </main>
       <SiteFooter minimal />
-    </>
+    </div>
   )
 }

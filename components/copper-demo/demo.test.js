@@ -18,7 +18,7 @@ describe('Made product catalog', () => {
   test('exposes one available product and keeps planned products non-actionable', () => {
     expect(products.map(({ name, status }) => ({ name, status }))).toEqual([
       { name: 'Copper', status: 'Available' },
-      { name: 'Orbit', status: 'Planned' },
+      { name: 'Groovy', status: 'Planned' },
       { name: 'Forge', status: 'Planned' },
     ])
     expect(products[0].productHref).toBe('/copper')
@@ -26,7 +26,7 @@ describe('Made product catalog', () => {
     for (const product of products.slice(1)) {
       expect(product.productHref).toBeUndefined()
       expect(product.releasesHref).toBeUndefined()
-      expect(product.description).toContain('reserved in the Made catalog')
+      expect(product.description).toMatch(/planned|reserved/)
     }
   })
 })

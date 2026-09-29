@@ -54,11 +54,11 @@ Why: the revision distinguishes code that exists from functionality that ships b
 
 Weak:
 
-> Use Orbit for JVM development and Forge for game development.
+> Use Groovy for JVM development and Forge for game development.
 
 Stronger:
 
-> Orbit and Forge are planned product entries. The current build tooling rejects them, and neither has a release target.
+> Groovy and Forge are planned product entries. Neither has a release target or public download.
 
 Why: the revision preserves roadmap status and names the evidence.
 
@@ -70,7 +70,7 @@ Weak:
 
 Stronger:
 
-> This guided browser demo uses local fixtures. Its conversation and test output are recorded; it does not run Copper, an agent, or a Rust compiler.
+> This guided browser demo uses local fixtures. Its diagnostics and test output are recorded; it does not run Copper, an agent, or a Rust compiler.
 
 Why: the revision labels the interaction and its limits directly.
 

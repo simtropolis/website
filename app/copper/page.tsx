@@ -120,8 +120,8 @@ const productStates = [
   {
     label: 'Planned',
     className: 'is-planned',
-    title: 'Orbit and Forge',
-    text: 'The product catalog reserves Orbit for JVM development and Forge for game development. Neither is available to run or download.',
+    title: 'Groovy and Forge',
+    text: 'Groovy is planned for JVM and Groovy development, and Forge is planned for game development. Neither has a release target or download.',
   },
 ]
 
@@ -184,11 +184,12 @@ export default function CopperPage() {
                 development <span>environment.</span>
               </h1>
               <p className="cp-lede">
-                Write code, run Cargo tasks, inspect agent activity, and review proposed changes in
-                one desktop application.
+                Write code, run Cargo tasks, inspect requested actions, and review proposed changes
+                in one desktop application.
               </p>
               <p className="cp-positioning">
-                You choose the tools and models. Commands and edits remain subject to your approval.
+                Output, diagnostics, and diffs stay visible. The active tool profile decides which
+                actions run and which require confirmation.
               </p>
               <div className="cp-actions">
                 <Button asChild className="pill cp-primary-action">

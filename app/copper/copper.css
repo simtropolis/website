@@ -1,19 +1,19 @@
 .copper-page {
-  --cp-paper: #f5f2ec;
-  --cp-paper-bright: #fbfaf7;
-  --cp-ink: #211e1a;
-  --cp-muted: #6c665e;
-  --cp-line: #d8d2c9;
-  --cp-orange: #f04408;
-  --cp-orange-dark: #c93605;
-  --cp-dark: #24231f;
-  --cp-dark-line: #454139;
+  --cp-paper: #0d0e0c;
+  --cp-paper-bright: #151613;
+  --cp-ink: #f6f3ed;
+  --cp-muted: #a8aaa2;
+  --cp-line: #ffffff1c;
+  --cp-orange: #f47a32;
+  --cp-orange-dark: #f68b4b;
+  --cp-dark: #10110f;
+  --cp-dark-line: #ffffff20;
   background: var(--cp-paper);
   color: var(--cp-ink);
 }
 
 .cp-wrap {
-  width: min(100%, 1600px);
+  width: min(100%, 1320px);
   margin-inline: auto;
   padding-inline: clamp(24px, 4.5vw, 80px);
 }
@@ -47,9 +47,14 @@
   border: 1px solid var(--cp-line);
   border-radius: 16px;
   background:
-    linear-gradient(to right, #20211d08 1px, transparent 1px),
-    linear-gradient(to bottom, #20211d08 1px, transparent 1px), var(--cp-paper-bright);
-  background-size: 72px 72px;
+    radial-gradient(circle at 77% 28%, #f47a3224, transparent 32%),
+    linear-gradient(to right, #ffffff09 1px, transparent 1px),
+    linear-gradient(to bottom, #ffffff09 1px, transparent 1px), var(--cp-paper-bright);
+  background-size:
+    auto,
+    60px 60px,
+    60px 60px,
+    auto;
 }
 
 .cp-kicker {
@@ -95,12 +100,12 @@
 }
 
 .cp-primary-action {
-  background: var(--cp-ink);
-  color: white;
+  color: #171713;
+  background: var(--cp-orange);
 }
 
 .cp-primary-action:hover {
-  background: var(--cp-orange-dark);
+  background: #ff9658;
 }
 
 .cp-mascot {
@@ -114,7 +119,7 @@
 
 .cp-mascot::before,
 .cp-mascot::after,
-.cp-mascot-orbit {
+.cp-mascot-ring {
   content: '';
   position: absolute;
   left: 50%;
@@ -134,20 +139,20 @@
   transform: translate(-50%, -50%) rotate(14deg);
 }
 
-.cp-mascot-orbit::before,
-.cp-mascot-orbit::after {
+.cp-mascot-ring::before,
+.cp-mascot-ring::after {
   content: '+';
   position: absolute;
   color: #8b8378;
   font: 15px var(--font-mono);
 }
 
-.cp-mascot-orbit::before {
+.cp-mascot-ring::before {
   top: 6%;
   left: 48%;
 }
 
-.cp-mascot-orbit::after {
+.cp-mascot-ring::after {
   right: 2%;
   bottom: 16%;
 }
@@ -354,19 +359,19 @@
 }
 
 .cp-status.is-available {
-  border-color: #daa286;
-  color: #a62f05;
-  background: #fff4ed;
+  border-color: #f47a3260;
+  color: #f69b64;
+  background: #f47a3214;
 }
 
 .cp-status.is-optional {
-  color: #625944;
-  background: #f2ecdc;
+  color: #d4c4aa;
+  background: #ffffff09;
 }
 
 .cp-status.is-planned {
-  color: #696969;
-  background: #eeeeeb;
+  color: #9a9d93;
+  background: #ffffff07;
 }
 
 .cp-evidence {
@@ -451,7 +456,7 @@
 }
 
 .copper-page .demo-section {
-  width: min(100%, 1600px);
+  width: min(100%, 1320px);
   margin-inline: auto;
   padding-top: clamp(80px, 8vw, 120px);
 }

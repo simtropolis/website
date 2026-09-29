@@ -9,7 +9,7 @@ Use this reference for product identity, capability status, releases, agent beha
 | Simtropolis     | Company                                                               | Use as the actor that builds and maintains products. Do not use it as the application or codebase name.                                                                             |
 | Made            | Open platform for agentic software development                        | Explain “open” through the relevant mechanism. Verify repository access separately. Made is the shared codebase and product foundation, not the downloadable Rust application name. |
 | Copper          | Currently available Rust development environment built on Made        | Use for the application, downloads, release notes, and Rust-focused product behavior.                                                                                               |
-| Orbit and Forge | Planned product entries unless current authoritative evidence changes | Use future-tense or roadmap language. Do not provide download or usage instructions.                                                                                                |
+| Groovy and Forge | Planned product entries unless current authoritative evidence changes | Use future-tense or roadmap language. Do not provide download or usage instructions.                                                                                               |
 | Zed             | Upstream project and technical lineage                                | Mention for attribution, licensing, retained internal terminology, or upstream-derived behavior. Do not borrow Zed’s brand identity or claims.                                      |
 
 “Building the Integral Development Experience” is a thesis, not evidence. When used, connect it to the functions present in the relevant build and to the evidence a developer can inspect.
@@ -50,7 +50,7 @@ These facts were checked on 25 September 2026 and must be reverified before publ
 - Its standard profile enables `agentic-tools` and `rust-tools`, with Rust and `rust-analyzer` defaults, Cargo tooling, test exploration, and a Rust-focused agent profile.
 - The editor platform contains terminal, Git, debugger, remote-development, extension, and agent infrastructure. Describe a capability as Copper behavior only when its standard product composition and current implementation support that claim.
 - Multiplayer and native visual tooling are opt-in and absent from the standard Copper release profile.
-- Orbit and Forge are planned, have no release targets, and are rejected by current build tooling.
+- Groovy and Forge are planned and have no release targets. Groovy has a guarded development-only build path; that does not make it an available product.
 - The current release workflow targets Linux x86_64, macOS ARM64, and Windows x86_64.
 - Signing uses an automatic policy and depends on complete credential sets. The updater is disabled unless a build supplies its update service URL.
 - Made is derived from Zed. The source is primarily GPL-3.0-or-later with Apache-2.0 components where marked.

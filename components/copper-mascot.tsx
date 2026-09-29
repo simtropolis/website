@@ -11,7 +11,7 @@ export function CopperMascot() {
       <span className="cp-mascot-coordinate mono" aria-hidden="true">
         Copper mascot
       </span>
-      <span className="cp-mascot-orbit" aria-hidden="true" />
+      <span className="cp-mascot-ring" aria-hidden="true" />
       <button
         className="cp-mascot-button"
         type="button"

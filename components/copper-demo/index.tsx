@@ -48,7 +48,7 @@ class DemoBoundary extends Component<{ children: ReactNode }, { failed: boolean 
   }
 }
 
-export function CopperDemo() {
+export function CopperDemo({ sectionLabel = 'Guided local demo' }: { sectionLabel?: string }) {
   const [ready, setReady] = useState(false)
   const anchor = useRef<HTMLDivElement>(null)
 
@@ -72,19 +72,17 @@ export function CopperDemo() {
       <div className="demo-intro">
         <div>
           <p className="eyebrow">
-            <span className="rule" /> Guided local demo
+            <span className="rule" /> {sectionLabel}
           </p>
-          <h2 id="demo-title">
-            Follow the task, then <em>edit the code.</em>
-          </h2>
+          <h2 id="demo-title">Edit the fixture and inspect the result.</h2>
         </div>
         <a href="/releases" className="text-link">
           Download Copper <ArrowUpRight size={16} />
         </a>
       </div>
       <p className="demo-description">
-        Collaborative shows the recorded request, tool activity, output, and proposed diff. Editor
-        opens the same Rust files for editing and review.
+        Open the Rust files, keep edits between tabs, inspect diagnostics and the proposed diff,
+        then apply or reject the recorded sample change.
       </p>
       <div ref={anchor} className="demo-reserved">
         <DemoBoundary>
@@ -111,7 +109,7 @@ export function CopperDemo() {
         </DemoBoundary>
       </div>
       <p className="demo-disclaimer">
-        Guided local interface. Edits stay in browser memory. The conversation and test output are
+        Guided local interface. Edits stay in browser memory. Diagnostics and test output are
         recorded fixtures; no live agent, compiler, backend, or multiplayer session is connected.{' '}
         <a href="https://github.com/simtropolis/made">Source ↗</a>
       </p>

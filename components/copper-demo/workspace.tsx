@@ -69,7 +69,7 @@ export default function Workspace() {
   )
   const [selected, setSelected] = useState(mainId)
   const [path, setPath] = useState<FilePath>('src/lib.rs')
-  const [experience, setExperience] = useState<Experience>('collaborative')
+  const [experience, setExperience] = useState<Experience>('editor')
   const [editorMode, setEditorMode] = useState<'code' | 'review'>('code')
   const [mode, setMode] = useState<'threads' | 'files'>('threads')
   const [review, setReview] = useState(true)
@@ -186,7 +186,7 @@ export default function Workspace() {
     dispatch({ type: 'reset' })
     setSelected(mainId)
     setPath('src/lib.rs')
-    setExperience('collaborative')
+    setExperience('editor')
     setEditorMode('code')
     setMode('threads')
     setReview(true)
@@ -769,36 +769,11 @@ export default function Workspace() {
       data-pane={pane}
       data-experience={experience}
     >
-      <div
-        className="cw-experience-switch"
-        role="tablist"
-        aria-label="Copper demo view"
-        onKeyDown={tabKeys}
-      >
-        {(['collaborative', 'editor'] as Experience[]).map((id) => (
-          <button
-            role="tab"
-            id={`cw-experience-${id}`}
-            aria-controls="cw-experience-panel"
-            aria-selected={experience === id}
-            tabIndex={experience === id ? 0 : -1}
-            key={id}
-            onClick={() => {
-              setExperience(id)
-              setNotice(`${id === 'collaborative' ? 'Collaborative' : 'Editor'} view opened.`)
-            }}
-          >
-            {id === 'collaborative' ? 'Collaborative' : 'Editor'}
-          </button>
-        ))}
-        <span>One local Rust fixture</span>
+      <div className="cw-experience-switch cw-experience-static">
+        <strong>Editor</strong>
+        <span>Editable local Rust fixture</span>
       </div>
-      <div
-        id="cw-experience-panel"
-        role="tabpanel"
-        aria-labelledby={`cw-experience-${experience}`}
-        className="cw-experience-panel"
-      >
+      <div id="cw-experience-panel" aria-label="Copper editor demo" className="cw-experience-panel">
         {experience === 'collaborative' ? (
           <>
             <div

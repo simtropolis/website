@@ -46,7 +46,7 @@ test('sorts numeric versions and selects stable independently of prereleases', (
 test('filters drafts, unrelated tags and incomplete assets', () => {
   const releases = normalizeReleases([
     release('1.2.0', { draft: true }),
-    release('1.2.0', { tag_name: 'orbit-v1.2.0' }),
+    release('1.2.0', { tag_name: 'jvm-v1.2.0' }),
     release('1.2.0', { assets: [asset(), asset('pending', { state: 'new' })] }),
   ])
   assert.equal(releases.length, 1)
