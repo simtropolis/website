@@ -72,8 +72,8 @@ export default function Page() {
               development environments from a shared, Zed-derived editor platform.
             </p>
             <p>
-              An open platform for agentic software development. A workspace where humans and
-              specialised agents all work together.
+              Made supplies the shared editor and agent tooling for focused products. Developers
+              review tool output and proposed changes in their workspace.
             </p>
             <div className="hero-actions">
               <Button asChild className="pill">
@@ -209,7 +209,9 @@ export default function Page() {
               <div className="catalog-row">
                 <span className="catalog-index mono">01</span>
                 <div>
-                  <h3>Copper</h3>
+                  <h3>
+                    <a href="/copper">Copper</a>
+                  </h3>
                   <p>Rust development</p>
                 </div>
                 <span className="badge available">Available</span>
@@ -217,7 +219,7 @@ export default function Page() {
               <div className="catalog-row">
                 <span className="catalog-index mono">02</span>
                 <div>
-                  <h3>Orbit</h3>
+                  <h3>Groovy</h3>
                   <p>JVM development</p>
                 </div>
                 <span className="badge">Planned</span>
@@ -225,8 +227,10 @@ export default function Page() {
               <div className="catalog-row">
                 <span className="catalog-index mono">03</span>
                 <div>
-                  <h3>Forge</h3>
-                  <p>Game development</p>
+                  <h3>
+                    <a href="/sim">Sim</a>
+                  </h3>
+                  <p>Game development and native visual workflows</p>
                 </div>
                 <span className="badge">Planned</span>
               </div>
@@ -288,7 +292,8 @@ export default function Page() {
             <div>
               <SourceCommand />
               <p className="source-prerequisites">
-                Building from source requires Git, Rustup, and your platform’s native dependencies.{' '}
+                Building from source requires Made repository access, Git, Rustup, and your
+                platform’s native dependencies.{' '}
                 <a href={sourceGuide}>
                   Read the setup guide <ArrowUpRight size={13} />
                 </a>

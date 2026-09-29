@@ -983,3 +983,107 @@ h2 {
     height: 56px;
   }
 }
+
+/* Shared product navigation */
+.products-control {
+  position: relative;
+}
+.site-header .products-trigger {
+  min-height: 44px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+.products-trigger[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+.products-menu {
+  position: absolute;
+  z-index: 60;
+  top: calc(100% + 14px);
+  left: -18px;
+  width: min(390px, 90vw);
+  padding: 9px 18px;
+  background: #f7f7f2;
+  color: #20211d;
+  border: 1px solid #d7d8cf;
+  box-shadow: 0 25px 55px #0003;
+}
+.site-header .products-menu > a,
+.product-menu-row {
+  min-height: 70px;
+  padding: 13px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid #d7d8cf;
+}
+.site-header .products-menu > :last-child {
+  border-bottom: 0;
+}
+.products-menu strong,
+.mobile-products strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+}
+.products-menu small,
+.mobile-products small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #62635c;
+}
+.product-menu-status {
+  font: 11px var(--font-mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #925832;
+}
+.products-menu a:hover {
+  color: #925832;
+}
+.mobile-products summary {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  list-style: none;
+  font-size: 23px;
+  border-bottom: 1px solid var(--line);
+}
+.mobile-products summary::-webkit-details-marker {
+  display: none;
+}
+.mobile-products[open] summary svg {
+  transform: rotate(180deg);
+}
+.mobile-sheet nav .mobile-products a,
+.mobile-product-row {
+  min-height: 72px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.mobile-products .product-menu-status {
+  flex-shrink: 0;
+}
+@media (max-width: 390px) {
+  .mobile-sheet {
+    padding-inline: 20px;
+  }
+  .mobile-products small {
+    max-width: 145px;
+  }
+}

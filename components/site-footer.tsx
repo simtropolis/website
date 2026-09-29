@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { repository, documentation, license } from '@/lib/content'
+import { documentation, license, repository } from '@/lib/content'
 
 export function SiteFooter() {
   return (
@@ -12,20 +12,22 @@ export function SiteFooter() {
               ✳
             </span>
           </Link>
-          <p>Focused tools for people who build.</p>
+          <p>Focused tools from a shared Made foundation.</p>
         </div>
         <nav aria-label="Footer navigation">
           <div>
-            <span className="eyebrow">Explore</span>
-            <Link href="/#copper">Copper</Link>
-            <a href="/releases">Releases</a>
-            <Link href="/#platform">The platform</Link>
+            <span className="eyebrow">Products</span>
+            <Link href="/copper">Copper · Available</Link>
+            <span>Groovy · Planned</span>
+            <Link href="/sim">Sim · Planned</Link>
+            <Link href="/releases">Copper releases</Link>
           </div>
           <div>
-            <span className="eyebrow">Build with us</span>
+            <span className="eyebrow">Made</span>
+            <Link href="/#platform">The foundation</Link>
             <a href={documentation}>Documentation</a>
-            <a href={repository}>Source on GitHub</a>
-            <a href={`${repository}/blob/main/CONTRIBUTING.md`}>Contribute</a>
+            <a href={repository}>Source</a>
+            <a href={`${repository}/blob/main/CONTRIBUTING.md`}>Contribution</a>
           </div>
         </nav>
       </div>

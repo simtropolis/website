@@ -143,7 +143,7 @@ To roll back, use the existing Amplify deployment history. Disable or rotate the
 
 ## Content and assets
 
-Product content is centralized in `lib/content.ts` and `app/page.tsx`. Copper is the only enabled product. The full multiplayer workspace and native visual workflows are explicitly opt-in; Orbit and Forge are planned. Updater and signing limitations are described without promising unavailable services.
+Product content is centralized in `lib/content.ts` and `app/page.tsx`. Copper is the only enabled product. The full multiplayer workspace and native visual workflows are explicitly opt-in; Groovy and Sim are planned. Updater and signing limitations are described without promising unavailable services.
 
 Source references, checked 7 September 2026:
 

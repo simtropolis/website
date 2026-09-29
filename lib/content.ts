@@ -25,7 +25,7 @@ export const faqs = [
   {
     question: 'Is the source available?',
     answer:
-      'Yes. Made’s source is public on GitHub. It is primarily licensed under GPL-3.0-or-later, with Apache-2.0 components where marked. Review the repository’s license files and contribution guidance for details.',
+      'Made’s repository currently requires access. Its source is primarily licensed under GPL-3.0-or-later, with Apache-2.0 components where marked. Repository links and contribution guidance may require permission.',
   },
   {
     question: 'Will Copper update automatically?',
@@ -35,6 +35,6 @@ export const faqs = [
   {
     question: 'What is next for Made?',
     answer:
-      'Orbit, focused on JVM development, and Forge, focused on game development, are planned products. They are not currently available to run or download. Copper and the Made platform remain under active development.',
+      'Groovy, focused on JVM development, and Sim, focused on game development and native visual workflows, are planned products. Neither has an enabled build or a download. Copper and the Made platform remain under active development.',
   },
 ]
