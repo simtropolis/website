@@ -46,7 +46,7 @@ test('sorts numeric versions and selects stable independently of prereleases', (
 test('filters drafts, unrelated tags and incomplete assets', () => {
   const releases = normalizeReleases([
     release('1.2.0', { draft: true }),
-    release('1.2.0', { tag_name: 'orbit-v1.2.0' }),
+    release('1.2.0', { tag_name: 'jvm-v1.2.0' }),
     release('1.2.0', { assets: [asset(), asset('pending', { state: 'new' })] }),
   ])
   assert.equal(releases.length, 1)
@@ -146,8 +146,7 @@ test('writes a public allowlist atomically; failed refresh preserves last genera
     await rm(directory, { recursive: true, force: true })
   }
 })
-test('production configuration validates snapshots without fetching releases', async () => {
+test('production configuration has no release snapshot dependency', async () => {
   const source = await readFile(new URL('../next.config.mjs', import.meta.url), 'utf8')
-  assert.match(source, /await readSnapshot\(\)/)
-  assert.doesNotMatch(source, /generateReleases|fetchReleases|redirects|RELEASES_URL/)
+  assert.doesNotMatch(source, /readSnapshot|generateReleases|fetchReleases|redirects|RELEASES_URL/)
 })

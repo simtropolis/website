@@ -12,6 +12,24 @@ import {
 } from '@/lib/copper-demo'
 
 import { initialThreads, threadReducer } from '@/lib/copper-threads'
+import { products } from '@/lib/product-catalog'
+
+describe('Made product catalog', () => {
+  test('exposes one available product and no planned-product downloads', () => {
+    expect(products.map(({ name, status }) => ({ name, status }))).toEqual([
+      { name: 'Copper', status: 'Available' },
+      { name: 'Groovy', status: 'Planned' },
+      { name: 'Sim', status: 'Planned' },
+    ])
+    expect(products[0].productHref).toBe('/copper')
+    expect(products[0].releasesHref).toBe('/releases')
+    for (const product of products.slice(1)) {
+      expect(product.productHref).toBe(product.name === 'Sim' ? '/sim' : undefined)
+      expect(product.releasesHref).toBeUndefined()
+      expect(product.description).toMatch(/planned|reserved/)
+    }
+  })
+})
 
 describe('guided patch safety', () => {
   test('applies all three changes and leaves the original immutable', () => {

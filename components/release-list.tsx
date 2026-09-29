@@ -117,7 +117,7 @@ export function ReleaseList({
             <Downloads release={stable} platforms={platforms} featured />
             <details className="latest-notes">
               <summary>
-                What’s changed in {stable.version}
+                Release notes for {stable.version}
                 <span className="expand" aria-hidden="true">
                   +
                 </span>
@@ -135,21 +135,21 @@ export function ReleaseList({
           </div>
         )}
         <p className="install-note">
-          Copper is under active development. Signing varies by build; macOS may use ad-hoc signing
-          and Windows builds may be unsigned. Review the{' '}
+          Downloads use the assets attached to each GitHub release. GitHub may ask you to sign in
+          when repository access is restricted. Signing varies by build; macOS may use ad-hoc
+          signing and Windows builds may be unsigned. See the{' '}
           <a href={repository + '/blob/main/docs/src/development/product-flavors.md#signing'}>
             signing documentation
           </a>
-          . Automatic updates require a configured update service.
+          . Install newer versions from this page unless your build has an update service
+          configured.
         </p>
       </section>
       <section id="history" className="release-history wrap" aria-labelledby="history-title">
         <div className="release-section-heading">
-          <p className="eyebrow">The changelog</p>
-          <h2 id="history-title">
-            Every step <em>forward.</em>
-          </h2>
-          <p>Published versions, changes, and downloads. Prereleases are labelled separately.</p>
+          <p className="eyebrow">All published versions</p>
+          <h2 id="history-title">Release history.</h2>
+          <p>Stable releases and prereleases are labelled separately.</p>
         </div>
         {releases.length ? (
           releases.map((release) => (

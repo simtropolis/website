@@ -8,9 +8,9 @@ export default function NotFound() {
         <br />
         isn’t here.
       </h1>
-      <p>Head back to Made, or find your next Copper download.</p>
+      <p>Return to Simtropolis or browse published Copper releases.</p>
       <Link className="text-link" href="/">
-        Back to the website →
+        Simtropolis home →
       </Link>
       <a className="text-link" href="/releases">
         View releases ↗

@@ -14,6 +14,7 @@ frontend:
         - bun run typecheck
         - bun run test
         - bun run build
+        - bun run test:build
   artifacts:
     baseDirectory: .next
     files:

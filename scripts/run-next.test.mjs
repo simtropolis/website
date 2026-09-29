@@ -7,9 +7,8 @@ import { runNext } from './run-next.mjs'
 import { generateReleases } from './generate-releases.mjs'
 import { readSnapshot } from './release-snapshot.mjs'
 import nextConfig from '../next.config.mjs'
-import constants from 'next/constants.js'
 
-test('generates exactly once before Next and repeated config reads never fetch', async () => {
+test('legacy wrapper generates a release snapshot once when explicitly invoked', async () => {
   const directory = await mkdtemp(join(tmpdir(), 'made-build-'))
   const cwd = process.cwd(),
     previousId = process.env.RELEASE_SNAPSHOT_ID
@@ -40,7 +39,7 @@ test('generates exactly once before Next and repeated config reads never fetch',
         assert.equal(env.RELEASES_GITHUB_TOKEN, undefined)
         assert.equal(env.AMPLIFY_REBUILD_WEBHOOK, undefined)
         process.env.RELEASE_SNAPSHOT_ID = env.RELEASE_SNAPSHOT_ID
-        for (let count = 0; count < 5; count++) await nextConfig(constants.PHASE_PRODUCTION_BUILD)
+        assert.deepEqual(nextConfig, { images: { unoptimized: true } })
         const snapshot = await readSnapshot()
         assert.ok(!JSON.stringify(snapshot).includes('private-token'))
         assert.ok(!JSON.stringify(snapshot).includes('private-webhook'))

@@ -1,22 +1,36 @@
 import './releases.css'
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { SiteHeader } from '@/components/site-header'
-import { SiteFooter } from '@/components/site-footer'
-import { ReleaseList } from '@/components/release-list'
+import { SiteHeader } from '@/components/archive/site-header'
+import { SiteFooter } from '@/components/archive/site-footer'
+import { ReleaseList } from '@/components/archive/release-list'
 import { readReleases } from '@/lib/releases'
 import { sourceGuide } from '@/lib/content'
 
 export const dynamic = 'force-static'
-const title = 'Copper releases — Made by Simtropolis'
+const title = 'Copper releases | Simtropolis'
 const description =
-  'Download Copper for macOS, Windows, and Linux. Find the latest stable release, release notes, and previous versions.'
+  'Download published Copper builds for macOS, Windows, and Linux, and read the release history.'
 export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: '/releases' },
-  openGraph: { title, description, url: '/releases', type: 'website', siteName: 'Simtropolis' },
-  twitter: { card: 'summary', title, description },
+  openGraph: {
+    title,
+    description,
+    url: '/releases',
+    type: 'website',
+    siteName: 'Simtropolis',
+    images: [
+      {
+        url: '/social-card.png',
+        width: 1200,
+        height: 630,
+        alt: 'Copper releases from Simtropolis',
+      },
+    ],
+  },
+  twitter: { card: 'summary_large_image', title, description, images: ['/social-card.png'] },
 }
 
 export default async function ReleasesPage() {
@@ -31,17 +45,13 @@ export default async function ReleasesPage() {
         <section className="release-hero wrap">
           <p className="eyebrow">
             <span className="rule" />
-            Made / Downloads &amp; releases
+            Copper / Downloads
           </p>
           <h1>
             Copper <em>releases.</em>
           </h1>
           <div className="release-hero-bottom">
-            <p>
-              Downloads and release notes.
-              <br />
-              Your next step with Copper, the Rust environment from Made.
-            </p>
+            <p>Download a published build and read its notes, including previous versions.</p>
             <Image
               src="/copper.svg"
               alt="Copper application icon"
@@ -54,14 +64,14 @@ export default async function ReleasesPage() {
         <ReleaseList {...data} />
         <section className="release-source wrap">
           <div>
-            <p className="eyebrow">Made to be explored</p>
+            <p className="eyebrow">Source build</p>
             <h2>
-              Prefer the <em>source?</em>
+              Build <em>Copper.</em>
             </h2>
-            <p>Read the code, build Copper, or contribute to what comes next.</p>
+            <p>The setup guide lists the Rust toolchain and platform dependencies.</p>
           </div>
           <a className="pill" href={sourceGuide}>
-            Build from source ↗
+            Documentation ↗
           </a>
         </section>
       </main>
