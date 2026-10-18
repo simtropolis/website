@@ -1,67 +1,76 @@
 import assert from 'node:assert/strict'
-import { readFile } from 'node:fs/promises'
+import { readFile, readdir } from 'node:fs/promises'
 
-// Run after the production build to check its actual server-rendered homepage.
+// Verify actual production HTML, not a fixture or a source-copy snapshot.
 const html = await readFile('.next/server/app/index.html', 'utf8')
-const socialCard = await readFile('public/social-card.svg', 'utf8')
-
+const visible = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '').replace(/<[^>]*>/g, ' ')
 for (const text of [
-  'Sim / a game-development workspace',
-  'world foundation models',
-  'Zed-derived',
-  'Sim brings scenes, assets, model inputs, code, and review into one place.',
-  'Layers and nodes',
-  'Nondestructive composition',
-  'Procedural graphics',
-  'Animation and VFX',
-  'Long-term vision',
-  'No Sim release target or download',
-  'Native workflow graph editor and execution runtime',
-  'Model catalog and image/video output previews',
-  'Made is derived from Zed',
+  'Sim / In development',
+  'visual development workspace',
+  'PNG-backed artboards',
+  'Invert an image',
+  'linked .sim document',
+  'Queue a workflow',
+  'Planned work',
+  'Opt-in',
+  'Release pending',
+  'public release is still pending',
 ]) {
-  assert.ok(html.includes(text), `Missing product or status copy: ${text}`)
+  assert.ok(visible.includes(text), `Missing feature or limitation: ${text}`)
 }
-
-for (const application of ['VFX', 'Animation', 'Creative arts', 'Advertising', 'eCommerce']) {
-  assert.ok(html.includes(`>${application}</h3>`), `Missing intended application: ${application}`)
-}
+assert.match(html, /<title>simtropolis<\/title>/)
+assert.equal(
+  html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)[1].replace(/<[^>]*>/g, ''),
+  'Worlds toimagine.',
+)
+assert.match(html, /<h1[^>]*aria-label="Worlds to imagine, build and explore\."/)
+assert.ok(html.includes('simtropolis'))
+assert.equal(
+  new URL(html.match(/rel="canonical" href="([^"]+)"/)[1]).href,
+  'https://simtropolis.ai/',
+)
+for (const tag of ['og:title', 'twitter:title'])
+  assert.ok(html.includes(`"${tag}" content="simtropolis"`))
+assert.ok(html.includes('https://simtropolis.ai/images/whale.png'))
+assert.ok(html.includes('a visual development workspace in development.'))
+assert.doesNotMatch(
+  visible,
+  /\bMade\b|GitHub|Copper|Groovy|Forge|game-development|world foundation|testimonials|pricing|Sign up|Download Sim/i,
+)
 assert.doesNotMatch(
   html,
-  /Sim is our planned workspace|The Sim direction|not a released application|Intended:/,
+  /RELEASES_GITHUB_TOKEN|AMPLIFY_REBUILD_WEBHOOK|SoftwareApplication|downloadUrl|<a[^>]+href="https?:|<img[^>]+src="https?:/,
 )
-
-for (const anchor of [
+for (const id of [
   'features',
   'how-it-works',
-  'infra',
-  'integrations',
-  'developers',
+  'nodes',
+  'documents',
+  'execution',
+  'tools',
+  'limits',
+  'planned',
   'status',
 ]) {
-  assert.ok(html.includes(`id="${anchor}"`), `Missing navigation target: ${anchor}`)
+  assert.ok(html.includes(`id="${id}"`), `Missing section ${id}`)
 }
-
-assert.match(html, /<title>Sim \| Game worlds and creative tools by Simtropolis<\/title>/)
-assert.ok(html.includes('rel="canonical" href="https://simtropolis.ai"'))
-assert.ok(html.includes('content="https://simtropolis.ai/images/whale.png"'))
-assert.ok(html.includes('procedural, node-based creative tools'))
-assert.ok(html.includes('native workflow graph, model and media tools'))
-assert.ok(
-  html.includes(
-    'Glowing whale artwork for Sim, a game-development workspace with native visual workflows',
-  ),
-)
-assert.ok(html.includes('Two glowing trees linked across a shared world scene'))
-assert.ok(socialCard.includes('Native node graphs, model and media workflows, code, and review.'))
-assert.doesNotMatch(html, /\bComfy(?:-compatible)?\b/i)
-assert.doesNotMatch(socialCard, /\bComfy(?:-compatible)?\b/i)
-assert.doesNotMatch(
-  html,
-  /Copper|Groovy|Forge|Featured companies|Download Sim|Sign up|SOC 2|HIPAA|ISO 27001/,
-)
-assert.doesNotMatch(html, /RELEASES_GITHUB_TOKEN|AMPLIFY_REBUILD_WEBHOOK/)
-
+for (const anchor of html.matchAll(/href="#([^"]+)"/g))
+  assert.ok(html.includes(`id="${anchor[1]}"`), `Broken anchor ${anchor[1]}`)
+for (const file of await readdir('components/landing')) {
+  const source = await readFile(`components/landing/${file}`, 'utf8')
+  assert.doesNotMatch(source, /hebbkx1anhila5yf|src="https?:/)
+}
+assert.ok(html.includes('/home-media/hero.mp4'))
+assert.match(html, /<video[^>]+object-cover object-center opacity-80/)
+assert.ok(!html.includes('/home-art/'))
+const notice = await readFile('public/notices.txt', 'utf8')
+assert.ok(notice.includes('Zed Industries') && notice.includes('Graphite'))
+const css = await readFile('app/homepage.css', 'utf8')
+assert.match(css, /prefers-reduced-motion:\s*reduce/)
+assert.doesNotMatch(css, /--muted-foreground|font-family|font-size|grid-template-columns/)
+const social = await readFile('public/social-card.svg', 'utf8')
+assert.ok(social.includes('simtropolis') && social.includes('Visual development workspace'))
+assert.doesNotMatch(social, /Made|GitHub|game-development/)
 console.log(
-  'Sim product copy, status, navigation, attribution, and metadata verified in production HTML',
+  'Homepage branding, mechanisms, capability states, metadata, anchors, local media and notices verified',
 )

@@ -1,46 +1,48 @@
 'use client'
 
+import { Artwork } from './artwork'
+
 import { useEffect, useRef, useState } from 'react'
 import { Check, ArrowRight } from 'lucide-react'
 
 const states = [
   {
-    name: 'Made core',
-    description: 'The editor and review foundation.',
-    status: 'Implemented',
+    name: 'Current tools',
+    description: 'Native visual functionality in development.',
+    status: 'Development',
     details: [
-      'Zed-derived editor and project surfaces',
-      'Terminal, source control, and agent workflows',
-      'Code and change review in Made source',
-    ],
-    href: 'https://github.com/simtropolis/made/tree/dev',
-    cta: 'See Made source',
-    highlight: false,
-  },
-  {
-    name: 'Optional modules',
-    description: 'Features available in opt-in Made builds.',
-    status: 'Opt-in',
-    details: [
-      'Native workflow graph editor and execution runtime',
-      'Model catalog and image/video output previews',
-      'Multiplayer workspace behind its own feature flag',
-    ],
-    href: '#infra',
-    cta: 'See the foundation',
-    highlight: false,
-  },
-  {
-    name: 'Sim',
-    description: 'The game-development workspace.',
-    status: 'In development',
-    details: [
-      'Scenes, assets, model inputs, code, and review',
-      'Procedural, nondestructive, animation, and VFX integration',
-      'No Sim release target or download',
+      'Image operations and PNG-backed artboards',
+      'Linked .sim save and reopen; separate PNG export',
+      'Native interactions remain under validation',
     ],
     href: '#features',
-    cta: 'Explore Sim',
+    cta: 'Explore current tools',
+    highlight: false,
+  },
+  {
+    name: 'Node execution',
+    description: 'Visual runtime and configured resources required.',
+    status: 'Opt-in',
+    details: [
+      'Typed graph editing, groups and graph history',
+      'Queue, cancel and inspect generated media',
+      'Backend availability differs by build',
+    ],
+    href: '#nodes',
+    cta: 'Explore node workflows',
+    highlight: false,
+  },
+  {
+    name: 'Public release',
+    description: 'Sim is a visual development workspace in progress.',
+    status: 'Pending',
+    details: [
+      'A public release is still pending',
+      'Broader authoring remains planned',
+      'The workspace is in active development',
+    ],
+    href: '#planned',
+    cta: 'See planned work',
     highlight: true,
   },
 ]
@@ -72,16 +74,16 @@ export function PricingSection() {
             <h2
               className={`text-6xl md:text-7xl lg:text-[128px] font-display tracking-tight leading-[0.9] transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             >
-              Made today.
+              Built so far.
               <br />
-              <span className="text-stroke">Sim ahead.</span>
+              <span className="text-stroke">More ahead.</span>
             </h2>
           </div>
           <div className="lg:col-span-5 relative p-0 h-96 lg:h-auto">
             <div
               className={`absolute inset-0 pointer-events-none transition-all duration-1000 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
             >
-              <img
+              <Artwork
                 src="/images/whale.png"
                 alt=""
                 aria-hidden="true"
@@ -102,7 +104,7 @@ export function PricingSection() {
                 {state.highlight && (
                   <div className="absolute -top-4 left-8 right-8 flex justify-center">
                     <span className="px-4 py-2 bg-foreground text-background text-xs font-mono uppercase tracking-widest">
-                      Product focus
+                      Release pending
                     </span>
                   </div>
                 )}
@@ -139,9 +141,9 @@ export function PricingSection() {
         <div
           className={`mt-20 flex flex-wrap gap-6 pt-12 border-t border-foreground/10 text-sm text-muted-foreground transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0'}`}
         >
-          <span>Editor and review in Made</span>
-          <span>Visual graphs and multiplayer opt-in</span>
-          <span>Sim integration in development</span>
+          <span>Current image tools</span>
+          <span>Node execution is opt-in</span>
+          <span>Public release pending</span>
         </div>
       </div>
       <style jsx>{`

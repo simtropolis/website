@@ -1,40 +1,39 @@
 'use client'
 
+import { Artwork } from './artwork'
+
 import { useState, useEffect, useRef } from 'react'
 
 const features = [
   {
-    title: 'Game design',
-    description: 'Compare spaces and world rules while shaping a game concept.',
+    title: 'Linked input',
+    description: 'The artboard path starts with a project PNG and retains that input link.',
   },
   {
-    title: 'Film',
-    description: 'Review settings and sequence ideas against shared world references.',
+    title: 'Accepted edits',
+    description: 'Apply edits before saving or exporting the composition.',
   },
   {
-    title: 'VFX',
-    description: 'Explore environment and effects references in a scene context.',
+    title: 'Opt-in runtime',
+    description: 'Project asset access and model execution require the visual runtime.',
   },
   {
-    title: 'Animation',
-    description: 'Review character and motion ideas alongside world references.',
+    title: 'Model resources',
+    description: 'Configure the resources needed by the selected workflow.',
   },
   {
-    title: 'Creative arts',
-    description: 'Develop visual world concepts from a common set of references.',
+    title: 'Backend scope',
+    description: 'Backend availability depends on the build and configured services.',
   },
   {
-    title: 'Advertising',
-    description: 'Compare campaign setting ideas against a shared creative brief.',
+    title: 'Focused authoring',
+    description: 'Richer drawing and layer controls will extend the current image path.',
   },
   {
-    title: 'eCommerce',
-    description: 'Explore product-scene concepts in a consistent visual world.',
+    title: 'Validation in progress',
+    description: 'Native interaction and backend compatibility are still being validated.',
   },
-  {
-    title: 'Virtual production',
-    description: 'Discuss set and scene ideas using shared world references.',
-  },
+  { title: 'Release pending', description: 'A public Sim release is a separate milestone.' },
 ]
 
 export function DevelopersSection() {
@@ -54,15 +53,15 @@ export function DevelopersSection() {
   }, [])
 
   return (
-    <section id="developers" ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden">
+    <section id="limits" ref={sectionRef} className="relative py-24 lg:py-32 overflow-hidden">
       {/* Image — absolute, bottom-right, behind all content */}
       <div
         className={`absolute bottom-0 right-0 w-[55%] h-[85%] pointer-events-none transition-all duration-1000 delay-300 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        <img
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Upscaled%20Image%20%2813%29-OQ2DiR3ElVsUg8kTvTL1kC5A3Q6maM.png"
+        <Artwork
+          src="/home-media/developers.png"
           alt=""
           aria-hidden="true"
           className="w-full h-full object-cover object-left-top"
@@ -83,12 +82,12 @@ export function DevelopersSection() {
         >
           <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
             <span className="w-8 h-px bg-foreground/30" />
-            Application areas
+            Working boundaries
           </span>
           <h2 className="text-6xl md:text-7xl lg:text-[128px] font-display tracking-tight leading-[0.9]">
-            Room for many
+            Know the
             <br />
-            <span className="text-muted-foreground">kinds of makers.</span>
+            <span className="text-muted-foreground">current limits.</span>
           </h2>
         </div>
 
@@ -99,8 +98,8 @@ export function DevelopersSection() {
           }`}
         >
           <p className="text-xl text-muted-foreground mb-12 leading-relaxed max-w-md">
-            Sim&apos;s world-model workflows span games, screen work, creative arts, advertising,
-            and eCommerce. A shared world gives each discipline a place to develop ideas.
+            Start with the current image workflow. Native visual tools are in development, and
+            execution depends on the resources and services configured for the build.
           </p>
           <div className="grid grid-cols-2 gap-6">
             {features.map((feature, index) => (

@@ -1,18 +1,24 @@
 'use client'
 
+import { useReducedMotion } from './use-reduced-motion'
+
+import { Artwork } from './artwork'
+
 import { useEffect, useRef, useState } from 'react'
 
 const features = [
   {
     number: '01',
-    title: 'A workspace for making worlds',
-    description: 'Sim brings scenes, assets, model inputs, code, and review into one place.',
-    stats: { value: 'One', label: 'Connected workspace' },
+    title: 'Work with a linked image',
+    description:
+      'Invert an image, make it opaque, or mix two images with an opacity control. PNG-backed artboards expose position, dimensions, background and clipping.',
+    stats: { value: '.sim', label: 'Editable composition, separate PNG export' },
   },
 ]
 
 // Floating dot particles visualization
 function ParticleVisualization() {
+  const reducedMotion = useReducedMotion()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const frameRef = useRef(0)
   const mouseRef = useRef({ x: 0.5, y: 0.5 })
@@ -90,7 +96,7 @@ function ParticleVisualization() {
       })
 
       time += 0.016
-      frameRef.current = requestAnimationFrame(render)
+      if (!reducedMotion) frameRef.current = requestAnimationFrame(render)
     }
     render()
 
@@ -99,10 +105,11 @@ function ParticleVisualization() {
       canvas.removeEventListener('mousemove', handleMouseMove)
       cancelAnimationFrame(frameRef.current)
     }
-  }, [])
+  }, [reducedMotion])
 
   return (
     <canvas
+      aria-hidden="true"
       ref={canvasRef}
       className="absolute inset-0 pointer-events-auto"
       style={{ width: '100%', height: '100%' }}
@@ -135,16 +142,16 @@ export function FeaturesSection() {
             <div className="lg:col-span-7">
               <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
                 <span className="w-12 h-px bg-foreground/30" />
-                Workspace
+                Current development
               </span>
               <h2
                 className={`text-6xl md:text-7xl lg:text-[128px] font-display tracking-tight leading-[0.9] transition-all duration-1000 ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >
-                Game worlds,
+                Image editing,
                 <br />
-                <span className="text-muted-foreground">made together.</span>
+                <span className="text-muted-foreground">with a preview.</span>
               </h2>
             </div>
             <div className="lg:col-span-5 lg:pb-4">
@@ -153,8 +160,8 @@ export function FeaturesSection() {
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
               >
-                Move between world building, procedural editing, and code review without losing the
-                creative thread.
+                Evaluate an edit before keeping it. Project image editing requires a development
+                build with the visual runtime enabled and access to a linked project PNG.
               </p>
             </div>
           </div>
@@ -194,8 +201,8 @@ export function FeaturesSection() {
 
             {/* Right: mirrored image, full height */}
             <div className="hidden lg:block relative w-[42%] shrink-0 overflow-hidden">
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Upscaled%20Image%20%2812%29-ng3RrNnsPMJ5CrtOjcPTmhHg01W11q.png"
+              <Artwork
+                src="/home-media/features.png"
                 alt=""
                 aria-hidden="true"
                 className="absolute inset-0 w-full h-full object-cover object-center"

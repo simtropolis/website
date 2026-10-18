@@ -1,15 +1,32 @@
 'use client'
 
+import { useReducedMotion } from './use-reduced-motion'
+
+import { Artwork } from './artwork'
+
 import { useEffect, useState, useRef } from 'react'
 
 const regions = [
-  { name: 'Editor and review', detail: 'Zed-derived Made source', status: 'In source' },
-  { name: 'Visual graphs', detail: 'Native workflow graph editor', status: 'Opt-in' },
-  { name: 'Multiplayer tools', detail: 'Shared workspace code', status: 'Opt-in' },
-  { name: 'Sim composition', detail: 'Game-focused integration', status: 'Product scope' },
+  {
+    name: 'Typed connections',
+    detail: 'Inputs and outputs are checked when links change.',
+    status: 'Development',
+  },
+  {
+    name: 'Node properties',
+    detail: 'Change parameters in the native graph editor.',
+    status: 'Development',
+  },
+  { name: 'Graph history', detail: 'Undo and redo graph edits.', status: 'Development' },
+  {
+    name: 'Execution services',
+    detail: 'Resources and backend configuration required.',
+    status: 'Opt-in',
+  },
 ]
 
 export function InfrastructureSection() {
+  const reducedMotion = useReducedMotion()
   const [isVisible, setIsVisible] = useState(false)
   const [activeRegion, setActiveRegion] = useState(0)
   const sectionRef = useRef<HTMLElement>(null)
@@ -27,14 +44,15 @@ export function InfrastructureSection() {
   }, [])
 
   useEffect(() => {
+    if (reducedMotion) return
     const interval = setInterval(() => {
       setActiveRegion((prev) => (prev + 1) % regions.length)
     }, 3000)
     return () => clearInterval(interval)
-  }, [])
+  }, [reducedMotion])
 
   return (
-    <section id="infra" ref={sectionRef} className="relative py-32 lg:py-40 overflow-hidden">
+    <section id="nodes" ref={sectionRef} className="relative py-32 lg:py-40 overflow-hidden">
       {/* Background accent — retiré, remplacé par l'image sphère */}
 
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -46,7 +64,7 @@ export function InfrastructureSection() {
             }`}
           >
             <span className="w-12 h-px bg-foreground/20" />
-            The foundation
+            Node workflows / opt-in
           </span>
 
           <div className="grid lg:grid-cols-[auto_1fr] gap-8 lg:gap-16 items-stretch">
@@ -56,8 +74,8 @@ export function InfrastructureSection() {
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             >
-              <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/world-3i68QNWJwmO7W19ztZWbevAwJQHzYL.png"
+              <Artwork
+                src="/home-media/infrastructure.png"
                 alt=""
                 aria-hidden="true"
                 className="w-full h-full object-contain object-center"
@@ -71,9 +89,9 @@ export function InfrastructureSection() {
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >
-                Built on
+                Define work
                 <br />
-                <span className="text-muted-foreground">Made.</span>
+                <span className="text-muted-foreground">with nodes.</span>
               </h2>
 
               <p
@@ -81,9 +99,9 @@ export function InfrastructureSection() {
                   isVisible ? 'opacity-100' : 'opacity-0'
                 }`}
               >
-                Made supplies the Zed-derived editor, project tools, and review surfaces. Its
-                optional native workflow graph, execution runtime, model catalog, media output
-                tools, and multiplayer features provide building blocks for Sim.
+                Connect typed inputs and outputs, edit properties, and organize nodes in groups.
+                Execution needs the visual runtime enabled, model resources and a configured
+                backend. Backend availability differs by build.
               </p>
             </div>
           </div>
@@ -153,11 +171,12 @@ export function InfrastructureSection() {
 
             <div className="relative z-10">
               <div className="flex items-baseline gap-2 mb-4">
-                <span className="text-8xl lg:text-[10rem] font-display leading-none">Made</span>
-                <span className="text-2xl text-muted-foreground">source</span>
+                <span className="text-8xl lg:text-[10rem] font-display leading-none">Graph</span>
+                <span className="text-2xl text-muted-foreground">editing</span>
               </div>
               <p className="text-muted-foreground max-w-md">
-                Editor, project, source-control, terminal, agent, and review code live in Made.
+                Define the connections and parameters, then inspect the result of the configured
+                task.
               </p>
             </div>
           </div>
@@ -171,7 +190,7 @@ export function InfrastructureSection() {
             >
               <span className="text-5xl lg:text-6xl font-display">Graph</span>
               <span className="block text-sm text-muted-foreground mt-2">
-                Native graph editor, workflow runtime, and media outputs in opt-in Made builds
+                Native node editor with typed links, groups and graph undo and redo
               </span>
             </div>
 
@@ -180,9 +199,9 @@ export function InfrastructureSection() {
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             >
-              <span className="text-5xl lg:text-6xl font-display">Share</span>
+              <span className="text-5xl lg:text-6xl font-display">Queue</span>
               <span className="block text-sm text-muted-foreground mt-2">
-                Multiplayer workspace code behind its own feature
+                Queue a workflow or selected outputs; inspect progress, errors and cancellation
               </span>
             </div>
           </div>

@@ -1,18 +1,19 @@
 'use client'
 
+import { useReducedMotion } from './use-reduced-motion'
+
+import { Artwork } from './artwork'
+
 import { useEffect, useState, useRef } from 'react'
 
 const metrics = [
-  { value: 'Scenes', label: 'World context and assets', sublabel: 'Build the world' },
-  {
-    value: 'Nodes',
-    label: 'Procedural graphics and composition',
-    sublabel: 'Shape the visual flow',
-  },
-  { value: 'Motion', label: 'Animation and VFX workflows', sublabel: 'Explore change over time' },
+  { value: 'Input', label: 'A linked project PNG', sublabel: 'Current image path' },
+  { value: '.sim', label: 'Save and reopen the composition', sublabel: 'Editable source' },
+  { value: 'PNG', label: 'Export the accepted composition', sublabel: 'Baked output' },
 ]
 
 function GridBackground() {
+  const reducedMotion = useReducedMotion()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const timeRef = useRef(0)
   const frameRef = useRef(0)
@@ -58,7 +59,7 @@ function GridBackground() {
       ctx.lineTo(width, pulseY)
       ctx.stroke()
       timeRef.current += 0.02
-      frameRef.current = requestAnimationFrame(render)
+      if (!reducedMotion) frameRef.current = requestAnimationFrame(render)
     }
     render()
 
@@ -66,10 +67,11 @@ function GridBackground() {
       window.removeEventListener('resize', resize)
       cancelAnimationFrame(frameRef.current)
     }
-  }, [])
+  }, [reducedMotion])
 
   return (
     <canvas
+      aria-hidden="true"
       ref={canvasRef}
       className="absolute inset-0 pointer-events-none"
       style={{ width: '100%', height: '100%' }}
@@ -98,7 +100,8 @@ function DotGraph({
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const frameRef = useRef(0)
-  const timeRef = useRef(Math.random() * 100)
+  const reducedMotion = useReducedMotion()
+  const timeRef = useRef(0)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -134,15 +137,19 @@ function DotGraph({
       }
 
       timeRef.current += speed
-      frameRef.current = requestAnimationFrame(render)
+      if (!reducedMotion) frameRef.current = requestAnimationFrame(render)
     }
 
     render()
     return () => cancelAnimationFrame(frameRef.current)
-  }, [color, height, freq1, freq2, freqT, speed, baseline, amplitude])
+  }, [color, height, freq1, freq2, freqT, speed, baseline, amplitude, reducedMotion])
 
   return (
-    <canvas ref={canvasRef} style={{ width: '100%', height: `${height}px`, display: 'block' }} />
+    <canvas
+      aria-hidden="true"
+      ref={canvasRef}
+      style={{ width: '100%', height: `${height}px`, display: 'block' }}
+    />
   )
 }
 
@@ -162,7 +169,7 @@ export function MetricsSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="relative py-32 lg:py-40 overflow-hidden">
+    <section id="documents" ref={sectionRef} className="relative py-32 lg:py-40 overflow-hidden">
       <GridBackground />
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -172,9 +179,9 @@ export function MetricsSection() {
             <div className="flex items-center gap-4 mb-6">
               <span className="flex items-center gap-2 px-3 py-1 bg-[#eca8d6]/10 text-[#eca8d6] text-xs font-mono">
                 <span className="w-2 h-2 rounded-full bg-[#eca8d6] animate-pulse" />
-                CREATIVE TOOLS
+                EDITABLE DOCUMENTS
               </span>
-              <span className="text-sm font-mono text-muted-foreground">From scene to motion</span>
+              <span className="text-sm font-mono text-muted-foreground">Keep the source link</span>
             </div>
 
             <h2
@@ -182,9 +189,9 @@ export function MetricsSection() {
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             >
-              Shape the
+              Save the
               <br />
-              <span className="text-muted-foreground">whole world.</span>
+              <span className="text-muted-foreground">editable work.</span>
             </h2>
           </div>
         </div>
@@ -195,8 +202,8 @@ export function MetricsSection() {
             isVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <img
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/real-time-graph-INFmn3u0MlUwvNPynoIhwxtPaPjxM5.png"
+          <Artwork
+            src="/home-media/metrics.png"
             alt=""
             aria-hidden="true"
             className="w-full h-auto object-cover"
@@ -268,10 +275,10 @@ export function MetricsSection() {
             isVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <span>Scenes and assets</span>
-          <span>Node-based editing</span>
-          <span>Nondestructive composition</span>
-          <span className="text-foreground">Animation and VFX</span>
+          <span>Linked PNG input</span>
+          <span>Accepted artboard edits</span>
+          <span>Editable .sim document</span>
+          <span className="text-foreground">Separate PNG export</span>
         </div>
       </div>
     </section>

@@ -1,44 +1,47 @@
 'use client'
 
+import { useReducedMotion } from './use-reduced-motion'
+
 import { useEffect, useState, useRef } from 'react'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 const testimonials = [
   {
     quote:
-      'What if teams could move from a rough world sketch to editable scenes without losing the ideas behind them?',
-    author: 'Simtropolis',
-    role: 'Product vision',
-    stage: 'Worlds',
-    metric: { value: 'Worlds', label: 'From references to editable scenes' },
+      'Planned layer work will add selection and layer operations to the native image interface.',
+    author: 'Sim',
+    role: 'Planned authoring',
+    stage: 'Layers',
+    metric: { value: 'Edit', label: 'Native selection and layer operations' },
   },
   {
     quote:
-      'A node graph makes procedural decisions visible while layers keep direct visual editing close to the canvas.',
-    author: 'Simtropolis',
-    role: 'Product vision',
-    stage: 'Creative tools',
-    metric: { value: 'Nodes', label: 'Procedural and nondestructive editing' },
+      'Planned drawing work will add pen and path-editing tools to the native image interface.',
+    author: 'Sim',
+    role: 'Planned authoring',
+    stage: 'Drawing',
+    metric: { value: 'Draw', label: 'Pen and path-editing tools' },
   },
   {
     quote:
-      'Animation and VFX belong beside the world, its source assets, and the team reviewing each change.',
-    author: 'Simtropolis',
-    role: 'Product vision',
-    stage: 'Motion',
-    metric: { value: 'Motion', label: 'Animation and effects in context' },
+      'Planned animation work will add playback, frame and time controls. These controls remain part of the roadmap.',
+    author: 'Sim',
+    role: 'Planned authoring',
+    stage: 'Animation',
+    metric: { value: 'Time', label: 'Playback, frame and time controls' },
   },
   {
     quote:
-      'We imagine model-driven worlds reducing reliance on traditional engines and opening new forms of interactive entertainment. That is a long-term vision.',
-    author: 'Simtropolis',
-    role: 'Long-term vision',
-    stage: 'Future',
-    metric: { value: 'Vision', label: 'A future for model-driven worlds' },
+      'Planned export work will add JPEG, WebP and SVG output. The current image path exports PNG.',
+    author: 'Sim',
+    role: 'Planned output',
+    stage: 'Formats',
+    metric: { value: 'Files', label: 'JPEG, WebP and SVG output' },
   },
 ]
 
 export function TestimonialsSection() {
+  const reducedMotion = useReducedMotion()
   const [activeIndex, setActiveIndex] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
@@ -56,11 +59,12 @@ export function TestimonialsSection() {
   }, [])
 
   useEffect(() => {
+    if (reducedMotion) return
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % testimonials.length)
     }, 8000)
     return () => clearInterval(interval)
-  }, [])
+  }, [reducedMotion])
 
   const goTo = (index: number) => {
     setActiveIndex(index)
@@ -78,6 +82,7 @@ export function TestimonialsSection() {
 
   return (
     <section
+      id="planned"
       ref={sectionRef}
       className="relative py-32 lg:py-40 bg-foreground text-background overflow-hidden"
     >
@@ -97,15 +102,15 @@ export function TestimonialsSection() {
           <div>
             <span className="inline-flex items-center gap-3 text-sm font-mono text-background/40 mb-4">
               <span className="w-12 h-px bg-background/20" />
-              Long-term vision
+              Planned work
             </span>
             <h2
               className={`text-4xl lg:text-5xl font-display transition-all duration-1000 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             >
-              The creative horizon
-              <span className="text-background/40"> is still open.</span>
+              More authoring tools
+              <span className="text-background/40"> will follow.</span>
             </h2>
           </div>
 
@@ -113,14 +118,14 @@ export function TestimonialsSection() {
           <div className="hidden lg:flex items-center gap-2">
             <button
               onClick={goPrev}
-              aria-label="Previous vision statement"
+              aria-label="Previous planned feature"
               className="p-4 border border-background/20 hover:bg-background/10 transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
             <button
               onClick={goNext}
-              aria-label="Next vision statement"
+              aria-label="Next planned feature"
               className="p-4 border border-background/20 hover:bg-background/10 transition-colors"
             >
               <ArrowRight className="w-5 h-5" />
@@ -132,8 +137,11 @@ export function TestimonialsSection() {
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
           {/* Quote side */}
           <div className="lg:col-span-7 relative">
-            {/* Large quote mark */}
-            <span className="absolute -left-4 -top-8 text-[200px] font-display text-background/5 leading-none select-none">
+            {/* Original decorative punctuation; roadmap text is attributed to Sim. */}
+            <span
+              aria-hidden="true"
+              className="absolute -left-4 -top-8 text-[200px] font-display text-background/5 leading-none select-none"
+            >
               &ldquo;
             </span>
 
@@ -179,8 +187,9 @@ export function TestimonialsSection() {
                 <button
                   key={idx}
                   onClick={() => goTo(idx)}
-                  aria-label={`Show vision statement ${idx + 1}`}
-                  className="flex-1 h-1 bg-background/20 overflow-hidden"
+                  aria-label={`Show planned feature ${idx + 1}`}
+                  className="roadmap-indicator flex-1 h-1 bg-background/20 overflow-hidden"
+                  aria-pressed={idx === activeIndex}
                 >
                   <div
                     className={`h-full bg-background transition-all duration-300 ${
@@ -199,20 +208,21 @@ export function TestimonialsSection() {
             {/* Direction tabs */}
             <div className="mt-4 pt-6 border-t border-background/10">
               <span className="text-xs font-mono text-background/30 uppercase tracking-widest block mb-4">
-                Ideas to explore
+                Planned features
               </span>
               <div className="flex flex-wrap gap-3">
                 {testimonials.map((t, idx) => (
                   <button
-                    key={t.metric.value}
+                    key={t.stage}
                     onClick={() => goTo(idx)}
+                    aria-pressed={idx === activeIndex}
                     className={`px-4 py-2 text-sm border transition-all ${
                       idx === activeIndex
                         ? 'border-background/40 text-background'
                         : 'border-background/10 text-background/40 hover:border-background/30'
                     }`}
                   >
-                    {t.metric.value}
+                    {['Layers', 'Draw', 'Time', 'Export'][idx]}
                   </button>
                 ))}
               </div>

@@ -1,39 +1,36 @@
 'use client'
 
+import { Artwork } from './artwork'
+
 import { ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
 
-const made = 'https://github.com/simtropolis/made'
 const footerLinks = {
   Sim: [
-    { name: 'Workspace', href: '#features' },
-    { name: 'Workflow', href: '#how-it-works' },
-    { name: 'Model inputs', href: '#integrations' },
+    { name: 'Current features', href: '#features' },
+    { name: 'Image workflow', href: '#how-it-works' },
+    { name: 'Planned work', href: '#planned' },
     { name: 'Current status', href: '#status' },
   ],
-  Foundation: [
-    { name: 'Made code and status', href: '#infra' },
-    { name: 'Made repository', href: made },
-    { name: 'Made README', href: `${made}/blob/main/README.md` },
+  Nodes: [
+    { name: 'Graph editing', href: '#nodes' },
+    { name: 'Execution', href: '#execution' },
+    { name: 'Output documents', href: '#documents' },
   ],
-  Creators: [
-    { name: 'Application areas', href: '#developers' },
-    { name: 'Creative tools', href: '#security' },
-    { name: 'Current status', href: '#status' },
+  Development: [
+    { name: 'Current tools', href: '#tools' },
+    { name: 'Working boundaries', href: '#limits' },
+    { name: 'Planned work', href: '#planned' },
   ],
-  Attribution: [
-    { name: 'Zed', href: 'https://zed.dev' },
-    { name: 'GPL-3.0-or-later', href: `${made}/blob/main/LICENSE-GPL` },
-    { name: 'Apache-2.0 components', href: `${made}/blob/main/LICENSE-APACHE` },
-  ],
+  Notices: [{ name: 'License and attribution', href: '/notices.txt' }],
 }
 
 export function FooterSection() {
   return (
     <footer className="relative bg-black">
       <div className="relative w-full h-[340px] md:h-[420px] overflow-hidden">
-        <img
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Upscaled%20Image%20%2810%29-UnDKstODkIENp5xqTYUEpt0Sm8tNOw.png"
+        <Artwork
+          src="/home-media/footer.png"
           alt=""
           aria-hidden="true"
           className="w-full h-full object-cover object-center"
@@ -49,21 +46,19 @@ export function FooterSection() {
               <Link
                 href="/"
                 className="inline-flex items-center gap-2 mb-6"
-                aria-label="Simtropolis home"
+                aria-label="simtropolis home"
               >
                 <span className="text-2xl font-display text-white">simtropolis</span>
-                <span className="text-xs text-white/40 font-mono">/ Sim</span>
               </Link>
               <p className="text-white/50 leading-relaxed mb-8 max-w-xs text-sm">
-                Sim is a game-development workspace for world models, procedural creative tools,
-                code, and review.
+                A visual development workspace for native image editing, artboards and node
+                workflows. In development.
               </p>
               <a
-                href={made}
+                href="#status"
                 className="text-sm text-white/60 hover:text-white transition-colors inline-flex items-center gap-1 group"
               >
-                Made source (access may be required)
-                <ArrowUpRight className="w-3 h-3" />
+                Current status <ArrowUpRight className="w-3 h-3" aria-hidden="true" />
               </a>
             </div>
 
@@ -89,10 +84,7 @@ export function FooterSection() {
 
         <div className="py-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/60">
           <p>&copy; {new Date().getFullYear()} Simtropolis, Inc.</p>
-          <p>
-            Made is derived from Zed. Source is primarily GPL-3.0-or-later, with Apache-2.0
-            components where marked.
-          </p>
+          <p>Native tools in development. Public release pending.</p>
         </div>
       </div>
     </footer>

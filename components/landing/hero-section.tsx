@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
+import { useReducedMotion } from './use-reduced-motion'
 
-const words = ['imagine', 'shape', 'explore']
+const words = ['imagine', 'build', 'explore']
 
 function BlurWord({ word, trigger }: { word: string; trigger: number }) {
+  const reducedMotion = useReducedMotion()
   const letters = word.split('')
   const STAGGER = 45 // ms between each letter
   const DURATION = 500 // blur+opacity fade duration per letter
@@ -18,6 +20,7 @@ function BlurWord({ word, trigger }: { word: string; trigger: number }) {
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([])
 
   useEffect(() => {
+    if (reducedMotion) return
     // reset
     framesRef.current.forEach(cancelAnimationFrame)
     timersRef.current.forEach(clearTimeout)
@@ -59,7 +62,7 @@ function BlurWord({ word, trigger }: { word: string; trigger: number }) {
       timersRef.current.forEach(clearTimeout)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [trigger])
+  }, [trigger, reducedMotion])
 
   // gradient colours cycling across letter positions
   const gradientColors = ['#eca8d6', '#a78bfa', '#67e8f9', '#fbbf24', '#eca8d6']
@@ -90,9 +93,9 @@ function BlurWord({ word, trigger }: { word: string; trigger: number }) {
             key={i}
             style={{
               display: 'inline-block',
-              opacity: letterStates[i]?.opacity ?? 0,
-              filter: `blur(${letterStates[i]?.blur ?? 20}px)`,
-              color: showGradient ? `rgb(${r},${g},${b})` : 'white',
+              opacity: reducedMotion ? 1 : (letterStates[i]?.opacity ?? 0),
+              filter: reducedMotion ? 'none' : `blur(${letterStates[i]?.blur ?? 20}px)`,
+              color: !reducedMotion && showGradient ? `rgb(${r},${g},${b})` : 'white',
               transition: 'color 0.4s ease',
             }}
           >
@@ -107,34 +110,41 @@ function BlurWord({ word, trigger }: { word: string; trigger: number }) {
 export function HeroSection() {
   const [isVisible, setIsVisible] = useState(false)
   const [wordIndex, setWordIndex] = useState(0)
-
+  const reducedMotion = useReducedMotion()
+  const videoRef = useRef<HTMLVideoElement>(null)
   useEffect(() => {
     setIsVisible(true)
   }, [])
 
   useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    if (reducedMotion) video.pause()
+    else void video.play().catch(() => {})
+  }, [reducedMotion])
+
+  useEffect(() => {
+    if (reducedMotion) return
     const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % words.length)
+      setWordIndex((previous) => (previous + 1) % words.length)
     }, 2500)
     return () => clearInterval(interval)
-  }, [])
+  }, [reducedMotion])
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center items-start overflow-hidden bg-black">
       {/* Background video */}
       <div className="absolute inset-0 z-0">
         <video
-          autoPlay
+          ref={videoRef}
+          autoPlay={!reducedMotion}
           muted
           loop
           playsInline
           aria-hidden="true"
           className="w-full h-full object-cover object-center opacity-80"
         >
-          <source
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/bg-hero-0BnFGdr81Ifnj3WbBZoNt1KE4D5DMT.mp4"
-            type="video/mp4"
-          />
+          <source src="/home-media/hero.mp4" type="video/mp4" />
         </video>
         {/* Subtle overlay to ensure text readability on the left */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
@@ -177,29 +187,33 @@ export function HeroSection() {
           >
             <span className="inline-flex items-center gap-3 text-sm font-mono text-white/60">
               <span className="w-8 h-px bg-white/30" />
-              Sim / a game-development workspace
+              Sim / In development
             </span>
           </div>
 
           {/* Main headline */}
           <div className="mb-12">
             <h1
+              aria-label="Worlds to imagine, build and explore."
               className={`text-left text-[clamp(2rem,6vw,7rem)] font-display leading-[0.92] tracking-tight text-white transition-all duration-1000 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             >
               <span className="block">Worlds to</span>
-              <span className="block">
+              <span className="block" aria-hidden="true">
                 <span className="relative inline-block">
-                  <BlurWord word={words[wordIndex]} trigger={wordIndex} />
+                  <BlurWord
+                    word={words[reducedMotion ? 0 : wordIndex]}
+                    trigger={reducedMotion ? 0 : wordIndex}
+                  />
                 </span>
                 .
               </span>
             </h1>
             <p className="mt-8 max-w-2xl text-lg md:text-xl leading-relaxed text-white/75">
-              Make game worlds with scenes, assets, model inputs, code, and review in a Zed-derived
-              workspace. Sim combines world foundation models with procedural, node-based creative
-              tools for visual work and collaboration.
+              A visual development workspace for native image editing, artboards and node workflows.
+              Work on a linked image, inspect a preview, and keep an editable composition. Sim is in
+              development; a public release is still pending.
             </p>
             <div className="mt-8 flex flex-wrap gap-4 text-sm">
               <a
@@ -227,9 +241,9 @@ export function HeroSection() {
       >
         <div className="max-w-[1400px] mx-auto flex flex-wrap items-start gap-6 lg:gap-20">
           {[
-            { value: 'Scenes', label: 'Worlds and assets' },
-            { value: 'Nodes', label: 'Procedural creative tools' },
-            { value: 'Review', label: 'Code and visual changes' },
+            { value: 'Images', label: 'Native development tools' },
+            { value: 'Nodes', label: 'Opt-in visual runtime' },
+            { value: 'Output', label: 'Editable source and PNG' },
           ].map((stat) => (
             <div key={stat.label} className="flex flex-col gap-2">
               <span className="text-3xl lg:text-4xl font-display text-white">{stat.value}</span>

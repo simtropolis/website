@@ -1,38 +1,43 @@
 'use client'
 
+import { useReducedMotion } from './use-reduced-motion'
+
+import { Artwork } from './artwork'
+
 import { useEffect, useState, useRef } from 'react'
 import { Layers, Network, Eye, Compass } from 'lucide-react'
 
 const creativeFeatures = [
   {
     icon: Layers,
-    title: 'Layers and nodes',
-    description: 'Work visually on a canvas or shape the composition through a node graph.',
+    title: 'Artboard controls',
+    description: 'Change position, dimensions, background and clipping for a linked PNG.',
     image: '/images/isolated.jpg',
   },
   {
     icon: Eye,
-    title: 'Nondestructive composition',
-    description: 'Keep source assets and editing steps separate as a scene evolves.',
+    title: 'Preview and diagnostics',
+    description: 'Inspect evaluated pixels and field errors before applying an edit.',
     image: '/images/encrypted.jpg',
   },
   {
     icon: Network,
-    title: 'Procedural graphics',
-    description: 'Build reusable visual steps from nodes and parameters.',
+    title: 'Image operations',
+    description: 'Invert an image, make it opaque, or mix inputs with an opacity parameter.',
     image: '/images/audit.jpg',
   },
   {
     icon: Compass,
-    title: 'Animation and VFX',
-    description: 'Bring motion and effects into the creative workflow for a world.',
+    title: 'Editable persistence',
+    description: 'Reopen a saved .sim composition; export a separate PNG output.',
     image: '/images/permissions.jpg',
   },
 ]
 
-const capabilityStates = ['Layers', 'Nodes', 'Composition', 'Motion']
+const capabilityStates = ['Development', 'Linked PNG', 'Preview', '.sim / PNG']
 
 export function SecuritySection() {
+  const reducedMotion = useReducedMotion()
   const [isVisible, setIsVisible] = useState(false)
   const [activeFeature, setActiveFeature] = useState(0)
   const sectionRef = useRef<HTMLElement>(null)
@@ -50,14 +55,15 @@ export function SecuritySection() {
   }, [])
 
   useEffect(() => {
+    if (reducedMotion) return
     const interval = setInterval(() => {
       setActiveFeature((prev) => (prev + 1) % creativeFeatures.length)
     }, 3000)
     return () => clearInterval(interval)
-  }, [])
+  }, [reducedMotion])
 
   return (
-    <section id="security" ref={sectionRef} className="relative py-32 lg:py-40 overflow-hidden">
+    <section id="tools" ref={sectionRef} className="relative py-32 lg:py-40 overflow-hidden">
       {/* Background accent removed */}
 
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -69,7 +75,7 @@ export function SecuritySection() {
             }`}
           >
             <span className="w-12 h-px bg-foreground/20" />
-            Creative tool scope
+            Native image tools
           </span>
 
           {/* Title — full width */}
@@ -78,9 +84,9 @@ export function SecuritySection() {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Create with
+            Edit the
             <br />
-            <span className="text-muted-foreground">layers and nodes.</span>
+            <span className="text-muted-foreground">image.</span>
           </h2>
 
           {/* Description — below title */}
@@ -90,8 +96,9 @@ export function SecuritySection() {
             }`}
           >
             <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
-              Sim connects direct visual editing with procedural control. Work across layers,
-              reusable graphs, nondestructive compositions, motion, and effects.
+              The current image path is focused on linked PNGs and artboard edits. Saving needs a
+              linked input and accepted changes. Broader drawing, layer and animation controls
+              remain planned.
             </p>
           </div>
         </div>
@@ -107,7 +114,7 @@ export function SecuritySection() {
             {/* Dynamic feature image with cross-fade — desktop only */}
             <div className="absolute inset-0 pointer-events-none items-center justify-end hidden lg:flex">
               {creativeFeatures.map((feature, index) => (
-                <img
+                <Artwork
                   key={feature.image}
                   src={feature.image}
                   alt=""
@@ -119,11 +126,11 @@ export function SecuritySection() {
             </div>
 
             <div className="relative z-10">
-              <span className="font-mono text-sm text-muted-foreground">Creative workflow</span>
+              <span className="font-mono text-sm text-muted-foreground">Current image path</span>
               <div className="mt-8">
                 <span className="text-6xl sm:text-7xl lg:text-8xl font-display">Compose</span>
                 <span className="block text-muted-foreground mt-2">
-                  From source assets to editable results
+                  Linked input, editable composition, separate output
                 </span>
               </div>
             </div>
@@ -156,6 +163,15 @@ export function SecuritySection() {
                 } ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
                 style={{ transitionDelay: `${index * 80}ms` }}
                 onClick={() => setActiveFeature(index)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    setActiveFeature(index)
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                aria-pressed={activeFeature === index}
                 onMouseEnter={() => setActiveFeature(index)}
               >
                 <div className="flex items-start gap-4">

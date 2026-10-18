@@ -1,21 +1,58 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
 
 const navLinks = [
-  { name: 'Workspace', href: '#features' },
+  { name: 'Tools', href: '#features' },
   { name: 'Workflow', href: '#how-it-works' },
-  { name: 'Foundation', href: '#infra' },
-  { name: 'Models', href: '#integrations' },
+  { name: 'Nodes', href: '#nodes' },
+  { name: 'Planned', href: '#planned' },
   { name: 'Status', href: '#status' },
 ]
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const menuButton = useRef<HTMLButtonElement>(null)
+  const menu = useRef<HTMLDivElement>(null)
+  const closeMenu = () => {
+    setIsMobileMenuOpen(false)
+    menuButton.current?.focus()
+  }
+  useEffect(() => {
+    if (!isMobileMenuOpen) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        closeMenu()
+      }
+      if (event.key === 'Tab') {
+        const controls = [
+          menuButton.current,
+          ...Array.from(menu.current?.querySelectorAll<HTMLElement>('a') ?? []),
+        ].filter((node): node is HTMLElement => Boolean(node))
+        const first = controls[0],
+          last = controls[controls.length - 1]
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault()
+          last?.focus()
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault()
+          first?.focus()
+        }
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = previous
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [isMobileMenuOpen])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,16 +81,11 @@ export function Navigation() {
           }`}
         >
           {/* Logo */}
-          <Link href="/" aria-label="Simtropolis home" className="flex items-center gap-2 group">
+          <Link href="/" aria-label="simtropolis home" className="flex items-center gap-2 group">
             <span
               className={`font-display tracking-tight transition-all duration-500 ${isScrolled ? 'text-xl text-foreground' : 'text-2xl text-white'}`}
             >
               simtropolis
-            </span>
-            <span
-              className={`font-mono transition-all duration-500 ${isScrolled ? 'text-[10px] mt-0.5 text-muted-foreground' : 'text-xs mt-1 text-white/60'}`}
-            >
-              / Sim
             </span>
           </Link>
 
@@ -92,6 +124,8 @@ export function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
+            ref={menuButton}
+            aria-controls="mobile-navigation"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={`lg:hidden p-2 transition-colors duration-500 ${isScrolled || isMobileMenuOpen ? 'text-foreground' : 'text-white'}`}
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
@@ -104,6 +138,10 @@ export function Navigation() {
 
       {/* Mobile Menu - Full Screen Overlay */}
       <div
+        id="mobile-navigation"
+        ref={menu}
+        aria-label="Mobile navigation"
+        role="navigation"
         inert={!isMobileMenuOpen}
         className={`lg:hidden fixed inset-0 bg-background z-40 transition-all duration-500 ${
           isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -117,7 +155,7 @@ export function Navigation() {
               <a
                 key={link.name}
                 href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={closeMenu}
                 className={`text-5xl font-display text-foreground hover:text-muted-foreground transition-all duration-500 ${
                   isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
@@ -136,7 +174,7 @@ export function Navigation() {
             style={{ transitionDelay: isMobileMenuOpen ? '300ms' : '0ms' }}
           >
             <Button asChild variant="outline" className="flex-1 rounded-full h-14 text-base">
-              <a href="#status" onClick={() => setIsMobileMenuOpen(false)}>
+              <a href="#status" onClick={closeMenu}>
                 Current status
               </a>
             </Button>
@@ -144,7 +182,7 @@ export function Navigation() {
               asChild
               className="flex-1 bg-foreground text-background rounded-full h-14 text-base"
             >
-              <a href="#features" onClick={() => setIsMobileMenuOpen(false)}>
+              <a href="#features" onClick={closeMenu}>
                 Explore Sim
               </a>
             </Button>

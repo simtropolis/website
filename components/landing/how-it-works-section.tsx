@@ -1,31 +1,37 @@
 'use client'
 
+import { useReducedMotion } from './use-reduced-motion'
+
+import { Artwork } from './artwork'
+
 import { useEffect, useRef, useState } from 'react'
 
 const steps = [
   {
     number: '01',
-    title: 'Imagine',
-    subtitle: 'the world',
+    title: 'Define',
+    subtitle: 'the composition',
     description:
-      'Start with a creative brief, visual references, and the rules that give a world its shape.',
+      'Open an available project PNG on an artboard. Change placement, size, background and clipping; apply batch edits together or discard them.',
   },
   {
     number: '02',
-    title: 'Bring in',
-    subtitle: 'the models',
+    title: 'Evaluate',
+    subtitle: 'the preview',
     description:
-      'Connect image, video, and world-model inputs to scenes and source assets through visual workflows.',
+      'Prepare a preview of the composition. Invalid fields show diagnostics. An earlier preview stays identifiable while work is pending.',
   },
   {
     number: '03',
-    title: 'Shape',
-    subtitle: 'it together',
-    description: 'Review graph edits, visual changes, and code with the people shaping the world.',
+    title: 'Keep',
+    subtitle: 'an editable result',
+    description:
+      'Save a linked .sim document and reopen it to make changes. Export a separate baked PNG from accepted edits.',
   },
 ]
 
 export function HowItWorksSection() {
+  const reducedMotion = useReducedMotion()
   const [activeStep, setActiveStep] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -43,11 +49,12 @@ export function HowItWorksSection() {
   }, [])
 
   useEffect(() => {
+    if (reducedMotion) return
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % steps.length)
     }, 6000)
     return () => clearInterval(interval)
-  }, [])
+  }, [reducedMotion])
 
   return (
     <section
@@ -76,9 +83,9 @@ export function HowItWorksSection() {
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'
               }`}
             >
-              <span className="block">Imagine.</span>
-              <span className="block text-white/30">Shape.</span>
-              <span className="block text-white/10">Review.</span>
+              <span className="block">Define.</span>
+              <span className="block text-white/30">Evaluate.</span>
+              <span className="block text-white/10">Keep.</span>
             </h2>
           </div>
 
@@ -88,8 +95,8 @@ export function HowItWorksSection() {
               isVisible ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tree-uAia6REvB137CQyHFCf0za3O6h2zKO.png"
+            <Artwork
+              src="/home-media/how-it-works.png"
               alt=""
               aria-hidden="true"
               className="absolute bottom-0 left-0 w-full h-full object-contain object-bottom"
@@ -105,6 +112,7 @@ export function HowItWorksSection() {
             <button
               key={step.number}
               type="button"
+              aria-pressed={activeStep === index}
               onClick={() => setActiveStep(index)}
               className={`relative text-left p-8 lg:p-12 border transition-all duration-500 ${
                 activeStep === index

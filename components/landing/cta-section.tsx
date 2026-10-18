@@ -1,5 +1,7 @@
 'use client'
 
+import { Artwork } from './artwork'
+
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
@@ -51,14 +53,14 @@ export function CtaSection() {
               {/* Left content */}
               <div className="flex-1">
                 <h2 className="text-6xl md:text-7xl lg:text-[72px] font-display tracking-tight mb-8 leading-[0.95]">
-                  Make room for
+                  Explore the
                   <br />
-                  new worlds.
+                  work in progress.
                 </h2>
 
                 <p className="text-xl text-muted-foreground mb-12 leading-relaxed max-w-xl">
-                  Explore the creative tool scope, then inspect the Made code that forms Sim&apos;s
-                  foundation.
+                  Follow the current image workflow, inspect how node execution works, and see what
+                  is planned for Sim.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-start gap-4">
@@ -78,20 +80,20 @@ export function CtaSection() {
                     variant="outline"
                     className="h-14 px-8 text-base rounded-full border-foreground/20 hover:bg-foreground/5"
                   >
-                    <a href="https://github.com/simtropolis/made/tree/dev">Explore Made source</a>
+                    <a href="#planned">See planned tools</a>
                   </Button>
                 </div>
 
                 <p className="text-sm text-muted-foreground mt-8 font-mono">
-                  No Sim download is available yet.
+                  Sim is in development. A public release is still pending.
                 </p>
               </div>
 
               {/* Right image */}
               <div className="hidden lg:flex items-end justify-center w-[600px] h-[650px] -mr-16">
-                <img
+                <Artwork
                   src="/images/bridge.png"
-                  alt="Two glowing trees linked across a shared world scene"
+                  alt=""
                   className="w-full h-full object-contain object-bottom"
                 />
               </div>

@@ -1,16 +1,18 @@
 'use client'
 
+import { Artwork } from './artwork'
+
 import { useEffect, useState, useRef } from 'react'
 
 const integrations = [
-  { name: 'Image models', category: 'Model input' },
-  { name: 'Video models', category: 'Model input' },
-  { name: 'World models', category: 'Model input' },
-  { name: 'Shared world state', category: 'World' },
-  { name: 'Game design', category: 'Application' },
-  { name: 'Film', category: 'Application' },
-  { name: 'Animation', category: 'Application' },
-  { name: 'Virtual production', category: 'Application' },
+  { name: 'Typed inputs', category: 'Graph' },
+  { name: 'Node properties', category: 'Graph' },
+  { name: 'Model resources', category: 'Required' },
+  { name: 'Backend selection', category: 'Configured' },
+  { name: 'Queue controls', category: 'Execution' },
+  { name: 'Cancellation', category: 'Execution' },
+  { name: 'Media previews', category: 'Output' },
+  { name: 'Run history', category: 'Review' },
 ]
 
 export function IntegrationsSection() {
@@ -32,7 +34,7 @@ export function IntegrationsSection() {
   }, [])
 
   return (
-    <section id="integrations" ref={sectionRef} className="relative overflow-hidden">
+    <section id="execution" ref={sectionRef} className="relative overflow-hidden">
       {/* Header — centré verticalement sur l'image */}
       <div className="relative z-10 pt-32 lg:pt-40 text-center">
         <span
@@ -41,7 +43,7 @@ export function IntegrationsSection() {
           }`}
         >
           <span className="w-12 h-px bg-foreground/20" />
-          Model workflows
+          Configured execution
           <span className="w-12 h-px bg-foreground/20" />
         </span>
 
@@ -50,9 +52,9 @@ export function IntegrationsSection() {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          One creative
+          Run the
           <br />
-          <span className="text-muted-foreground">surface.</span>
+          <span className="text-muted-foreground">node graph.</span>
         </h2>
 
         <p
@@ -60,8 +62,8 @@ export function IntegrationsSection() {
             isVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          Image, video, and world-model inputs sit beside scenes, assets, and procedural tools in
-          Sim&apos;s creative workspace.
+          Queue a workflow or selected outputs, inspect progress and errors, then review generated
+          media and execution history. Model work requires resources and an available backend.
         </p>
       </div>
 
@@ -71,8 +73,8 @@ export function IntegrationsSection() {
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        <img
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/connection-KeJwWPQvn6l0a7C48tCARYtNEdC92H.png"
+        <Artwork
+          src="/home-media/integrations.png"
           alt=""
           aria-hidden="true"
           className="w-full h-auto object-cover"
@@ -159,9 +161,9 @@ export function IntegrationsSection() {
         >
           <div className="flex flex-wrap gap-12">
             {[
-              { value: 'Image', label: 'model input' },
-              { value: 'Video', label: 'model input' },
-              { value: 'World', label: 'model input' },
+              { value: 'Queue', label: 'the task' },
+              { value: 'Inspect', label: 'the output' },
+              { value: 'Change', label: 'the graph' },
             ].map((stat) => (
               <div key={stat.label} className="flex items-baseline gap-3">
                 <span className="text-3xl font-display">{stat.value}</span>
