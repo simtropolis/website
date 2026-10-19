@@ -42,7 +42,11 @@ GitHub settings: repository **Settings → Pages → Build and deployment → So
 
 Read-only checks at approximately 10:05 BST on 19 October 2026 used the local resolver, Cloudflare `1.1.1.1`, and authoritative `ns-366.awsdns-45.com`. The apex returned NOERROR without A/AAAA/CNAME answers; `www` returned NXDOMAIN. The apex NS records were `ns-1143.awsdns-14.org`, `ns-1020.awsdns-63.net`, `ns-366.awsdns-45.com`, and `ns-1976.awsdns-55.co.uk`. MX/TXT/CAA queries had no answers. These starting observations do not enumerate the whole zone.
 
-The DNS provider is Route 53. With AWS access, inspect the public hosted zone and update only the website routing records to these values (TTL 300):
+The domain registrar and selected DNS provider are **GoDaddy**. In Domain Portfolio → `simtropolis.ai` → DNS → Nameservers, select **GoDaddy Nameservers**, save, and confirm. GoDaddy assigns its default nameservers; use those exact assigned values rather than guessing them. Once the change has processed, open **DNS Records** and add/update only the website records below (TTL 300 where available).
+
+No AWS account or Route 53 access is needed for this setup. Keep any unrelated records visible in the GoDaddy zone. The initial AWS zone could not be exported because no authenticated AWS session was available; public apex queries found no A/AAAA/MX/TXT/CAA data, but that is not a complete subdomain inventory. Before relying on other domain services, confirm any service-specific records with their owners.
+
+GoDaddy marked the registration expired on 18 October 2026 when inspected during setup on 19 October. Domain renewal is an account action separate from the website deployment; confirm the registration is active before treating the domain setup as complete.
 
 | Name                 | Type  | Values                                                                                     |
 | -------------------- | ----- | ------------------------------------------------------------------------------------------ |
@@ -50,11 +54,11 @@ The DNS provider is Route 53. With AWS access, inspect the public hosted zone an
 | `simtropolis.ai`     | AAAA  | `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153` |
 | `www.simtropolis.ai` | CNAME | `simtropolis.github.io.`                                                                   |
 
-Do not change nameservers or unrelated records, including mail, TXT, CAA, or certificate-validation records. Replace conflicting website address/alias records where present. Do not add an apex CNAME or a wildcard. The `www` target has no repository path. With the apex configured as the Pages custom domain, GitHub redirects `www` to the apex once both DNS variants are correct.
+After selecting GoDaddy nameservers, preserve unrelated DNS records, including mail, TXT, CAA, or certificate-validation records. Replace conflicting website address/alias records where present. Do not add an apex CNAME or a wildcard. The `www` target has no repository path. With the apex configured as the Pages custom domain, GitHub redirects `www` to the apex once both DNS variants are correct.
 
 Organization-level domain verification is optional but recommended: organization **Settings → Pages → Add a domain** generates a TXT record at `_github-pages-challenge-simtropolis.simtropolis.ai`. Use the exact generated value and keep it once verified; do not invent it. It is not a prerequisite for this setup.
 
-The initial AWS CLI check had no default credentials, and `smart-dev-support` had no SSO token. Sign in with `aws sso login --profile smart-dev-support` if that is still the active profile. Missing DNS access does not prevent enabling Pages, merging the workflow, or publishing the artifact.
+GitHub Pages is already configured for Actions publishing and `simtropolis.ai`. The first production build and deployment passed in [run 39229839071](https://github.com/simtropolis/website/actions/runs/39229839071). Its exact revision, homepage/metadata/404 responses, and 11 local script/style/font URLs were verified directly at the GitHub Pages origin. That origin check does not establish public custom-domain DNS or HTTPS readiness.
 
 ## Verify the live site
 
@@ -76,3 +80,6 @@ See [verification and screenshots](verification.md) for the completed local/brow
 - [Custom domains and DNS targets](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site)
 - [Domain verification](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages)
 - [HTTPS](https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https)
+
+- [GoDaddy nameservers](https://www.godaddy.com/en/help/change-my-domain-nameservers-664)
+- [GoDaddy A records](https://www.godaddy.com/en-uk/help/add-or-edit-an-a-record-42546)
