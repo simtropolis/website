@@ -39,7 +39,8 @@ test('legacy wrapper generates a release snapshot once when explicitly invoked',
         assert.equal(env.RELEASES_GITHUB_TOKEN, undefined)
         assert.equal(env.AMPLIFY_REBUILD_WEBHOOK, undefined)
         process.env.RELEASE_SNAPSHOT_ID = env.RELEASE_SNAPSHOT_ID
-        assert.deepEqual(nextConfig, { images: { unoptimized: true } })
+        assert.equal(nextConfig.output, 'export')
+        assert.equal(nextConfig.images.unoptimized, true)
         const snapshot = await readSnapshot()
         assert.ok(!JSON.stringify(snapshot).includes('private-token'))
         assert.ok(!JSON.stringify(snapshot).includes('private-webhook'))
