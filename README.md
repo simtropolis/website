@@ -27,7 +27,7 @@ bun run preview
 
 The production build fetches Google fonts, so it needs network access. `bun run build` exports the site into `out/`. `bun run preview` (also `bun run start`) serves those files at http://127.0.0.1:3000; set `PORT` to use another port. Unknown paths serve the exported 404 page with a 404 status, rather than the homepage. `bun run test:static` starts an ephemeral static server and checks the exported artifact, routes, metadata, and asset references.
 
-GitHub Actions runs the checks and uploads `out/` on PRs and `main`. Deployment requires `main` plus the repository variable `PAGES_DEPLOY_ENABLED=true`; leave it unset until cutover is approved. See [the hosting migration runbook](docs/hosting/github-pages.md) for eligibility, settings, domain/DNS changes, HTTPS, and rollback. The existing `amplify.yml` remains in place until the approved post-cutover cleanup. Only `/` is included in the sitemap. Former product and release routes are no longer served.
+GitHub Actions runs the checks and uploads `out/` on PRs and `main`. Successful builds on `main` deploy automatically to GitHub Pages; pull requests only validate and upload the artifact. See [the hosting migration runbook](docs/hosting/github-pages.md) for eligibility, settings, domain/DNS changes, and HTTPS. Obsolete Amplify build configuration has been removed. Only `/` is included in the sitemap. Former product and release routes are no longer served.
 
 Earlier site documentation and assets are preserved in `archive/` for repository history; that directory is outside the Next.js app and public asset roots. The remaining release scripts are historical tooling and are not part of the Sim build.
 

@@ -46,10 +46,10 @@ Machine-readable observations are in [export-browser.json](export-browser.json) 
 
 ![320px keyboard-opened navigation menu](screenshots/320-menu.png)
 
-## External state and remaining gates
+## Initial external state and subsequent setup
 
-The user authorized making the source public after review; the GitHub API confirms `private=false` / `visibility=public`. Pages was not enabled, no custom domain or deployment variable was configured, and no DNS or AWS mutation was performed.
+At the end of the initial preparation, the user had authorized making the source public after review; the GitHub API confirmed `private=false` / `visibility=public`. At that point Pages was not enabled, no custom domain or deployment variable was configured, and no DNS or AWS mutation had been performed.
 
 DNS was checked against the local resolver, Cloudflare, and an authoritative Route 53 nameserver. The apex had no A/AAAA/CNAME answers, and `www` was NXDOMAIN. These are the observed starting conditions, not an effect of this PR. The AWS default profile has no credentials and the existing named profile has no SSO token. The Amplify app, successful deployment/default URL, full Route 53 zone inventory, and exact working rollback alias therefore remain unverified.
 
-The [migration runbook](github-pages.md) specifies Pages settings, exact proposed DNS targets, HTTPS checks, revision verification, rollback prerequisites, and eventual Amplify configuration removal. Root `amplify.yml` remains unchanged and a verbatim copy is retained at `docs/hosting/amplify.rollback.yml`. Cutover approval, authenticated AWS inventory, GitHub CI results, and live-domain/deployment-SHA verification must be recorded separately. Do not merge into Amplify's connected branch before its old automatic SSR build is held during the approved cutover.
+The user subsequently authorized proceeding with setup without a rollback requirement. The [hosting guide](github-pages.md) now documents automatic deployment from `main`, Pages/custom-domain settings, exact DNS records, and HTTPS verification. The obsolete Amplify YAML files and deployment opt-in gate were removed. Current live deployment results are recorded in the PR and GitHub Actions history; the checks above remain the initial local/browser evidence, not a claim about subsequent DNS propagation.

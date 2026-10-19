@@ -41,8 +41,7 @@ jobs:
           path: out
 
   deploy:
-    # Explicit opt-in keeps this PR/merge from changing hosting before cutover approval.
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.PAGES_DEPLOY_ENABLED == 'true'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
