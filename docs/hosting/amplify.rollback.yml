@@ -1,0 +1,24 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm install 22.22.0
+        - nvm use 22.22.0
+        - npm install --global bun@1.3.6
+        - bun install --frozen-lockfile
+    build:
+      commands:
+        - bun run format:check
+        - bun run lint
+        - bun run typecheck
+        - bun run test
+        - bun run build
+        - bun run test:build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - .next/cache/**/*

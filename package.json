@@ -11,15 +11,17 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "start": "next start",
+    "start": "node scripts/serve-static.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check app components/landing next.config.mjs scripts/smoke.mjs scripts/demo-build-check.mjs scripts/releases.test.mjs scripts/run-next.test.mjs package.json",
+    "format:check": "prettier --check app components/landing next.config.mjs scripts/{smoke,demo-build-check,check-static,serve-static,serve-static.test,releases.test,run-next.test}.mjs package.json .github/workflows/pages.yml docs/hosting/*.md README.md",
     "test": "node --test scripts/*.test.mjs",
     "test:build": "node scripts/demo-build-check.mjs",
     "test:smoke": "node scripts/smoke.mjs",
-    "test:demo:rust": "node scripts/demo-fixtures.mjs --rust"
+    "test:demo:rust": "node scripts/demo-fixtures.mjs --rust",
+    "preview": "node scripts/serve-static.mjs",
+    "test:static": "node scripts/check-static.mjs"
   },
   "dependencies": {
     "@codemirror/commands": "6.11.0",

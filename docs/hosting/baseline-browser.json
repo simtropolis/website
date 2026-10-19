@@ -1,0 +1,114 @@
+[
+  {
+    "width": 1920,
+    "overflow": {
+      "viewport": 1920,
+      "document": 1920
+    },
+    "focused": {
+      "tag": "A",
+      "label": "Simtropolis home"
+    },
+    "images": 13,
+    "errors": [],
+    "failures": [],
+    "badResponses": [],
+    "reduced": {
+      "matches": true,
+      "video": [
+        {
+          "paused": false,
+          "autoplay": true
+        }
+      ],
+      "animations": 47
+    }
+  },
+  {
+    "width": 1440,
+    "overflow": {
+      "viewport": 1440,
+      "document": 1440
+    },
+    "focused": {
+      "tag": "A",
+      "label": "Simtropolis home"
+    },
+    "images": 13,
+    "errors": [],
+    "failures": [],
+    "badResponses": [],
+    "reduced": {
+      "matches": true,
+      "video": [
+        {
+          "paused": false,
+          "autoplay": true
+        }
+      ],
+      "animations": 49
+    }
+  },
+  {
+    "width": 390,
+    "overflow": {
+      "viewport": 390,
+      "document": 390
+    },
+    "focused": {
+      "tag": "A",
+      "label": "Simtropolis home"
+    },
+    "mobile": {
+      "keyboardOpens": true,
+      "keyboardNavigates": true,
+      "closesOnSelection": true,
+      "escapeCloses": false
+    },
+    "images": 13,
+    "errors": [],
+    "failures": [],
+    "badResponses": [],
+    "reduced": {
+      "matches": true,
+      "video": [
+        {
+          "paused": false,
+          "autoplay": true
+        }
+      ],
+      "animations": 47
+    }
+  },
+  {
+    "width": 320,
+    "overflow": {
+      "viewport": 320,
+      "document": 320
+    },
+    "focused": {
+      "tag": "A",
+      "label": "Simtropolis home"
+    },
+    "mobile": {
+      "keyboardOpens": true,
+      "keyboardNavigates": true,
+      "closesOnSelection": true,
+      "escapeCloses": false
+    },
+    "images": 13,
+    "errors": [],
+    "failures": [],
+    "badResponses": [],
+    "reduced": {
+      "matches": true,
+      "video": [
+        {
+          "paused": false,
+          "autoplay": true
+        }
+      ],
+      "animations": 47
+    }
+  }
+]

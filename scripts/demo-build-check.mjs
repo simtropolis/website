@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 
-// Run after the production build to check its actual server-rendered homepage.
-const html = await readFile('.next/server/app/index.html', 'utf8')
+// Validate the homepage artifact that GitHub Pages will actually serve.
+const html = await readFile('out/index.html', 'utf8')
 const socialCard = await readFile('public/social-card.svg', 'utf8')
 
 for (const text of [

@@ -7,10 +7,28 @@ for (const path of ['/', '/robots.txt', '/sitemap.xml', '/images/whale.png']) {
   assert.equal(response.status, 200, path)
 }
 
-for (const path of ['/copper', '/sim', '/releases', '/archive', '/nonexistent-verification-path']) {
+for (const path of [
+  '/copper',
+  '/sim',
+  '/releases',
+  '/archive',
+  '/nonexistent-verification-path',
+  '/nested/nonexistent-verification-path',
+]) {
   const response = await fetch(new URL(path, base), { redirect: 'manual' })
   assert.equal(response.status, 404, `${path} should not expose a legacy product page`)
 }
+
+for (const [path, contentType] of [
+  ['/robots.txt', 'text/plain'],
+  ['/sitemap.xml', 'application/xml'],
+]) {
+  const response = await fetch(new URL(path, base))
+  assert.ok(response.headers.get('content-type')?.startsWith(contentType), path)
+}
+
+const missing = await fetch(new URL('/nonexistent-verification-path', base))
+assert.match(await missing.text(), /404/)
 
 const home = await (await fetch(new URL('/', base))).text()
 const sitemap = await (await fetch(new URL('/sitemap.xml', base))).text()

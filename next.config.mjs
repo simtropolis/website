@@ -1,3 +1,3 @@
-const config = { images: { unoptimized: true } }
+const config = { output: 'export', images: { unoptimized: true } }
 
 export default config
